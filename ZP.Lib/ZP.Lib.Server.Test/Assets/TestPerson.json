@@ -1,0 +1,38 @@
+{
+    "Person.blood":90,
+  "Person.blood2": [99, 109, 119],
+  "Person.weapon": {
+    "Weapon.power": 12.5,
+    "Weapon.transform":{
+            "ZTransform3.Position": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 3.0
+            },
+            "ZTransform3.Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        }
+    },
+    "Person.bMale": true,
+    "Person.degree": "UniversityDegree",
+    "Person.pos": {
+      "x": 1.0,
+      "y": 2.0,
+      "z": 1.5
+    },
+    "Person.testList": [
+      10,
+      20,
+      30
+    ],
+    "Person.testInterface2": { "refid": 1 },
+    "Person.testInterface": {
+      "Interface.Type": "ZP.Lib.Server.Test.Entity.TestObj",
+      "Interface.AssemblyPath": "ZP.Lib.Server.Test.dll",
+      "TestObj.testData": 1.225
+    }
+  }

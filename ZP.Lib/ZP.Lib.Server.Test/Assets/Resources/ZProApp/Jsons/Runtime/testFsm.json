@@ -1,0 +1,9 @@
+{
+  "TestFsm.Transfers":[
+    {"Transfer.From":"Status1", "Transfer.To":"Status2", "Transfer.Event":"Event1"},
+    {"Transfer.From":"Status2", "Transfer.To":"Status3", "Transfer.Event":"Event2"},
+    {"Transfer.From":"Status2", "Transfer.To":"Status5", "Transfer.Event":"Event5"},
+    {"Transfer.From":"Status3", "Transfer.To":"Status1", "Transfer.Event":"Event4"},
+    {"Transfer.From":"Status4", "Transfer.To":"Status1", "Transfer.Event":"Event4"}
+  ]
+}

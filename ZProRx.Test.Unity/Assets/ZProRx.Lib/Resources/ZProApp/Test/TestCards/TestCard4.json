@@ -1,0 +1,9 @@
+{
+    "TestCard.cardId":4,
+    "TestCard.Image":"ArcherTower",
+    "TestCard.blood":8,
+    "TestCard.attack":9,
+
+    "TestCard.modelName":"TestCard3",
+    "TestCard.Category":"Normal"
+}

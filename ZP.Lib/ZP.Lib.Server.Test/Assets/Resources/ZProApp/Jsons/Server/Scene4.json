@@ -1,0 +1,45 @@
+{
+    "ZServerScene.Name":"Scene4",
+    "ZServerScene.Objects":[
+        {
+            "GameObject.InName": "Root",
+            "GameObject.InTransform":{
+                "ZTransform3.Position": {"x":0.0, "y":0.0, "z":0.0},
+                "ZTransform3.Rotation": {"x":0.0, "y":0.0, "z":0.0, "w":1.0}
+            },
+
+            "GameObject.InComponents":[
+                {
+                    "BindComponent.InType": "ZP.Lib.Server.Test.Entity.MainScene2",
+                    "BindComponent.AssemblyPath": "ZP.Lib.Server.Test.dll"
+                },
+                {
+                    "BindComponent.InType":"ZP.Lib.MainThreadDispatcher",
+                    "BindComponent.Params":[]
+                }
+            ],
+
+            "GameObject.Objects": [
+                {
+                    "GameObject.InName": ".MsgList",
+                    "GameObject.InTransform":{
+                        "ZTransform3.Position": {"x":0.0, "y":0.0, "z":0.0},
+                        "ZTransform3.Rotation": {"x":0.0, "y":0.0, "z":0.0, "w":1.0}
+                    },
+        
+                    "GameObject.Objects": []
+                },
+                {
+                    "GameObject.InName": ".HintList",
+                    "GameObject.InTransform":{
+                        "ZTransform3.Position": {"x":0.0, "y":1.0, "z":0.0},
+                        "ZTransform3.Rotation": {"x":0.0, "y":0.0, "z":0.0, "w":1.0}
+                    },
+        
+                    "GameObject.Objects": []
+                }
+            ]
+        }
+
+    ]
+}

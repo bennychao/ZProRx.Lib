@@ -1,0 +1,17 @@
+{
+    "name": "ZP.Lib.Main",
+    "references": [
+        "LitJson",
+        "M2Mqtt",
+        "UniRx"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "ZPLib.server": {
+      "commandName": "Project"
+    }
+  }
+}

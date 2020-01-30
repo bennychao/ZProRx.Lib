@@ -1,0 +1,29 @@
+[
+    {
+        "type": "Directory",
+        "name": "ZP.Server.Demo\\bin\\Debug\\netcoreapp2.2",
+        "parent_id": null,
+        "fsPath": "ZP.Server.Demo\\bin\\Debug\\netcoreapp2.2",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "hVeIPSiQZdUWTzwt"
+    },
+    {
+        "type": "File",
+        "name": "ZP.Lib\\ZP.Lib.Battle\\Readme.md",
+        "parent_id": null,
+        "fsPath": "ZP.Lib\\ZP.Lib.Battle\\Readme.md",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "nAc9uHP35GjWJBXk",
+        "label": "ZP.Lib.Battle"
+    },
+    {
+        "type": "Directory",
+        "name": "/Users/benny/Projects/ZPWorkSpace/ZP.Server.Demo/bin",
+        "parent_id": null,
+        "workspaceRoot": "/Users/benny/Projects/ZPWorkSpace",
+        "workspacePath": "ZP.Server.Demo/bin",
+        "id": "TVEKxy02kIMlmoiw"
+    }
+]

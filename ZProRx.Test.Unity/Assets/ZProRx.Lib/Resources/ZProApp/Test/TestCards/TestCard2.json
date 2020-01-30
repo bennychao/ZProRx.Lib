@@ -1,0 +1,9 @@
+{
+    "TestCard.cardId":2,
+    "TestCard.Image":"MageTower",
+    "TestCard.blood":7,
+    "TestCard.attack":12,
+
+    "TestCard.modelName":"TestCard2",
+    "TestCard.Category":"Normal"
+}

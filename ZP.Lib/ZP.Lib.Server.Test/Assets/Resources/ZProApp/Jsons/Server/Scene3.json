@@ -1,0 +1,274 @@
+{
+  "ZServerScene.Name":"Scene3",
+  "ZServerScene.Objects":[
+      {
+          "GameObject.InName":"main",
+          "GameObject.InTransform":{"ZTransform3.Position":{ "x":5.0, "y":0.0, "z":0.0}, "ZTransform3.Rotation":{ "x":0.0, "y":1.0, "z":0.0, "w":0.0}},
+          
+          "GameObject.InComponents":[
+            {
+              "BindComponent.InType": "ZP.Lib.Server.Test.Entity.MainScene",
+              "BindComponent.AssemblyPath": "ZP.Lib.Server.Test.dll",
+              "BindComponent.Params": [
+                {
+                  "BindComponentParam.Name": "strData",
+                  "BindComponentParam.Data": "TestPerson.json"
+                },
+                {
+                  "BindComponentParam.Name": "startPos",
+                  "BindComponentParam.RawData": {"x":2.0, "y":0.5, "z":4.0}
+                },
+                {
+                  "BindComponentParam.Name": "bFlag",
+                  "BindComponentParam.RawData": true
+                },
+                {
+                  "BindComponentParam.Name": "strString",
+                  "BindComponentParam.Data": "TestData"
+                }
+              ]
+            },
+              {
+                  "BindComponent.InType":"ZP.Lib.MainThreadDispatcher",
+                  "BindComponent.Params":[]
+              }
+              ,
+              {
+                  "BindComponent.InType":"UnityEngine.BoxCollider",
+                  "BindComponent.Params":[
+                      {
+                          "BindComponentParam.Name":"inSize",
+                          "BindComponentParam.RawData": {
+                              "x":1.0, "y":1.0, "z":1.0
+                          }
+                      }
+                  ]
+              }
+
+          ],
+
+          "GameObject.Objects":[{
+                  "GameObject.InName":"Person.rank",
+                  "GameObject.InTransform":{"ZTransform3.Position":{ "x":2.5, "y":0.0, "z":0.0}, "ZTransform3.Rotation":{ "x":0.0, "y":0.0,  "z":0.0, "w":1.0}},
+ 
+                  "GameObject.Objects":[]
+              },
+              {
+                  "GameObject.InName":"Person.weapon",
+                  "GameObject.InTransform":{"ZTransform3.Position":{ "x":1.5, "y":0.0, "z":0.0}, "ZTransform3.Rotation":{ "x":0.0, "y":1.0,  "z":0.0, "w":0.0}},
+ 
+                  "GameObject.Objects":[
+                      {
+                          "GameObject.InName":"Weapon.power",
+                          "GameObject.InTransform":{"ZTransform3.Position":{ "x":0.3, "y":0.0, "z":0.0}, "ZTransform3.Rotation":{ "x":0.0, "y":0.0,  "z":0.0, "w":1.0}},
+         
+                          "GameObject.Objects":[]
+                      }
+                  ]
+              }
+          ]
+      },
+    {
+      "GameObject.InName": "Person",
+      "GameObject.InTransform": {
+        "ZTransform3.Position": {
+          "x": 0.0,
+          "y": 5.0,
+          "z": 0.0
+        },
+        "ZTransform3.Rotation": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        }
+      },
+
+      "GameObject.InComponents": [
+        {
+          "BindComponent.InType": "UnityEngine.BoxCollider",
+          "BindComponent.Params": [
+            {
+              "BindComponentParam.Name": "inSize",
+              "BindComponentParam.RawData": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          ]
+        }
+      ],
+      "GameObject.Objects": [
+        {
+          "GameObject.InName": "Person.rank",
+          "GameObject.InTransform": {
+            "ZTransform3.Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "ZTransform3.Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          },
+
+          "GameObject.Objects": []
+        },
+        {
+          "GameObject.InName": "Person.pos",
+          "GameObject.InTransform": {
+            "ZTransform3.Position": {
+              "x": 0.1,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "ZTransform3.Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          },
+
+          "GameObject.Objects": []
+        },
+        {
+          "GameObject.InName": "Person.weapon",
+          "GameObject.InTransform": {
+            "ZTransform3.Position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "ZTransform3.Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          },
+
+          "GameObject.InComponents": [
+            {
+              "BindComponent.InType": "ZP.Lib.Server.Test.Entity.RTWeaponObj3",
+              "BindComponent.AssemblyPath": "ZP.Lib.Server.Test.dll",
+              "BindComponent.Params": []
+            },
+            {
+              "BindComponent.InType": "UnityEngine.BoxCollider",
+              "BindComponent.Params": [
+                {
+                  "BindComponentParam.Name": "inSize",
+                  "BindComponentParam.RawData": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                  }
+                },
+                {
+                  "BindComponentParam.Name": "inIsActive",
+                  "BindComponentParam.RawData": false
+                }
+              ]
+            }
+          ],
+          "GameObject.Objects": [
+            {
+              "GameObject.InName": "Weapon.power",
+              "GameObject.InTransform": {
+                "ZTransform3.Position": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "ZTransform3.Rotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 1.0
+                }
+              },
+
+              "GameObject.Objects": []
+            }
+          ]
+        }
+      ]
+
+    },
+    {
+      "GameObject.InName": "Person2",
+      "GameObject.InTransform": {
+        "ZTransform3.Position": {
+          "x": 0.0,
+          "y": 10.0,
+          "z": 0.0
+        },
+        "ZTransform3.Rotation": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        }
+      },
+
+      "GameObject.InComponents": [
+        {
+          "BindComponent.InType": "UnityEngine.BoxCollider",
+          "BindComponent.Params": [
+            {
+              "BindComponentParam.Name": "inSize",
+              "BindComponentParam.RawData": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          ]
+        }
+      ],
+      "GameObject.Objects": [
+        {
+          "GameObject.InName": ".rank",
+          "GameObject.InTransform": {
+            "ZTransform3.Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "ZTransform3.Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          },
+
+          "GameObject.Objects": []
+        },
+        {
+          "GameObject.InName": ".weapon.power",
+          "GameObject.InTransform": {
+            "ZTransform3.Position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "ZTransform3.Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          }
+        }
+      ]
+
+    }
+  ]
+
+}

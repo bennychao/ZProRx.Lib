@@ -1,0 +1,31 @@
+{
+    "TestPlayer.name":"TestPlayer",
+    "TestPlayer.portrait":"Archers",
+    "TestPlayer.blood":{"ZDataBar.Max":100.0, "ZDataBar.Cur":10.0},
+    "TestPlayer.attack":{"ZIntBar.Max":10, "ZIntBar.Cur":4},
+    "TestPlayer.power":5,
+    "TestPlayer.mine":12,
+
+    "TestPlayer.createTime":{
+        "ZDateTime.date":"2018/09/12", 
+        "ZDateTime.time":"12:09:22"
+    },
+    "TestPlayer.rank":{"ZIntBar.Max":5, "ZIntBar.Cur":2},
+    "TestPlayer.speed":{"ZDataBar.Max":50.0, "ZDataBar.Cur":10.0},
+
+    "TestPlayer.loadingProgress":0.92,
+
+    "TestPlayer.message":"",
+    "TestPlayer.CardCategory":"Normal",
+    "TestPlayer.bMale":false,
+    "TestPlayer.curSelect":2,
+    
+    "TestPlayer.group":"RedTower",
+
+    "TestPlayer.cardList":[
+        {
+
+        }
+    ]
+    
+}
