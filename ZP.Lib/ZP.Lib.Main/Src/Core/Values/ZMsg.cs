@@ -13,14 +13,15 @@ namespace ZP.Lib
         float Timer { set; get; }
     }
 
-    [PropertyUIItemResClass("Msgs/Msg")]
+    [PropertyUIItemResClass("[APP]/Msgs/Msg")]
     //for hint msg UI
     public class ZMsg : IZMsg, IIndexable
     {
         private int msgID;
 
-        [PropertyImageRes("Msgs/")]
+        [PropertyImageRes("[APP]/Msgs/")]
         public ZProperty<string> Icon = new ZProperty<string>("");
+
         public ZProperty<string> Title = new ZProperty<string>("");
         public ZProperty<string> Description = new ZProperty<string>("");
 

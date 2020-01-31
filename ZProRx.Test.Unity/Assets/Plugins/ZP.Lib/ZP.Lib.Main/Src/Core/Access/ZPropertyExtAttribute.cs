@@ -92,7 +92,7 @@ namespace ZP.Lib
         public PropertyAutoLoadAttribute(string path)
         {
             this.Path = path;
-
+            this.Path = this.Path.Replace("[APP]", ServerPath.AppName);
         }
 
     }

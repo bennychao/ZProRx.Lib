@@ -39,7 +39,7 @@
     },
     {
       "ZPrefab.Name": "TestMsg",
-      "ZPrefab.path": "Msgs/Msg",
+      "ZPrefab.path": "ZProApp/Msgs/Msg",
       "ZPrefab.gameObject":{
         "GameObject.InName": "TestMsg",
         "GameObject.InTransform":{
@@ -50,7 +50,7 @@
     },
     {
       "ZPrefab.Name": "TestHint",
-      "ZPrefab.path": "Hints/Hint",
+      "ZPrefab.path": "ZProApp/Hints/Hint",
       "ZPrefab.gameObject":{
         "GameObject.InName": "TestHint",
         "GameObject.InTransform":{

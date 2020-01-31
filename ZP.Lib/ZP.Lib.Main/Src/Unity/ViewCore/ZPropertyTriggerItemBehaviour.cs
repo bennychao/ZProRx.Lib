@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using ZP.Lib.Unity.RTComponents;
 
 namespace ZP.Lib.Unity.ViewCore
 {
@@ -12,7 +13,7 @@ namespace ZP.Lib.Unity.ViewCore
         public string SubEventID;
 
         protected IZEvent zEvent;
-        protected void BindBase(IZEvent e)
+        protected  void BindBase(IZEvent e)
         {
             zEvent = e;
         }
@@ -28,6 +29,17 @@ namespace ZP.Lib.Unity.ViewCore
         {
             //throw new NotImplementedException();
             base.BindBase(property);
+
+            var attr = ZPropertyAttributeTools.GetAttribute<RTAddTriggerComponentAttribute>(property);
+            if (attr != null)
+            {
+                SubEventID = attr.SubEventId;
+            }
+            else
+            {
+               var  attrClass = ZPropertyAttributeTools.GetAttribute<RTAddTriggerComponentClassAttribute>(property);
+                SubEventID = attrClass?.SubEventId;
+            }
             var zEvent = ZPropertyMesh.GetEventEx(property.Value, SubEventID);
 
             Bind(zEvent);

@@ -119,14 +119,14 @@ namespace ZP.Lib
         {
             this.ResType = resType;
             this.Path = path;
-
+            this.Path = this.Path.Replace("[APP]", ServerPath.AppName);
         }
 
         public PropertyConfigPathAttribute(string path)
         {
             this.ResType = PathType.LocalRes;
             this.Path = path;
-
+            this.Path = this.Path.Replace("[APP]", ServerPath.AppName);
         }
 
     }

@@ -17,8 +17,8 @@ namespace ZP.Lib{
 		ZRowsIterator<T> _Rows;
 		ZRowsIterator _Rows2;
 
-		ZRowsIterator<T> _Cols;
-		ZRowsIterator _Cols2;
+		//ZRowsIterator<T> _Cols;
+		//ZRowsIterator _Cols2;
 
 		internal Dictionary<int, T> _DataList;// = new List<T>();
 

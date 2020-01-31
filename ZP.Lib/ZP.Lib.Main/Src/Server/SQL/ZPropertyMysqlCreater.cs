@@ -23,7 +23,7 @@ namespace ZP.Lib.Server.SQL
         public void CreateTable<TData>(string TableName, TData sample)
         {
             //TODO
-            uint id = 0;
+            //uint id = 0;
             StringBuilder sCommand = new StringBuilder();
             sCommand.Append($"CREATE TABLE {TableName} (");
 

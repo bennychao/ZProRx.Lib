@@ -19,7 +19,7 @@ public class TestServerEx : MonoBehaviour
     {
         //transform.rotation = ZTransformEx.LookAt(Target.forward, Target.up);
 #if ZP_SERVER
-        var f =  Mathf.PI;
+        //var f =  Mathf.PI;
         //var r1 = ZTransformEx.AngleAxisEx(angle, Target.up);
 
         var r1 = ZTransformEx.LookAt(Target.forward, Target.up);

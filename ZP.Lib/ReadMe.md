@@ -1,7 +1,26 @@
 ﻿# ZProRx.Lib
 
 ## 目录
-- [RoadMap](#RoadMap)
+- [ZProRx.Lib](#zprorxlib)
+  - [目录](#%E7%9B%AE%E5%BD%95)
+  - [ZProRx 框架简介](#zprorx-%E6%A1%86%E6%9E%B6%E7%AE%80%E4%BB%8B)
+    - [各模块简介](#%E5%90%84%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B)
+  - [Framework 架构](#framework-%E6%9E%B6%E6%9E%84)
+    - [统一语言](#%E7%BB%9F%E4%B8%80%E8%AF%AD%E8%A8%80)
+    - [共通宏定义](#%E5%85%B1%E9%80%9A%E5%AE%8F%E5%AE%9A%E4%B9%89)
+  - [Rule 规范](#rule-%E8%A7%84%E8%8C%83)
+    - [文件 命名规则](#%E6%96%87%E4%BB%B6-%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99)
+      - [Common](#common)
+      - [Reactive](#reactive)
+      - [Matrix](#matrix)
+      - [Card](#card)
+  - [Unity Plugin](#unity-plugin)
+    - [Plugin 导入](#plugin-%E5%AF%BC%E5%85%A5)
+  - [Asset](#asset)
+  - [Demo 应用案例](#demo-%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B)
+  - [Other 其它](#other-%E5%85%B6%E5%AE%83)
+  - [RoadMap](#roadmap)
+  - [License](#license)
 
 ## ZProRx 框架简介
 面向属性的编程框架，以属性为基础，构建属性网，同时结合反应式编程、链式编程。
@@ -28,7 +47,7 @@
 注：以上目前暂时开源了ZP.Lib.Main模块，即ZP的核心模块，后续将陆续开源其它模块。
 
 --------------
-## 架构
+## Framework 架构
 	
 ZP系的库文件结构树，如下图所示，可以看到各产品的依赖关系。
 
@@ -54,7 +73,7 @@ ZP系的库文件结构树，如下图所示，可以看到各产品的依赖关
 	#define ZP_SERVER // Server 用于使用.NetCore端对Server
 ```
 
-
+## Rule 规范
 
 ### 文件 命名规则
 文件名后缀规则
@@ -160,6 +179,7 @@ public sealed class  ServerPath : PropObjectSingleton<ServerPath>
 ```json
   "AssetConfig": {
     "AssetPath": "",
+    "AppName":"Dudu",
     "Scenes": [
       {
         "Name": "Scene3"
@@ -169,9 +189,12 @@ public sealed class  ServerPath : PropObjectSingleton<ServerPath>
 ```
 
 其由UseMatrix自动加载（包括Web端和Soc端）
-- 通过方法`UseAssetPath`分别在定义在`AssetAppBuilderExtensions`类中
+- 通过方法`UseAssetPath`分别在定义在`AssetAppBuilderExtensions`类中,其会由`UseMatrix`自动调用。
 
-## 应用案例与Demos
+Unity端可通过
+RoomMatrixBehaviour的AppName进行指定，默认为"ZProApp"
+
+## Demo 应用案例
  - [ZP.Server.Demo一个Soc端服务](../ZP.Server.Demo/Readme.md)
    - 其主要功能是一个简单的回合制小游戏
   
@@ -179,7 +202,7 @@ public sealed class  ServerPath : PropObjectSingleton<ServerPath>
 
 注意：后续开源中。。。
 
-## 其它
+## Other 其它
 Tools 目录：主要包括了一些配合VSCode Task 使用的一些Shell脚本文件，目前支持Windows、Mac。
 ClientLibrary: Client端依赖的库文件
 ServerLibrary目录：Server端依赖的库文件，
@@ -191,16 +214,13 @@ ServerLibrary目录：Server端依赖的库文件，
   - 资源管理类进行统一处理，支持动态更新、版本控制、缓存、前后端差别（Resource.Load时 Unity不能带扩展名）
 2. [v0.81] 支持NetCore 3.0, 模块整理, HTTP 错误码支持。
 3. [v0.82] Pool模块支持池化。TestCase 对应xUnit
-4. [v0.9] 非功能性需求对应，使用的AOP对应，主要功能包括
-   - 事务
-   - 缓存
-   - 日志
-   - 安全
-5. **[v1.0]**  1.0版本对外开放，对Unity更好的支持，包括Unity Plugin以及工程优化
+4. **[v1.0]**  1.0版本对外开放，对Unity更好的支持，包括Unity Plugin以及工程优化，支持更多的TriggerComponent
+5. [v1.09] 非功能性需求对应，使用的AOP对应，主要功能包括
+   - 事务 - 缓存 - 日志 - 安全
 6. [v1.1] Net优化与扩展，支持除MQTT外的Socket框架。支持Component的绑定功能。
 7. [v1.2] 后端物理引擎完善（Box2D？），Server端替换到UnityCore相关的依赖
 8. [v1.3] 坐标系统后续考虑更多布局的支持，比如，六边形。Unity资源优化，支持Scene文件自动输出为Json。
-9. [v1.4] gRPC支持，调用Soc端
+9.  [v1.4] gRPC支持，调用Soc端
 
 
 

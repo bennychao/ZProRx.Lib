@@ -643,7 +643,9 @@ ZP框架中基于其的应用，比如`ZUIPropertyListItem` 已经加了锁，�
 
 ## Config ZP.Lib.Main
 
-- 通过Nuget下载
+- 通过Nuget下载 
+  .Net CLI
+  `>dotnet add package ZP.Lib.Server --version 1.0.3`
 - 通过Githup上源码编译
 - Unity通过Asset Store（未上线）
 

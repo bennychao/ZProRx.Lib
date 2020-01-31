@@ -91,7 +91,11 @@ namespace ZP.Lib
         {
             FieldInfo[] typeInfo = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-            return typeInfo.Where(a => typeof(IZProperty).IsAssignableFrom(a.FieldType)).Count() > 0;
+            return typeInfo.Where(a => 
+                    typeof(IZProperty).IsAssignableFrom(a.FieldType) ||
+                    typeof(IZEvent).IsAssignableFrom(a.FieldType)
+                )
+                .Count() > 0;
         }
 
         /// <summary>

@@ -56,7 +56,7 @@ namespace ZP.Lib
         {
             this.ResType = ImageResType.LocalRes;
             this.Path = path;
-
+            this.Path = this.Path.Replace("[APP]", ServerPath.AppName);
         }
 
     }

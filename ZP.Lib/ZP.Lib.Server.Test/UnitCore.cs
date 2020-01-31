@@ -45,12 +45,12 @@ namespace ZP.Lib.Server.Test
                 {
                     Thread.Sleep(100);
                     var threadId = TaskScheduler.Current.Id;
-                    var testTaskObj = (TestObjectSingleWithTaskScheduler.Instance);
+                    var testTaskObjInner = (TestObjectSingleWithTaskScheduler.Instance);
 
-                    testTaskObj.IntProp.Value = 99 + threadId;
+                    testTaskObjInner.IntProp.Value = 99 + threadId;
                     lock (typeof(TestObjectSingleWithTaskScheduler))
                     {
-                        testTaskList.Add(testTaskObj);
+                        testTaskList.Add(testTaskObjInner);
                         taskCount.Value++;
                     }
                 });

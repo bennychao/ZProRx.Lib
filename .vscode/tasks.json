@@ -348,7 +348,7 @@
             "type": "promptString",
             "id": "ZPLibUnityProjectName",
             "description": "Select your Unity Client.",
-            "default": "ZProRx.Lib.Unity"
+            "default": "ZProRx.Test.Unity"
           }
       ]
 }

@@ -24,15 +24,5 @@ del /q /s ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Main\obj\
 rd  /s /q ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Main\bin\
 rd  /s /q ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Main\obj\
 
-echo "Copy ZP.Lib.Card"
-xcopy .\ZP.Lib.Card\*.cs ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Card\ /s /e /c /y /h /r
-xcopy .\ZP.Lib.Card\ZP.Lib.Card.asmdef ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Card\ /s /e /c /y /h /r
-
-del /q /s ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Card\bin\
-del /q /s ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Card\obj\
-rd  /s /q ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Card\bin\
-rd  /s /q ..\%1\Assets\Plugins\ZP.Lib\ZP.Lib.Card\obj\
-
-
 
 pause

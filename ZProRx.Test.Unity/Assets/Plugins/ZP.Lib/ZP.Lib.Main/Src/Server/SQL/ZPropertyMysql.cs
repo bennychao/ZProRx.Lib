@@ -199,7 +199,7 @@ namespace ZP.Lib.Server.SQL
         //return id
         public uint Insert<T>(string table, T obj)
         {
-            uint id = 0;
+            //uint id = 0;
             StringBuilder sCommand = new StringBuilder();
             sCommand.Append("INSERT INTO " + table);
 
@@ -242,7 +242,7 @@ namespace ZP.Lib.Server.SQL
 
         public uint Insert<T>(string table, uint linkIndex, T obj)
         {
-            uint id = 0;
+            //uint id = 0;
             StringBuilder sCommand = new StringBuilder();
             sCommand.Append("INSERT INTO " + table);
 

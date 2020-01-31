@@ -57,7 +57,7 @@ namespace ZP.Lib.Server.Test.Entity
 
             var disp = ObservableEx.EveryUpdate().ObserveOn(Scheduler.CurrentThread).Subscribe(_ =>
             {
-                var runId = MatrixRuntimeTools.GetRunId();
+                runId = MatrixRuntimeTools.GetRunId();
                 Assert.IsTrue(string.Compare("TestValuesRoom", runId) == 0);
                 //Debug.Log("ObservableEx.NextFrame")
                 taskCount.Value++;

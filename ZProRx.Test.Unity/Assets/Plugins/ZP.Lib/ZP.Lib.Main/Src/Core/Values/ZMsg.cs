@@ -19,8 +19,9 @@ namespace ZP.Lib
     {
         private int msgID;
 
-        [PropertyImageRes("Msgs/")]
+        [PropertyImageRes("[APP]/Msgs/")]
         public ZProperty<string> Icon = new ZProperty<string>("");
+
         public ZProperty<string> Title = new ZProperty<string>("");
         public ZProperty<string> Description = new ZProperty<string>("");
 

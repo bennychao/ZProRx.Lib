@@ -11,6 +11,7 @@ using System.Threading;
 using ZP.Lib.Server.CommonTools;
 using ZP.Lib.CoreEx;
 using ZP.Lib.Core.Main;
+using System.Diagnostics;
 
 namespace ZP.Lib.Server.Test
 {
@@ -65,7 +66,7 @@ namespace ZP.Lib.Server.Test
             //test package recevie, data is NetPackage<TestPropData>
             ZPropertySocket.ReceivePackage<TestPropData>("topic/response", null).
             Subscribe((TestPropData a1) => {
-                Debug.Log("Get Response " + a1.name.Value.ToString());
+                //Debug.Log("Get Response " + a1.name.Value.ToString());
 
                 Assert.IsTrue(string.Compare(a1.name.Value, "testobjectname") == 0);
                 taskEnd.Value = true;
@@ -97,7 +98,7 @@ namespace ZP.Lib.Server.Test
             var disp = ZPropertySocket.ReceivePackageAndResponse<TestPropData, bool>("topic/response2", null).
                 Subscribe(             //< TestPropData, bool> support return 
                 (TestPropData a1) => {
-                    Debug.Log("Get Response " + a1.name.Value.ToString());
+                    //Debug.Log("Get Response " + a1.name.Value.ToString());
 
                     Assert.IsTrue(string.Compare(a1.name.Value, "testobjectname") == 0);
 
@@ -135,7 +136,7 @@ namespace ZP.Lib.Server.Test
             ZPropertySocket.ReceivePackageAndResponse<TestPropData>("topic/response3", null).
                 Subscribe(             //< TestPropData, bool> support return 
                 (TestPropData a1) => {
-                    Debug.Log("Get Response " + a1.name.Value.ToString());
+                    //Debug.Log("Get Response " + a1.name.Value.ToString());
 
                     Assert.IsTrue(string.Compare(a1.name.Value, "testobjectname") == 0);
 
@@ -177,8 +178,6 @@ namespace ZP.Lib.Server.Test
 
             //callCount.Where(cur => cur.Count >= 100).Fetch().Timeout(TimeSpan.FromSeconds(5)).ToTask().Wait();
             callCount.WaitFor(cur => cur >= 100).ToTask().Wait();
-
-            Debug.Log("");
         }
 
         [Test]
@@ -338,8 +337,8 @@ namespace ZP.Lib.Server.Test
                     //throw new ZNetMultiException<TestErrorEnum>(TestErrorEnum.Error1);
 
                     //get data from IRawDataRef
-                    var data = rawData.GetData<TestPropData>();
-                    Assert.IsTrue(string.Compare(data.name.Value, "testobjectname") == 0);
+                    var rdata = rawData.GetData<TestPropData>();
+                    Assert.IsTrue(string.Compare(rdata.name.Value, "testobjectname") == 0);
 
                     //return result
                     return true;
@@ -404,21 +403,21 @@ namespace ZP.Lib.Server.Test
             taskEnd.Value = false;
         }
 
+        [Conditional("DEBUG")]
         [Test]
         public void TestSocketStartAndConnectHandler()
         {
             IReactiveProperty<bool> taskEnd = new ReactiveProperty<bool>(false);
 
-            ZPropertySocket.OnConnected().Subscribe(client => {
-                Debug.Log("OnConnected " + client);
+            ZPropertySocket.OnConnected().Subscribe(client => {               
                 Assert.IsTrue(string.Compare(client, "testId") == 0);
                 taskEnd.Value = true;
             });
 
             ZPropertySocket.FakeConnect("testId");
-
+#if DEBUG
             taskEnd.Where(cur => cur == true).Fetch().Timeout(TimeSpan.FromSeconds(2)).ToTask().Wait();
-
+#endif
             //FakeDisConnect
         }
 

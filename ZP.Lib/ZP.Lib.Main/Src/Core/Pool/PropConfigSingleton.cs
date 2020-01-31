@@ -9,7 +9,7 @@ namespace ZP.Lib
         {
             get
             {
-                string path = "Jsons/Config/Config.json";
+                string path = $"{ServerPath.AppName}/Jsons/Config/Config.json";
                 var attr = ZPropertyAttributeTools.GetTypeAttribute<PropertyConfigPathAttribute>(typeof(T));
 
                 if (attr != null)

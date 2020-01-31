@@ -15,6 +15,8 @@
 
     "TestPlayer.loadingProgress":0.92,
 
+    "TestPlayer.curPosition":{"x":12.0, "y":2.0},
+
     "TestPlayer.message":"",
     "TestPlayer.CardCategory":"Normal",
     "TestPlayer.bMale":false,

@@ -15,6 +15,7 @@
 11. [v1.1] 自动Check 代码工具，比如如下的问题[19]
 12. [v0.8] 通用的异常处理
 13. [v0.8] Host Map 需要通过Configuration文件进行导入，目前只支持了一个(localhost)。
+14. [v0.8] 需要对应各UI的Description的功能。
 
 #### 目前问题
 1. [Fixed]ZNetErrorEnum 等RX对象的错误处理未完善。可以通过UniRx的.Catch方法进行接收。

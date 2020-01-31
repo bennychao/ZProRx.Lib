@@ -19,7 +19,7 @@ namespace ZP.Lib.Core.Values
 
 
     [RTTransformClass(".transform")] //add RTTransfrom
-    [PropertyUIItemResClass("Hints/", "", ".modelName")]
+    [PropertyUIItemResClass("[APP]/Hints/", "", ".modelName")]
     [RTAddTriggerComponentClass(typeof(RTHoldable), ".OnHold")]
     public class ZHint : IZHint, IIndexable
     {

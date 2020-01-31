@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using ZP.Lib;
 using UniRx;
+using ZP.Lib.Unity.RTComponents;
+using ZP.LibUnity;
 
 public enum TaskTypeEnum
 {
     Timer,
     Kill
+}
+
+
+[RTAddTriggerComponentClassAttribute(typeof(ZUIHoldableItem), ".OnHold")]
+public class TestHoldObject
+{
+    public ZProperty<bool> bHolding = new ZProperty<bool>();
+
+    public ZEvent<bool> OnHold = new ZEvent<bool>();
 }
 
 public class TestPlayer 
@@ -47,8 +58,12 @@ public class TestPlayer
 
     private ZTaskProperty<TaskTypeEnum> Task = new ZTaskProperty<TaskTypeEnum>();
 
-	// input panel
-	[PropertyImageRes(ImageResType.LocalRes, "ZProApp/Test/")]
+    private ZProperty<Vector2> curPosition = new ZProperty<Vector2>();
+
+    private ZProperty<TestHoldObject> holdObj = new ZProperty<TestHoldObject>();
+
+    // input panel
+    [PropertyImageRes(ImageResType.LocalRes, "ZProApp/Test/")]
 	private ZProperty<GroupTypeEnum> group = new ZProperty<GroupTypeEnum>();
 
     [PropertyDescription("male", "maleDes")]
@@ -97,6 +112,15 @@ public class TestPlayer
         ZPropertyPrefs.LoadFromRes(card, "ZProApp/Test/TestCards/TestCard4"); //.json
         CardList.Add(card);
 
+        holdObj.Value.OnHold.OnEventObservable<bool>().Subscribe(_ =>
+        {
+            var msg = ZMsg.Create("msg", $"Hold Object {_} !!!");
+            msg.Timer = 2;
+
+            zMsgs.AddTimer(msg);
+
+            holdObj.Value.bHolding.ActiveNode(_);
+        });
 
     }
 
@@ -179,6 +203,7 @@ public class TestPlayer
         Task.Value.Duration.Value = 10;
         Task.Value.Start();
 
+        holdObj.Value.bHolding.ActiveNode(false);
     }
 
     void OnUnbind()
