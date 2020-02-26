@@ -24,7 +24,7 @@ namespace ZP.Lib.Unity.RTComponents
         }
     }
 
-    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class,  AllowMultiple =true, Inherited = true)]
     public class RTAddTriggerComponentClassAttribute : PropertyAddComponentClassAttribute
     {
         public string SubEventId { get; protected set; }

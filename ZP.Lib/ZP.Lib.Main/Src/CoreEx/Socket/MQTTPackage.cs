@@ -5,6 +5,7 @@ using System.Text;
 namespace ZP.Lib.CoreEx
 {
     //not used
+    [Obsolete("not used")]
     internal class MQTTResponse : ISocketPackage
     {
         public string Topic => throw new NotImplementedException();

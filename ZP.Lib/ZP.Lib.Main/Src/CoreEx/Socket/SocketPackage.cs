@@ -21,7 +21,7 @@ using MQTTnet;
 #endif
 
 //same as NetPackage (low level net package)
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     public class SocketPackageHub<TData>
     {

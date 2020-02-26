@@ -2,6 +2,7 @@
 using System.Threading;
 using UnityEngine;
 using UniRx;
+using ZP.Lib.CoreEx;
 
 namespace ZP.Lib
 {
@@ -203,13 +204,20 @@ namespace ZP.Lib
 
             if (TransNode != null)
             {
-                var propItems = TransNode.GetComponents<IZPropertyViewItem>();
-
-                //prop.ViewItem = propItem;
-                foreach (var p in propItems)
+#if !ZP_SERVER
+                Observable.Return(Unit.Default).ObserveOnMainThread().Subscribe(_ =>
                 {
-                    p.UpdateValue((object)data);
-                }
+#endif
+                    var propItems = TransNode.GetComponents<IZPropertyViewItem>();
+
+                    //prop.ViewItem = propItem;
+                    foreach (var p in propItems)
+                    {
+                        p.UpdateValue((object)data);
+                    }
+#if !ZP_SERVER
+                });
+#endif
             }
         }
 
@@ -225,14 +233,20 @@ namespace ZP.Lib
 
             if (TransNode != null)
             {
-                var propItems = TransNode.GetComponents<IZPropertyViewItem>();
-
-                //prop.ViewItem = propItem;
-                foreach (var p in propItems)
+#if !ZP_SERVER
+                Observable.Return(Unit.Default).ObserveOnMainThread().Subscribe(_ =>
                 {
-                    p.UpdateValue((object)cur);
-                }
+#endif
+                    var propItems = TransNode.GetComponents<IZPropertyViewItem>();
 
+                    //prop.ViewItem = propItem;
+                    foreach (var p in propItems)
+                    {
+                        p.UpdateValue((object)cur);
+                    }
+#if !ZP_SERVER
+                });
+#endif
             }
         }
 

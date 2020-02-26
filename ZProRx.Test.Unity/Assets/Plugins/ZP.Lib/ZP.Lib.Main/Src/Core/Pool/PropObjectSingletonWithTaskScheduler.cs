@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UniRx;
 using ZP.Lib;
 using ZP.Lib.Core.Pool;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
 namespace ZP.Lib.Core.Main
 {

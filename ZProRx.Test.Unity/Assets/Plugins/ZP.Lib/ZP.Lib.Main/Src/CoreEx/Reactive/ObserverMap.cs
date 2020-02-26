@@ -4,7 +4,7 @@ using System.Text;
 using UniRx;
 using ZP.Lib.CoreEx.Domain;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     public class ObserverMap<TValue> : List<KeyValuePair<string, ICancellableObserver<TValue>  >>
     {

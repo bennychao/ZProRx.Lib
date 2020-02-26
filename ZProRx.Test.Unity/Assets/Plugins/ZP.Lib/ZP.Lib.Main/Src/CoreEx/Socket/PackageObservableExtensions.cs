@@ -12,9 +12,9 @@ using ZP.Lib.Core.Main;
 using ZP.Lib.Core.Domain;
 using UniRx.Operators;
 using System.Threading;
-using ZP.Lib.Server.CommonTools;
+using ZP.Lib.Main.CommonTools;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     //for Receive package Observable with not response
     public static class PackageObservableExtensions

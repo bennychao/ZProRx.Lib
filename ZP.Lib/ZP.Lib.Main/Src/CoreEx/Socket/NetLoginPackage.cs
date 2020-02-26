@@ -7,6 +7,7 @@ using ZP.Lib;
 namespace ZP.Lib.Net
 {
     //not used
+    [Obsolete("not used")]
     internal class NetLoginPackage<T>
     {
         private ZProperty<string> accessToken = new ZProperty<string>();

@@ -334,7 +334,7 @@ namespace ZP.Lib
 
         public override string ToString()
         {
-            return data.ToString();
+            return propList.ToString();
         }
 
         /// <summary>

@@ -16,13 +16,16 @@
 12. [v0.8] 通用的异常处理
 13. [v0.8] Host Map 需要通过Configuration文件进行导入，目前只支持了一个(localhost)。
 14. [v0.8] 需要对应各UI的Description的功能。
+15. [v0.8] 需要支持Channel Action的串行的标签。
 
 #### 目前问题
 1. [Fixed]ZNetErrorEnum 等RX对象的错误处理未完善。可以通过UniRx的.Catch方法进行接收。
-2. [Fixed]Socket 返回值 Topic目前调用了 UnSubscribe，但对应的SubJect还未进行处理, 同时还需要支持在返回的IDisposable 对象调用Dispose自动 UnSubscribe [2019.08.09]
+2. [Fixed]Socket 返回值 Topic目前调用了 UnSubscribe，
+   [Fixed]但对应的SubJect还未进行处理, 同时还需要支持在返回的IDisposable 对象调用Dispose自动 UnSubscribe [2019.08.09]
+   
 3. [1.0]Assembly 是否需要一个管理类，Load后，再调用时是否是重新加载，在BindComponent 中加载。【2019.08.14】
 4. [Fixed][1.0] ObservableEx.NextFrame()还不能在当前Server线程中调用。【2019.08.14】
-5. [Fixed][1.0] JsonLitRawData 中把Map转换为IRawDataPref，在多层的结构中可能会有问题。
+5. [Fixed][1.0] JsonLitRawData 中把Map转换为`IRawDataPref`，在多层的结构中可能会有问题。
 6. [Fixed][1.0]工程中Unity原生依赖，自带版本号的升级的问题还没有解决，使用的asmdef文件定义工程，直接把工程放到Plugin 目录中。
 7. [Fixed]Log使用NLog的方法进行输出，参考Supervisor中的做法。
 8.  [1.1]Mysql中还不支持第二个Index的创建。这样性能会有问题。
@@ -57,6 +60,9 @@
 
 【2019-11-15】
 [TBD]目前Lib.Main的`Task.run`已经对应完毕，其它模块的还未进行对应
+
+【2019-11-15】
+[TBD]还有大量的new Task 还未进行对应
 
 15. 网络订阅API（包括Socket与Http）都是不支持同时对同一个Url进行订阅，如果订阅了，也只有一个收到消息。
 引入支持计数功能的Observable类。
@@ -101,7 +107,7 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 22. [Fixed]"onclientconnected" 有几处的Send，没有进行Subscribe，那其不会触发的。还需要进一步的确认
 
 
-23. ZProperty 的直接赋值是很危险的。
+23. [CheckList]ZProperty 的直接赋值是很危险的。
     
   ![](./Docs/img/Readme_2019-12-23-22-21-48.png)
 
@@ -121,9 +127,48 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 
 29. [v1.1]物理引擎部分，目前还有一些细节，比如`ContactPoint contact`的支持等。
 
-30. PackageObservableExtension[Fixed] / ObservableWithResponsableExtension 等类 Subscribe未支持OnError 
+30. [Fixed] PackageObservableExtension [Fixed] / ObservableWithResponsableExtension [Fixed] 等类 Subscribe未支持OnError 
 
 31. 线程的Cancel还不完整，new Task( 等还有未支持取消的。
+
+32. IEquipable 的Destory还未进行对应。
+
+34. RTBullt还不是Trigger
+
+35. IZPropertyList).OnRemoveItem 还未支持Observable，因为其Action有两个参数
+
+36. [Fixed]需要支持除外 Bind的属性，如下所示，对于通过Radio List绑定时，如果BrainLinks再下面，会出于多次绑定的问题。
+即认为其第一次的子结点，为后面BrainLinks的要了。或者是判断是否已经进行过绑定。
+```csharp
+  [PropertyUIItemRes("DuduItems/BrainLinkItem", "Root")]
+  public ZPropertyRefList<BrainInfo> BrainLinks = new ZPropertyRefList<BrainInfo>();
+
+  [PropertyGroup("Main")]
+  [PropertyLink(".BrainLinks")]
+  public ZLinkProperty<int> CurHandBrain = new ZLinkProperty<int>();
+```
+  [2020-02-24] 通过追加数组的成员的Name[index]
+
+37. [Deferred][CheckList][v1.0]【重要】ZP类，的基类中如果定义为Private，通过父类目前是无法获取到其定义的属性值的。
+
+38. [Fixed]【重要】SendPackage 的多次的Subscribe会有问题，会有多个Result的Topic，其核心还是 ReceivePackage 是不能多次进行的。
+    [CheckList][2020-02-24] 目前 已经支持了SendPackage多次Subscribe的问题，但ReceivePackage 只能要Dispose之后才能再次使用
+
+39. UniRx ToTask 如何 Dispose
+
+40. [Deferred][CheckList][v1.0]PropertyMesh.IsDefineInterface(p) 对于把_ConvertToMap 即转换为Json时，对于值类是接口的ZP对象，目前的式样是停止进行转换的。
+
+41. [Deferred][CheckList][v1.0]【重要】ZEvent 还不支持MultiPropertyId, 即简写的".OnEvent"的形式。
+
+42. 【重要】TTPServer 中的 RecvListeners 还没有进行线程安全的处理。
+
+43. [Fixed]SocBuilding中的判断Connect需要加入 InterAdd 变量进行互斥操作。
+
+44. [Deferred][v1.0]对于Server端Channel的初始化依赖第一接入的Client的定义的Channels
+
+45. [Deferred][v1.0]BindProperty 目前使用的tran.name.Contains(prop.SimplePropertyID) 用于比较匹配，会有问题。
+
+46. UpdateValue 有一些个别的ViewItem中对UpdateValue还不是保证在UI线程上调用的。
 
 ------------------
 
@@ -156,7 +201,7 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 
 ![](./Docs/img/Readme_2019-10-21-14-29-29.png)
 
-这时需要使用的SemaphoreSlim或者Semaphore。前者开销更小。但不用于进程间。
+这时需要使用的`SemaphoreSlim`或者`Semaphore`。前者开销更小。但不用于进程间。
 
 
 1. Unity线程死锁的问题
@@ -179,3 +224,9 @@ When All not work it only return when all observer is stopped，
   ![](./Docs/img/Readme_2019-12-25-16-35-14.png)
 
 ---
+
+
+
+### Release
+一定要使用.nuspec 文件
+dotnet pack .\ZP.Lib.Server.csproj -p:NuspecFile=.\ZP.Lib.Server.nuspec

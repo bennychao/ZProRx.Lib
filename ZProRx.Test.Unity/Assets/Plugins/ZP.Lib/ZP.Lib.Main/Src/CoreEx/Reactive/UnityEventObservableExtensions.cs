@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine.Events;
 
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     static public class ZObservableUnityEventExtensions
     {

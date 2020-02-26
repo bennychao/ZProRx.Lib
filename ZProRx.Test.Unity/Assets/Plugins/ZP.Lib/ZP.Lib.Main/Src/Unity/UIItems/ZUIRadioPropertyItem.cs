@@ -12,7 +12,7 @@ using UniRx;
 namespace ZP.Lib
 {
     /// <summary>
-    /// ZUIR adio property item.support Enum Property and Link with List Property
+    /// ZUIR adio property item.support Enum Property and Link with List/RefList Property
     /// </summary>
     public class ZUIRadioPropertyItem : ZUIPropertyItemBehaviour, IZPropertyViewItem
     {
@@ -76,7 +76,7 @@ namespace ZP.Lib
         {
             var link = (property as IZLinkable).LinkProperty;
 
-            if (!ZPropertyMesh.IsPropertyList(link))
+            if (!ZPropertyMesh.IsPropertyListLike(link))
             {
                 Debug.LogError("property value is Linkable but it is not a ZpropertyList<String> Link");
                 return false;
@@ -106,22 +106,46 @@ namespace ZP.Lib
             SetSelect();
 
 
-            (link as IZPropertyList).OnAddItem += chprop =>
+            if (ZPropertyMesh.IsPropertyList(link))
             {
-                ZViewBuildTools.BindProperty(chprop as IZProperty, transform);
-                //var node = (chprop as IZProperty).ViewItem as ZPropertyViewItemBehaviour;
-                SetUnSelectStatus((chprop as IZProperty).TransNode, false);
+                (link as IZPropertyList).AddItemAsObservable().Subscribe(chprop =>
+                {
+                    ZViewBuildTools.BindProperty(chprop as IZProperty, transform);
+                    //var node = (chprop as IZProperty).ViewItem as ZPropertyViewItemBehaviour;
+                    SetUnSelectStatus((chprop as IZProperty).TransNode, false);
 
-                AddListenerForLinkList();
-            };
+                    AddListenerForLinkList();
+                });
 
-            (link as IZPropertyList).OnRemoveItem += (chprop, index) =>
+                (link as IZPropertyList).OnRemoveItem += (chprop, index) =>
+                {
+                    Observable.NextFrame().Subscribe(_ => GameObject.DestroyImmediate(root.GetChild(index).gameObject));
+                    //GameObject.DestroyImmediate( root.GetChild(index).gameObject);
+
+                    AddListenerForLinkList();
+                };
+            }
+            else if (ZPropertyMesh.IsPropertyRefList(link))
             {
-                Observable.NextFrame().Subscribe(_=> GameObject.DestroyImmediate(root.GetChild(index).gameObject));
-                //GameObject.DestroyImmediate( root.GetChild(index).gameObject);
+                (link as IZPropertyRefList).AddItemAsObservable().Subscribe(chprop =>
+                {
+                    ZViewBuildTools.BindProperty(chprop as IZProperty, transform);
+                    //var node = (chprop as IZProperty).ViewItem as ZPropertyViewItemBehaviour;
+                    SetUnSelectStatus((chprop as IZProperty).TransNode, false);
 
-                AddListenerForLinkList();
-            };
+                    AddListenerForLinkList();
+                });
+
+                (link as IZPropertyRefList).OnRemoveItem += (chprop, index) =>
+                {
+                    Observable.NextFrame().Subscribe(_ => GameObject.DestroyImmediate(root.GetChild(index).gameObject));
+                    //GameObject.DestroyImmediate( root.GetChild(index).gameObject);
+
+                    AddListenerForLinkList();
+                };
+            }
+
+
             return true;
         }
 

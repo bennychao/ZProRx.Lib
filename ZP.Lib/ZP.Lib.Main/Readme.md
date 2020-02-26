@@ -76,6 +76,9 @@
 
 主要值类：（预制值类）
 以下说明包括主要值类
+- ZIntBar/ZDataBar: 由Cur和Max属性组成。多用于血条、进度条等数值。
+- ZTask: 有对应的`ZTaskProperty`属性类，用于定义一个任务，这里需要注意与`ZTimerProerty`属性类的区别。共同点是都可以用于完成一个定时的任务。
+  不同点是前者支持持久化，其内部会保存创建时间，可用于前后端同步，恢复等，其本质是实现一个离线的Timer。应用案例：定时的宝箱。后者是实时的定时器，其暂停后，定时器也停止了。对于步数的不同，前者步数是不确定的，后者的步数是确定的。
 - 
 
 ### 创建与释放
@@ -306,11 +309,11 @@ ZProperty count.Link(otherPro.beWhere(node => node.value > 1).beCount());
 ![](./Docs/img/Readme_2019-11-15-14-42-50.png)
 
 可以分解出如下类型的属性，以及对应的UI表现。
-等级/稀有度：int/byte类型，使用小星星作为表现
-血条/兰条：float类型，进度条表现，也会有数值显示，参考包括最大值、颜色。其实就是做为不同的Prefab但是UI类是一个。
-数值属性：比如攻击力防御值等属性。会显示附加值即“（）”里的内容。类型的附加值，如果固定可通过Attribute的方式进行定义，当然也可以使用下面介绍的复合类型。
-ICON：类型左侧卡片上的攻击距离的表现，由一个图标和数值组成。
-复合类型：即左侧卡片做为一个整体属性，其本身又由子属性组成。如下代码所示，武器类包括子属性。
+- 等级/稀有度：int/byte类型，使用小星星作为表现
+- 血条/兰条：float类型，进度条表现，也会有数值显示，参考包括最大值、颜色。其实就是做为不同的Prefab但是UI类是一个。
+- 数值属性：比如攻击力防御值等属性。会显示附加值即“（）”里的内容。类型的附加值，如果固定可通过Attribute的方式进行定义，当然也可以使用下面介绍的复合类型。
+- ICON：类型左侧卡片上的攻击距离的表现，由一个图标和数值组成。
+- 复合类型：即左侧卡片做为一个整体属性，其本身又由子属性组成。如下代码所示，武器类包括子属性。
 
 ```csharp
 	public class Weapon {
@@ -375,8 +378,13 @@ OnDestroy()
 
 #### 控件
 定义基本的一些预制件如下：
-[TODO] 
-- ZUIInputPropertyItem: 支持Placeholder,
+
+- ZUIInputPropertyItem: 用于获取用户输入，支持Placeholder，并能与ZProperty属性自动绑定。
+其Prefab结构如下：
+
+![](./Docs/img/Readme_2020-02-26-22-25-09.png)
+
+Data为预留的子结点，用于显示其Title，由[PropertyDescription] Attribute进行定义。
 
 支持以下共通的预留的子结点名
 ```csharp
@@ -394,6 +402,12 @@ public static class ZViewCommonObject{
     public static string Second = "Second";
 }
 ```
+
+更多的控件请参考项目，如下为Unity Package中的Demo 展示 ，列举也目前支持的大部分预制。
+
+![](./Docs/img/Readme_2020-02-26-22-32-12.png)
+
+
 #### UI 属性 绑定
 [v1.1][TODO]
 类似VUE。比如 Active 显示。即定义对应的属性，通过Attribute 修饰，定义其绑定的UI属性或者行为。

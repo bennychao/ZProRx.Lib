@@ -5,7 +5,7 @@ using System.Threading;
 using UniRx;
 using ZP.Lib.CoreEx.Domain;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     internal class CancellationObservable<T> : RefCountObservable<T>, IDisposable, ICancellableObserver<T>
     {

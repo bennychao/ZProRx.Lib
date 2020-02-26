@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using ZP.Lib;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
 namespace ZP.Lib.Core.Main
 {

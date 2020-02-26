@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     public interface IRawPackageObservable<T> : IObservable<SocketPackageHub<T>>
     {

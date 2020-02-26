@@ -1,0 +1,30 @@
+{
+    "Tard.Blood":[5.0, 8.0, 10.0],
+    "Tard.Attack":[10.0, 10.0, 20.0],
+    "Tard.Consumes":[
+        {
+            "CardConsume.consumeCards":[
+                {
+                    "ZCodeIdCount.Code":"Tard",
+                    "ZCodeIdCount.Id":1,
+                    "ZCodeIdCount.Count":10
+                },
+                {
+                    "ZCodeIdCount.Code":"Tard",
+                    "ZCodeIdCount.Id":2,
+                    "ZCodeIdCount.Count":10
+                }
+            ],
+            "CardConsume.consumeMaterials":[
+                {
+                    "ZMaterial.code":"Oil",
+                    "ZMaterial.count":100
+                }
+            ],
+            "CardConsume.currency":{
+                "ZCurrency.currencyType":"Corn",
+                "ZCurrency.value":12.9
+            }
+        }
+    ]
+}

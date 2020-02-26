@@ -3,12 +3,17 @@ using UniRx;
 using ZP.Lib;
 using System;
 using NUnit.Framework;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 using ZP.Lib.CoreEx.Tools;
 
 namespace ZP.Lib.Server.Test.Entity
 {
-    public class MainScene : MonoBehaviour
+    public interface IMainScene
+    {
+
+    }
+
+    public class MainScene : MonoBehaviour , IMainScene
     {
         //Common Inspector's property
         public TextAsset strData;
@@ -52,6 +57,15 @@ namespace ZP.Lib.Server.Test.Entity
         {
             var runId = MatrixRuntimeTools.GetRunId();
             Assert.IsTrue(string.Compare("TestRoom", runId) == 0);
+
+            var com = gameObject.GetComponent(typeof(MainScene));
+            Assert.IsTrue(com != null);
+
+            var comI = gameObject.GetComponent(typeof(IMainScene));
+            Assert.IsTrue(comI != null);
+
+            var comT = gameObject.GetComponent<MainScene>();
+            Assert.IsTrue(comT != null);
 
             bACallStart = true;
 
@@ -429,7 +443,11 @@ namespace ZP.Lib.Server.Test.Entity
 
             //taskCount.Where(cur => cur > 10).Fetch().Timeout(TimeSpan.FromSeconds(5)).ToTask().Wait();
 
+            Observable.Timer(new TimeSpan(0, 0, 1)).ObserveOn(ZPRxScheduler.CurrentScheduler).Subscribe(_ => {
+                var runId = MatrixRuntimeTools.GetRunId();
+                Assert.IsTrue(string.Compare("TestRoom", runId) == 0);
 
+            });
         }
 
         private void OnCollisionEnter(Collision collision)

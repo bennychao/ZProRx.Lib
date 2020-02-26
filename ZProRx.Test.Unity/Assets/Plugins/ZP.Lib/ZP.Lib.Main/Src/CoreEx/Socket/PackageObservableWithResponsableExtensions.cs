@@ -12,9 +12,9 @@ using ZP.Lib.Core.Main;
 using ZP.Lib.Core.Domain;
 using UniRx.Operators;
 using System.Threading;
-using ZP.Lib.Server.CommonTools;
+using ZP.Lib.Main.CommonTools;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     //for Receive package Observable and Support Response
     public static class PackageObservableWithResponsableExtensions
@@ -139,6 +139,30 @@ namespace ZP.Lib.CoreEx.Reactive
             return SubscribeRecvPackage<TResult>(observable, func, onError, onCompleted);
         }
 
+        //Package Observalbe With Responsable Func<IRawDataPref, ISocketPackage, Task<TResult>>
+        static public IDisposable Subscribe<TResult>(this IRawPackageObservable<IRawDataPref> observable,
+    Func<IRawDataPref, ISocketPackage, Task<TResult>> func)
+        {
+            return SubscribeRecvPackage<TResult>(observable, func, ZFunctions.ThrowNextAction, ZFunctions.NullAction);
+        }
+
+        static public IDisposable Subscribe<TResult>(this IRawPackageObservable<IRawDataPref> observable,
+            Func<IRawDataPref, ISocketPackage, Task<TResult>> func, Action<Exception> onError)
+        {
+            return SubscribeRecvPackage<TResult>(observable, func, onError, ZFunctions.NullAction);
+        }
+
+        static public IDisposable Subscribe<TResult>(this IRawPackageObservable<IRawDataPref> observable,
+            Func<IRawDataPref, ISocketPackage, Task<TResult>> func, Action onCompleted)
+        {
+            return SubscribeRecvPackage<TResult>(observable, func, ZFunctions.ThrowNextAction, onCompleted);
+        }
+
+        static public IDisposable Subscribe<TResult>(this IRawPackageObservable<IRawDataPref> observable,
+            Func<IRawDataPref, ISocketPackage, Task<TResult>> func, Action<Exception> onError, Action onCompleted)
+        {
+            return SubscribeRecvPackage<TResult>(observable, func, onError, onCompleted);
+        }
 
 
 
@@ -395,6 +419,44 @@ namespace ZP.Lib.CoreEx.Reactive
         }
 
         static internal IDisposable SubscribeRecvPackage<TResult>(IRawPackageObservable<IRawDataPref> observable,
+    Func<IRawDataPref, ISocketPackage, Task<TResult>> func, Action<Exception> onError, Action onCompleted)
+        {
+            var resultDo = observable as INetResponsable<object>;
+            var resultDoById = observable as INetResponsableWithClientId<object>;
+            if (resultDo == null && resultDoById == null)
+                throw new InvalidCastException();
+
+            var ret = observable.Subscribe(async a =>
+            {
+                try
+                {
+                    var r = await func(a.data.Data, a.socketPackage);
+
+                    if (resultDoById != null)
+                        resultDoById.SetResult(a.socketPackage.Key, r);
+                    else if (resultDo != null)
+                        resultDo.SetResult(r);
+                }
+                catch (ZNetException e)
+                {
+                    if (resultDoById != null)
+                        resultDoById.SetError(a.socketPackage.Key, e.Error);
+                    else if (resultDo != null)
+                        resultDo.SetError(e.Error);
+                }
+                catch (Exception e)
+                {
+                    if (resultDoById != null)
+                        resultDoById.SetError(a.socketPackage.Key, e);
+                    else if (resultDo != null)
+                        resultDo.SetError(e);
+                }
+            }, onError, onCompleted);
+
+            return ret;
+        }
+
+        static internal IDisposable SubscribeRecvPackage<TResult>(IRawPackageObservable<IRawDataPref> observable,
             Func<IRawDataPref, ISocketPackage, TResult> func, Action<Exception> onError, Action onCompleted)
         {
             var resultDo = observable as INetResponsable<object>;
@@ -429,7 +491,7 @@ namespace ZP.Lib.CoreEx.Reactive
                 }
             }, onError, onCompleted);
 
-            return null;
+            return ret;
         }
 
         static internal IDisposable SubscribeRecvPackage<T>(IRawPackageObservable<T> observable, 

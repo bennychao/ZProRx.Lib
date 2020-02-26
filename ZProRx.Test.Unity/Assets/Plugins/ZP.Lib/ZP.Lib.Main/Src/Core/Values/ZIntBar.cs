@@ -1,11 +1,30 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using UniRx;
 
 
 namespace ZP.Lib
 {
+    public static class ZIntBarPropertyEx
+    {
+        static public IDisposable Select<ZT>(this ZProperty<ZIntBar> target, ZT source) where ZT : IZProperty<int>
+        {
+            return target.Value.Select(source);
+        }
+
+        static public IDisposable Select<ZT>(this ZProperty<ZIntBar> target, ZT source, ZT max) where ZT : IZProperty<int>
+        {
+            return target.Value.Select(source, max);
+        }
+
+        static public IDisposable Select(this ZProperty<ZIntBar> target, ZTimerProperty source)// where ZT : IZProperty<int>
+        {
+            return source.OnStartObservable.Subscribe(_ =>
+             target.Value.Select(source));
+        }
+    }
+
     [PropertyValueChangeAnchorClass(".Max", ".Cur")]
     public class ZIntBar : ICalculable<ZIntBar>
     {
@@ -82,6 +101,7 @@ namespace ZP.Lib
         {
             //Max.Value += b.Max;
             Cur.Value += b;
+            Cur.Value %= Max.Value;
             return this;
         }
 
@@ -90,6 +110,26 @@ namespace ZP.Lib
             //Max.Value -= b.Max;
             Cur.Value -= b;
             return this;
+        }
+
+        public IDisposable Select(IZProperty<int> curProp, IZProperty<int> maxProp)
+        {
+            var retDisp = new MultiDisposable();
+            this.Cur.Select(curProp, v => v.Value).AddToMultiDisposable(retDisp);
+
+            this.Max.Select(maxProp, v => v.Value).AddToMultiDisposable(retDisp);
+
+            return retDisp;
+        }
+
+        public IDisposable Select(IZProperty<int> curProp)
+        {
+            var retDisp = new MultiDisposable();
+            this.Cur.Select(curProp, v => v.Value).AddToMultiDisposable(retDisp);
+
+            //this.Max.Select(maxProp, v => v.Value).AddToMultiDisposable(retDisp);
+            this.Max.Value = curProp.Value;
+            return retDisp;
         }
     }
 }

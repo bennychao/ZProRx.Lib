@@ -6,7 +6,7 @@ using UniRx.Operators;
 using UniRx;
 using ZP.Lib.CoreEx.Domain;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     //ToCancellable Operator
     internal class CancellableOperator<T> : IDisposable, ICancellableObserver<T>

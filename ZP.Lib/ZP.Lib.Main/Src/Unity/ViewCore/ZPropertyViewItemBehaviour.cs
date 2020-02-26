@@ -10,10 +10,15 @@ namespace ZP.Lib {
 		protected IZProperty property;
         protected MultiDisposable disposables = new MultiDisposable();
 
+        volatile protected bool isBind = false;
+
+        public bool IsBind => isBind;
+
         protected virtual bool BindBase(IZProperty property)
 		{
-			this.property = property;
+			this.property = property;           
 
+            this.isBind = true;
 //			//add Component
 //			var attr = property.AttributeNode.GetTypeAttribute<PropertyAddComponentAttribute> ();
 //			if (attr != null) {

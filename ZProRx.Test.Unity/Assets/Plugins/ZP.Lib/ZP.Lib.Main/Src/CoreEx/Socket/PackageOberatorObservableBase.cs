@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using UniRx.Operators;
 using ZP.Lib.Net;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     abstract internal class PackageOperatorObservableBase<T, TErrorEnum> 
         : MultiOperatorObservableBase<SocketPackageHub<T, TErrorEnum>>,
@@ -22,11 +22,11 @@ namespace ZP.Lib.CoreEx.Reactive
         {
             base.Dispose(disposing);
 
-#if ZP_SERVER
-            TTPServer.Instance.UnSubscribe(Url);
-#else
-            TTPClient.Instance.UnSubscribe(Url);
-#endif
+// #if ZP_SERVER
+//             TTPServer.Instance.UnSubscribe(Url);
+// #else
+//             TTPClient.Instance.UnSubscribe(Url);
+// #endif
 
         }
     }
@@ -46,11 +46,11 @@ namespace ZP.Lib.CoreEx.Reactive
         {
             base.Dispose(disposing);
 
-#if ZP_SERVER
-            TTPServer.Instance.UnSubscribe(Url);
-#else
-            TTPClient.Instance.UnSubscribe(Url);
-#endif
+// #if ZP_SERVER
+//             TTPServer.Instance.UnSubscribe(Url);
+// #else
+//              TTPClient.Instance.UnSubscribe(Url);
+// #endif
         }
     }
 }

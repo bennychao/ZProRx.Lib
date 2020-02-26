@@ -22,5 +22,10 @@ namespace ZP.Lib.CoreEx.Tools
         static public bool IsServerId(string clientId){
             return clientId.Contains("RoomServer");
         }
+
+        static public string GetServerId(int roomId)
+        {
+            return RoomServer + roomId.ToString();
+        }
     }
 }

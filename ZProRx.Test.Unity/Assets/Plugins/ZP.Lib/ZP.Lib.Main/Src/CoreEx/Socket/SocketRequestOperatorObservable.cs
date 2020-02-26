@@ -1,8 +1,7 @@
 ﻿using System;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 using UniRx;
 using ZP.Lib.Net;
-using ZP.Lib.CoreEx;
 using System.Threading;
 using UnityEngine;
 using ZP.Lib.CoreEx.Domain;
@@ -35,11 +34,11 @@ namespace ZP.Lib
         {
             base.Dispose(disposing);
 
-#if ZP_SERVER
-            TTPServer.Instance.UnSubscribe(Url);
-#else
-            TTPClient.Instance.UnSubscribe(Url);
-#endif
+// #if ZP_SERVER
+//             TTPServer.Instance.UnSubscribe(Url);
+// #else
+//             TTPClient.Instance.UnSubscribe(Url);
+// #endif
         }
 
         protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)
@@ -109,7 +108,7 @@ namespace ZP.Lib
                     }
                     catch
                     {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("SocketClientRequestObservable<T, TResult>: response json read error"));
                     }
 
 
@@ -145,12 +144,6 @@ namespace ZP.Lib
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-#if ZP_SERVER
-            TTPServer.Instance.UnSubscribe(Url);
-#else
-            TTPClient.Instance.UnSubscribe(Url);
-#endif
         }
 
         public SocketRawRequestObservable(IObservable<ISocketPackage> request, string url) : base(true)
@@ -243,11 +236,11 @@ namespace ZP.Lib
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-#if ZP_SERVER
-            TTPServer.Instance.UnSubscribe(Url);
-#else
-            TTPClient.Instance.UnSubscribe(Url);
-#endif
+// #if ZP_SERVER
+//             TTPServer.Instance.UnSubscribe(Url);
+// #else
+//              TTPClient.Instance.UnSubscribe(Url);
+// #endif
         }
 
         protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)
@@ -327,7 +320,7 @@ namespace ZP.Lib
                         return;
                     }
 
-                    Debug.Log("Get a mutex " + parent.Url);
+                    //Debug.Log("Get a mutex " + parent.Url);
 
                     socketResponse = s;
                     parent.clientId = s.Key;
@@ -340,7 +333,7 @@ namespace ZP.Lib
                     }
                     catch
                     {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("SocketRawRequestObservable<T, TResult>:response json read error"));
                     }
 
 
@@ -543,7 +536,7 @@ namespace ZP.Lib
                         observer.OnError(new Exception(" time out"));
                         return;
                     }
-                    Debug.Log("Get a mutex " + parent.Url);
+                    //Debug.Log("Get a mutex " + parent.Url);
 
                     socketResponse = s;
                     parent.clientId = s.Key;
@@ -559,7 +552,7 @@ namespace ZP.Lib
                     }
                     catch
                     {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("SocketRawPackageAndResponseObservable<T, TErrorEnum, TResult> :response json read error"));
                     }
 
 
@@ -709,7 +702,7 @@ namespace ZP.Lib
                         observer.OnError(new Exception(" time out"));
                         return;
                     }
-                    Debug.Log("Get a mutex " + parent.Url);
+                    //Debug.Log("Get a mutex " + parent.Url);
 
                     socketResponse = s;
                     parent.clientId = s.Key;
@@ -725,7 +718,7 @@ namespace ZP.Lib
                     }
                     catch
                     {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("SocketRawPackageAndResponseObservable<T, TResult>:response json read error"));
                     }
 
 
@@ -765,11 +758,11 @@ namespace ZP.Lib
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-#if ZP_SERVER
-            TTPServer.Instance.UnSubscribe(Url);
-#else
-            TTPClient.Instance.UnSubscribe(Url);
-#endif
+// #if ZP_SERVER
+//             TTPServer.Instance.UnSubscribe(Url);
+// #else
+//             TTPClient.Instance.UnSubscribe(Url);
+// #endif
         }
 
         protected override IDisposable SubscribeCore(IObserver<ISocketPackage> observer, IDisposable cancel)
@@ -896,7 +889,7 @@ namespace ZP.Lib
                     }
                     catch
                     {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("SocketRawPackageAndResponseObservable<T>:response json read error"));
                     }
 
 
@@ -1005,7 +998,8 @@ namespace ZP.Lib
 
         public void SetError(string cId, Exception error)
         {
-            //ZPropertySocket.Post(this.Url + "/Result", ZPropertyNet.ErrorResult(error)).Subscribe();
+            var rex = MatrixRuntimeTools.IsServerId(cId) ? "" : cId + "/";
+            ZPropertySocket.Post(this.Url + $"/{rex}Result", ZPropertyNet.ErrorResult(error)).Subscribe();
             throw error;
         }
 
@@ -1062,7 +1056,7 @@ namespace ZP.Lib
                     }
                     catch
                     {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("SocketRawPackageAndResponseObservable:response json read error"));
                     }
 
 
@@ -1157,7 +1151,7 @@ namespace ZP.Lib
                     }
                     catch
                     {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("SocketRawPackageObservable:response json read error"));
                     }
 
 
@@ -1443,7 +1437,7 @@ namespace ZP.Lib
                             }
                             catch
                             {
-                                observer.OnError(new Exception("response json read error"));
+                                observer.OnError(new Exception("SocketRequestObjectObservable:response json read error"));
                             }
                         }
                     }

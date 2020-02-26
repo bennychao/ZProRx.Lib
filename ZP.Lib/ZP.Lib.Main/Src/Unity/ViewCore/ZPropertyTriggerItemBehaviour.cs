@@ -37,8 +37,14 @@ namespace ZP.Lib.Unity.ViewCore
             }
             else
             {
-               var  attrClass = ZPropertyAttributeTools.GetAttribute<RTAddTriggerComponentClassAttribute>(property);
-                SubEventID = attrClass?.SubEventId;
+               var  attrsClass = ZPropertyAttributeTools.GetAttributes<RTAddTriggerComponentClassAttribute>(property);
+
+                foreach(var attr1 in attrsClass)
+                {
+                    if (attr1.IsDefineType(this.GetType()))
+                        SubEventID = attr1?.SubEventId;
+                }
+                
             }
             var zEvent = ZPropertyMesh.GetEventEx(property.Value, SubEventID);
 

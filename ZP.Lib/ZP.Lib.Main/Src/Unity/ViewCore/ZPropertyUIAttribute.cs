@@ -49,7 +49,7 @@ namespace ZP.Lib
         {
             this.ResType = resType;
             this.Path = path;
-
+            this.Path = this.Path.Replace("[APP]", ServerPath.AppName);
         }
 
         public PropertyImageResAttribute(string path)
@@ -188,6 +188,10 @@ namespace ZP.Lib
             }
         }
 
+        public bool IsDefineType(Type type)
+        {
+            return AddTypes.FindIndex(t => t == type) >= 0;
+        }
     }
 
     /// <summary>

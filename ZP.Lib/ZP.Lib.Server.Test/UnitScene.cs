@@ -7,7 +7,7 @@ using UnityEngine;
 using ZP.Lib;
 using ZP.Lib.Server.Test.Entity;
 using UniRx;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 using System.Threading;
 using ZP.Lib.CoreEx.Tools;
 

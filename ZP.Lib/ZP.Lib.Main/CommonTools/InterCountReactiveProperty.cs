@@ -4,9 +4,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UniRx;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
-namespace ZP.Lib.Server.CommonTools
+namespace ZP.Lib.Main.CommonTools
 {
     public class InterCount
     {
@@ -41,9 +41,14 @@ namespace ZP.Lib.Server.CommonTools
             return Value.Count;
         }
 
-        public IObservable<int> WaitFor(Func<int, bool> comparer)
+        //public IObservable<int> WaitFor(Func<int, bool> comparer)
+        //{
+        //    return this.Select(cur => cur.Count).Where(cur => comparer(cur)).Fetch().Timeout(TimeSpan.FromSeconds(5));
+        //}
+
+        public IObservable<int> WaitFor(Func<int, bool> comparer, int waitSeconds = 5)
         {
-            return this.Select(cur => cur.Count).Where(cur => comparer(cur)).Fetch().Timeout(TimeSpan.FromSeconds(5));
+            return this.Select(cur => cur.Count).Where(cur => comparer(cur)).Fetch().Timeout(TimeSpan.FromSeconds(waitSeconds));
         }
     }
 }

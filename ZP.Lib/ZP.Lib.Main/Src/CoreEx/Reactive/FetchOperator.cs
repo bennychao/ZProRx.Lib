@@ -4,7 +4,7 @@ using System.Text;
 using UniRx;
 using UniRx.Operators;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     internal class FetchOperator<T> : OperatorObservableBase<T>
     {

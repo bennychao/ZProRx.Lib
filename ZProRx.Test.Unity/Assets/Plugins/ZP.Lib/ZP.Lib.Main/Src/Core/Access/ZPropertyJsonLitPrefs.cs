@@ -388,10 +388,19 @@ namespace ZP.Lib
         /// Converts the array to rank.
         /// </summary>
         private void ConvertArrayToRank(IRankable obj, JsonData data){
+            var p = (obj as IZProperty);
+
+
             if (!data.IsArray)
             {
                 Debug.LogWarning("ConvertArrayToRank error it is not a rank [PropID]:" + (obj as IZProperty).PropertyID);
-                var p = (obj as IZProperty);
+
+                Type subType = (obj as IZProperty).GetDefineType();
+                if (subType.IsInterface && p.Value != null)
+                {
+                    subType = p.Value?.GetType();
+                }
+
                 //only to read the current value
                 //ConvertProperty((obj as IZProperty), data);
                 if (p.GetDefineType()  == typeof(Vector2) )
@@ -399,9 +408,9 @@ namespace ZP.Lib
                     p.Value = (ConvertVector2(data));
                 }
 
-                if (ZPropertyMesh.IsPropertableLowAPI(p.GetDefineType()))
+                if (ZPropertyMesh.IsPropertableLowAPI(subType))
                 {
-                    var sub = ZPropertyMesh.CreateObject(p.GetDefineType());
+                    var sub = ZPropertyMesh.CreateObject(subType);
                     ConvertToObject(sub, (JsonData)data);
                     p.Value  = sub;
                 }
@@ -432,8 +441,12 @@ namespace ZP.Lib
             }
 
 			if (obj != null) {
-
+                
 				Type subType = (obj as IZProperty).GetDefineType ();
+                if (subType.IsInterface && p.Value != null)
+                {
+                    subType = p.Value?.GetType();
+                }
 
 				bool bClassSub = 
 					ZPropertyMesh.IsPropertableLowAPI (subType);

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 #endif
 
 using System.Linq;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
 namespace ZP.Lib
 {
@@ -57,7 +57,11 @@ namespace ZP.Lib
             var list = property as IZPropertyList;
             if (list != null)
             {
-                list.AddItemAsObservable().Subscribe(chprop =>
+                list.AddItemAsObservable()
+#if ZP_UNITY_CLIENT
+                    .ObserveOnMainThread()  
+#endif
+                    .Subscribe(chprop =>
                 {
                     lock (lockObj)
                     {
@@ -96,7 +100,11 @@ namespace ZP.Lib
             var reflist = property as IZPropertyRefList;
             if (reflist != null)
             {
-                reflist.AddItemAsObservable().Subscribe(chprop =>
+                reflist.AddItemAsObservable()
+#if ZP_UNITY_CLIENT
+                    .ObserveOnMainThread()
+#endif
+                    .Subscribe(chprop =>
                 {
                     lock (lockObj)
                     {

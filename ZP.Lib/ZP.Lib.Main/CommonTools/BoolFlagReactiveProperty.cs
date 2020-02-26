@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using UniRx;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
-namespace ZP.Lib.Server.CommonTools
+namespace ZP.Lib.Main.CommonTools
 {
     public class BoolFlag
     {

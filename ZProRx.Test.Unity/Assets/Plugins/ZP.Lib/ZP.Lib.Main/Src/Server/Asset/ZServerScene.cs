@@ -7,7 +7,7 @@ using UniRx;
 using System.Linq;
 using ZP.Lib.Core.Main;
 using System.Threading.Tasks;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
 #if ZP_SERVER
 
@@ -137,7 +137,7 @@ namespace ZP.Lib
             {
                 //coms.AddRange(o.GetComponents<T>());
 
-                coms.AddRange(o.GetComponentsInChildren<T>());
+                coms.AddRange(o.GetComponents<T>());
             }
             return coms;
         }
@@ -167,7 +167,7 @@ namespace ZP.Lib
             {
                 //coms.AddRange(o.GetComponents<ZServerComponent>());
 
-                coms.AddRange(o.GetComponentsInChildren<ZServerComponent>());
+                coms.AddRange(o.GetComponents<ZServerComponent>()); //InChildren
             }
             return coms;
         }

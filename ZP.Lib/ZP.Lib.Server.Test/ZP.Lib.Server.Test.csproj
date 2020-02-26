@@ -41,6 +41,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\ZP.Lib.Card\ZP.Lib.Card.csproj" />
     <ProjectReference Include="..\ZP.Lib.Main\ZP.Lib.Server.csproj" />
   </ItemGroup>
   

@@ -42,7 +42,7 @@ namespace ZP.Lib
                 return false;
             }
 
-			dataText.text = property.Value.ToString();
+			dataText.text = property.Value?.ToString() ?? "Error String";
 
 			return true;
 		}

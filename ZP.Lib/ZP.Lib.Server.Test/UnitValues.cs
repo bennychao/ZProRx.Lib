@@ -9,7 +9,7 @@ using UnityEngine;
 using ZP.Lib;
 using ZP.Lib.Core.Values;
 using ZP.Lib.CoreEx.Tools;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 using ZP.Lib.Server.Test.Entity;
 using System.Threading;
 

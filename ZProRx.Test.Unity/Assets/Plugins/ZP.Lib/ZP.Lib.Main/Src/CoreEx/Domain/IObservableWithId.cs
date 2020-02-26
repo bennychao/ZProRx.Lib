@@ -2,7 +2,7 @@
 using UniRx;
 using ZP.Lib.Net;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
 
     public interface IObservableWithScheduler

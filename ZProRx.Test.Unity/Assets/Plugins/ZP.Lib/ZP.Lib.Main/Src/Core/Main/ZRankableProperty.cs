@@ -116,6 +116,11 @@ namespace ZP.Lib
         {
             return propList.Select(a => a.Value).ToList<T>();
         }
+
+        //public override string ToString()
+        //{
+        //    return data.ToString();
+        //}
     }
 }
 

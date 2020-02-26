@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UniRx;
 using UniRx.Operators;
 using ZP.Lib.Net;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 
 namespace ZP.Lib
 {
@@ -53,7 +53,7 @@ namespace ZP.Lib
                         ZPropertyPrefs.LoadFromStr(obj, s);
                     }
                     catch {
-                        observer.OnError(new Exception("response json read error"));
+                        observer.OnError(new Exception("NetRequestObservable: response json read error"));
                     }
 
                     observer.OnNext(obj);
@@ -241,7 +241,7 @@ namespace ZP.Lib
                         }
                         catch
                         {
-                            observer.OnError(new Exception("response json read error"));
+                            observer.OnError(new Exception("NetRequestObjectObservable: response json read error"));
                         }
                       
                     }

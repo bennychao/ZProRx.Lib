@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UniRx.Operators;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     public class MultiObserver<TSource> : IDisposable, IObserver<TSource>
     {

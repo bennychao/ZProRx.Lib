@@ -36,10 +36,7 @@ namespace ZP.Lib
         /// <param name="property">Property.</param>
         bool IZPropertyViewItem.Bind(IZProperty property)
         {
-
             base.BindBase(property);
-
-
 
             dataText = GetComponent<Text>();
             if (dataText == null)

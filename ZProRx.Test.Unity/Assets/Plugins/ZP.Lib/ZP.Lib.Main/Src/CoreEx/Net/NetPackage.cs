@@ -31,6 +31,10 @@ namespace ZP.Lib.Net
             {
                 return (int)(object)(status.Value) == 0;
             }
+            else if (status.Value.GetType() == typeof(string)) //support string error for common Error Info. need client to convert to Enum
+            {
+                return string.Compare(status.Value.ToString(), "NoError", StringComparison.OrdinalIgnoreCase) == 0;
+            }
             else
             {
                 return false;
@@ -61,6 +65,7 @@ namespace ZP.Lib.Net
         {
             return Parse(socketPackage?.Value);
         }
+
         public static (T data, TErrorEnum error) Parse(string strPack)
         {
             var packOjb = ZPropertyMesh.CreateObject<NetPackage<T, TErrorEnum>>();

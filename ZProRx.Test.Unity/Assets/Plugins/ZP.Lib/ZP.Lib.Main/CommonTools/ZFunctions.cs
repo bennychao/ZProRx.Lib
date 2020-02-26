@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZP.Lib.Server.CommonTools
+namespace ZP.Lib.Main.CommonTools
 {
     static public class ZFunctions
     {

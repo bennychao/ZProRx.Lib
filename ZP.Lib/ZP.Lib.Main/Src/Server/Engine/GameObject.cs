@@ -165,7 +165,7 @@ namespace UnityEngine
 
         public ZServerComponent GetComponent(Type type)
         {
-            var c = components.Find((obj) => type.GetType().IsAssignableFrom(obj.GetType()));
+            var c = components.Find((obj) => type.IsAssignableFrom(obj.GetType()));
 
             return c;
             //return default(T);

@@ -24,7 +24,6 @@ namespace ZP.Lib
 				this.name = name;
 				this.description = description;
 			}
-
 		}
 
 		public bool IsLocalized(){

@@ -5,8 +5,12 @@
 主要包括了ZP中一些预定义的Prefab，以提升使用ZP的效果和体验。
 
 ## Plugin 配置
-导入后，需要在工程设置（PlayerSetting）中追加如下宏定义，才能正常使用。
-ZP_UNITY_CLIENT;ZP_UNIRX;ZP_M2MQTT 
+按如下步骤进行配置并导入Package
+
+1. 包含依赖UniRx，如果需要最新版本自行下载并安装更新。可以在Assets Store 搜索 UniRx。
+
+2. 导入ZProRx.Lib Plugin Package
+最新版本可以到 https://github.com/bennychao/ZProRx.Lib/Publish/ZProRx.Lib.package 下载。后续会放到AssetStore中。
 
 导入内容包含：
 Assets/ZProRx.Lib
@@ -16,7 +20,8 @@ Assets/Plugins/ZP.Lib/ZP.Lib.Main
 /Plugins/LitJson.dll
 /Plugins/M2Mqtt.dll
 
-另外，还包含依赖UniRx，如果需要最新版本自行下载并安装更新。可以在Assets Store 搜索 UniRx。
+1. 导入后，需要在工程设置（PlayerSetting）中追加如下宏定义，才能正常使用。
+ZP_UNITY_CLIENT;ZP_UNIRX;ZP_M2MQTT 
 
 
 ## Prefab

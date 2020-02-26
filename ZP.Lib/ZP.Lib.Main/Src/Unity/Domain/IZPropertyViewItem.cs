@@ -12,6 +12,8 @@ namespace ZP.Lib
 
     public interface IZPropertyViewItem {
 
+        bool IsBind { get; }
+
 		bool Bind (IZProperty property);
         void Unbind();
 		void UpdateValue(object data);

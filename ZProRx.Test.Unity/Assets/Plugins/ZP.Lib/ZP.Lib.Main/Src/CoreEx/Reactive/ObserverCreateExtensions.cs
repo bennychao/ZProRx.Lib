@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UniRx;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     static class ObserverEx
     {

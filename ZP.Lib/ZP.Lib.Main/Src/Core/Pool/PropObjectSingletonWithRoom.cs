@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UniRx;
 using ZP.Lib;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 using ZP.Lib.Core.Domain;
 
 namespace ZP.Lib.Core.Main

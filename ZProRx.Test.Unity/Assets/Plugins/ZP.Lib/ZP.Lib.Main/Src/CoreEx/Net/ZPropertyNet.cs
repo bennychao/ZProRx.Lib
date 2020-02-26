@@ -518,6 +518,15 @@ namespace ZP.Lib
             return ret;
         }
 
+        static public object ErrorResult(Exception e)
+        {
+            //can get by SendPackage2
+            var ret = ZPropertyMesh.CreateObject<NetPackage<ZNull, string>>();
+            ret.Error = e.ToString();
+
+            return ret;
+        }
+
         static public string StringErrorResult(string error)
         {
 

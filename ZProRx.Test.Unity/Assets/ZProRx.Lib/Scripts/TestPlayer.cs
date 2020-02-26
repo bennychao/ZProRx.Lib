@@ -4,7 +4,7 @@ using UnityEngine;
 using ZP.Lib;
 using UniRx;
 using ZP.Lib.Unity.RTComponents;
-using ZP.LibUnity;
+using ZP.Lib.Unity;
 
 public enum TaskTypeEnum
 {
@@ -19,6 +19,14 @@ public class TestHoldObject
     public ZProperty<bool> bHolding = new ZProperty<bool>();
 
     public ZEvent<bool> OnHold = new ZEvent<bool>();
+}
+
+[RTAddTriggerComponentClassAttribute(typeof(ZUIClickableItem), ".OnClick")]
+public class TestClickObject
+{
+    public ZProperty<bool> bClick = new ZProperty<bool>();
+
+    public ZEvent OnClick = new ZEvent();
 }
 
 public class TestPlayer 
@@ -42,6 +50,7 @@ public class TestPlayer
     //count
     private ZProperty<int> mine = new ZProperty<int>();
 
+    private ZProperty<int> cardCount = new ZProperty<int>();
 
     //static panel 2
     private ZProperty<ZDateTime> createTime = new ZProperty<ZDateTime>();
@@ -51,6 +60,12 @@ public class TestPlayer
 
     [PropertyDescription("rank", "bloodDes")]
     private ZProperty<ZIntBar> rank = new ZProperty<ZIntBar>();
+
+    private ZProperty<ZIntBar> curIntBar = new ZProperty<ZIntBar>();
+
+    private ZProperty<ZIntBar> timerProgress = new ZProperty<ZIntBar>();
+
+    private ZTimerProperty timerProp = new ZTimerProperty();
     
     private ZProperty<int> progress = new ZProperty<int>();
 
@@ -61,6 +76,8 @@ public class TestPlayer
     private ZProperty<Vector2> curPosition = new ZProperty<Vector2>();
 
     private ZProperty<TestHoldObject> holdObj = new ZProperty<TestHoldObject>();
+
+    private ZProperty<TestClickObject> clickObj = new ZProperty<TestClickObject>();
 
     // input panel
     [PropertyImageRes(ImageResType.LocalRes, "ZProApp/Test/")]
@@ -74,7 +91,7 @@ public class TestPlayer
 
 
     [PropertyLink("cardList")]
-    private ZProperty<int> curSelect = new ZProperty<int>();
+    private ZLinkProperty<int> curSelect = new ZLinkProperty<int>();
 
     [PropertyUIItemRes("ZProApp/Test/TestCardLinkItem", "Root")] //you should create perfab's varient in this folder
     public ZPropertyList<TestCard>  CardList = new ZPropertyList<TestCard>();
@@ -120,7 +137,20 @@ public class TestPlayer
             zMsgs.AddTimer(msg);
 
             holdObj.Value.bHolding.ActiveNode(_);
-        });
+        }).AddTo(disposables);
+
+        clickObj.Value.OnClick.OnEventObservable().Subscribe(_ =>
+        {
+            var msg = ZMsg.Create("msg", $"Click Object {_} !!!");
+            msg.Timer = 2;
+
+            zMsgs.AddTimer(msg);
+            
+        }).AddTo(disposables);
+
+        cardCount.Count(CardList).AddTo(disposables);
+
+        timerProgress.Select(timerProp).AddTo(disposables);
 
     }
 
@@ -148,7 +178,16 @@ public class TestPlayer
             //zMsgs.ActiveNode(true);
         }).AddTo(disposables);
 
-        
+        timerProp.OnEndObservable.Subscribe(_ =>
+        {
+            msg = ZMsg.Create("msg", $"Timer is End");
+            msg.Timer = 2;
+
+            zMsgs.AddTimer(msg);
+        });
+
+        timerProp.Start(10); //Start timer
+
         //onShowCards.OnEventObservable().Subscribe(_ =>
         //{
         //    var view = ZPropertyMesh.CreateObject<TestCardsView>();
@@ -179,6 +218,7 @@ public class TestPlayer
             }).AddTo(disposables);
 
         loadingProgress.Value = 0;
+
         //init the Task
         Task.Value.OnTickObservable.Subscribe(offset =>
         {

@@ -6,8 +6,14 @@
     <FileUpgradeFlags>40</FileUpgradeFlags>
     <UpgradeBackupLocation>D:\Unity\TestUniRX2\Backup\ZP.Lib\</UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <LangVersion>7.3</LangVersion>
+    <PackageProjectUrl>https://github.com/bennychao/ZProRx.Lib/tree/master/ZP.Lib/ZP.Lib.Main</PackageProjectUrl>
+    <Description>ZProRx.Lib Core Framework</Description>
+    <Copyright>BennyChao</Copyright>
+    <PackageReleaseNotes>MIT</PackageReleaseNotes>
+    <RepositoryType>Githup</RepositoryType>
+    <RepositoryUrl>https://github.com/bennychao/ZProRx.Lib</RepositoryUrl>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

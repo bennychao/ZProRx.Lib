@@ -6,9 +6,9 @@ using ZP.Lib.CoreEx.Domain;
 using ZP.Lib.CoreEx;
 using ZP.Lib.Net;
 using ZP.Lib.Common;
-using ZP.Lib.Server.CommonTools;
+using ZP.Lib.Main.CommonTools;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     public static class ObservableWithResponsableExtension
     {
@@ -85,8 +85,8 @@ namespace ZP.Lib.CoreEx.Reactive
             , Action<Exception> onError, Action onCompleted)
         {
             var resultDo = observable as INetResponsable<TResult>;
-            if (resultDo == null)
-                throw new Exception("Result Type is not match");
+            //if (resultDo == null)
+            //    throw new Exception("Result Type is not match");
 
             var ret = observable.Subscribe(a =>
             {
@@ -96,15 +96,15 @@ namespace ZP.Lib.CoreEx.Reactive
                 {
                     var r = func(a);
 
-                    resultDo.SetResult(r);
+                    resultDo?.SetResult(r);
                 }
                 catch (ZNetException e)
                 {
-                    resultDo.SetError(e.Error);
+                    resultDo?.SetError(e.Error);
                 }
                 catch (Exception e)
                 {
-                    resultDo.SetError(e);
+                    resultDo?.SetError(e);
                 }
 
             }, onError, onCompleted);

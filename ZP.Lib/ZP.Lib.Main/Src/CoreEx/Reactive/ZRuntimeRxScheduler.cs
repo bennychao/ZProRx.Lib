@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UniRx;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     internal class ZRuntimeRxScheduler : IScheduler
     {

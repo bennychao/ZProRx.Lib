@@ -4,7 +4,7 @@ using System.Text;
 using UniRx;
 using UniRx.Operators;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
     //linked Subscribe, same as Do Operator, but not need Subscribed
     public class LinkedSubscribeOperator<T> : OperatorObservableBase<T>

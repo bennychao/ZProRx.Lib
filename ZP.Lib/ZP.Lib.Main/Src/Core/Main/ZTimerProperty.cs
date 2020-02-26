@@ -10,19 +10,40 @@ namespace ZP.Lib
     {
         private IDisposable timer = null;
 
+        private Action startOption = null;
         private Action endOption = null;
         private Action<int> tickOption = null;
 
+        public IObservable<Unit> OnStartObservable =>
+            Observable.FromEvent<Action>(h => () => h(), h => startOption += h, h => startOption -= h);
+
+        public IObservable<Unit> OnEndObservable =>
+            Observable.FromEvent<Action>(h => () => h(), h => endOption += h, h => endOption -= h);
+
+        public IObservable<int> OnTickObservable =>
+            Observable.FromEvent<Action<int>, int>(h => a => h(a), h => tickOption += h, removeHandler: h => tickOption -= h);
+
+
         private int period = 1;
 
+        /// <summary>
+        /// Start the Timer
+        /// </summary>
+        /// <param name="deadline">Tick Count, Time run time is deadline * period</param>
+        /// <param name="period">Tick Period (unit: second) </param>
+        /// <returns></returns>
         public ZTimerProperty Start(int deadline, int period = 1)
         {
             Cancel();
+
             this.period = period;
             base.Value = deadline;
             timer = UniRx.Observable.Timer(new System.TimeSpan(0, 0, period)).Repeat().Subscribe(_ => {
                 innerTick();
             });
+
+            if (startOption != null)
+                startOption();
 
             return this;
         }

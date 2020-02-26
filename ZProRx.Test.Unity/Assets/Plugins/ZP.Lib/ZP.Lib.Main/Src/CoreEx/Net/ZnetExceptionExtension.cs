@@ -16,7 +16,9 @@ namespace ZP.Lib.Net
 
         static public bool IsError(this Exception e, ZNetErrorEnum error)
         {
-            return (e as ZNetException<ZNetErrorEnum>)?.Error == error;
+            ZNetErrorEnum convertError;
+            return (e as ZNetException<ZNetErrorEnum>)?.Error == error ||
+                (Enum.TryParse<ZNetErrorEnum>(e.ToString(), out convertError) && convertError == error);
         }
 
         static public bool IsErrorType<TErrorEnum>(this Exception exception)

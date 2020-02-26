@@ -7,7 +7,7 @@ using UniRx;
 using ZP.Lib;
 using ZP.Lib.Core.Domain;
 using ZP.Lib.Server.Test.Entity;
-using ZP.Lib.CoreEx.Reactive;
+using ZP.Lib.CoreEx;
 using ZP.Lib.CoreEx.Domain;
 using ZP.Lib.CoreEx.Status;
 

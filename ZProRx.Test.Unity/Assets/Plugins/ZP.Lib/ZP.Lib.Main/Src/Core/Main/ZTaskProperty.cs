@@ -19,7 +19,11 @@ namespace ZP.Lib
     }
 
     public class ZTaskProperty<TId> : ZProperty<ZTask<TId>>// where T : System.Enum  
-    { }
+    { 
+        public void Start(){
+            this.Value.Start();
+        } 
+    }
 
     public class ZTaskPropertyList<TId> : ZPropertyList<ZTask<TId>> //where T : System.Enum
     {

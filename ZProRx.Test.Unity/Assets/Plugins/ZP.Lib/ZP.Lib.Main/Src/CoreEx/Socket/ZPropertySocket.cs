@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using UniRx;
 using ZP.Lib.Net;
 using ZP.Lib.CoreEx;
-using ZP.Lib.CoreEx.Reactive;
 using ZP.Lib.Core.Domain;
 using ZP.Lib.CoreEx.Tools;
 using ZP.Lib.Common;
 using System.Diagnostics;
+using System.Threading;
 //using ClientResponse = System.Collections.Generic.KeyValuePair<string, string>;
 
 namespace ZP.Lib
@@ -98,18 +98,20 @@ namespace ZP.Lib
                 CompositeDisposable disposables = new CompositeDisposable();
 
                 var multiObserver = MultiObserver<TResult>.Create(observer);
-                var revObservable = ReceivePackage<TResult>(url + $"/{GetClientId}Result");
-                var ret = revObservable.Subscribe(multiObserver).AddTo(disposables);
+
+                var clientIdUrl = GetClientId;
+                var revObservable = ReceivePackage<TResult>(url + $"/{clientIdUrl}Result");
+                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
 
 #if ZP_SERVER
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => recvDisp.Dispose()));
                 TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
-                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
                 // sub = new NetRequestObservable<TResult>(TTPServer.Instance.Subscribe(url));
 #else
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()=> TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()=> recvDisp.Dispose()));
                 TTPClient.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
-                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
                 //sub = new NetRequestObservable<TResult>(TTPClient.Instance.Subscribe(url));
 #endif
                 return disposables;
@@ -134,20 +136,20 @@ namespace ZP.Lib
                 CompositeDisposable disposables = new CompositeDisposable();
 
                 var multiObserver = MultiObserver<TResult>.Create(observer);
-
-                var revObservable = ReceivePackage<TResult>(url + $"/{GetClientId}Result");
-                var ret = revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var clientIdUrl = GetClientId;
+                var revObservable = ReceivePackage<TResult>(url + $"/{clientIdUrl}Result");
+                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
 
 #if ZP_SERVER
 
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => recvDisp.Dispose()));
                 TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
                 //sub = new NetRequestObservable<TResult>(TTPServer.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 #else
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() =>  recvDisp.Dispose()));
                 TTPClient.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
-                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
                 //sub = new NetRequestObservable<TResult>(TTPClient.Instance.Subscribe(url));
 #endif
 
@@ -165,6 +167,8 @@ namespace ZP.Lib
 
             string strQuery = ZPropertyPrefs.ConvertToStr(send);
 
+            var runId = MatrixRuntimeTools.GetRunId();
+
             //NetRequestObservable<TResult> sub = null;
             return Observable.Create<TResult>(observer =>
             {
@@ -172,21 +176,29 @@ namespace ZP.Lib
 
                 var multiObserver = MultiObserver<TResult>.Create(observer);
 
-                var revObservable = ReceivePackage<TResult>(url + $"/{GetClientId}Result");
-                revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var clientIdUrl = GetClientId;
+
+                var revObservable = ReceivePackage<TResult>(url + $"/{clientIdUrl}Result");
+                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
 
 #if ZP_SERVER
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
-                TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() =>
+                {
+                    //TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result");
+                    recvDisp.Dispose();
+                }));
+
+                TTPServer.Instance.SendMsg(url, strQuery)
+                .Subscribe().AddTo(disposables);
 
                 //sub = new NetRequestObservable<TResult>(TTPServer.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 #else
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()  => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()  => recvDisp.Dispose()));
                 TTPClient.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
                 //sub = new NetRequestObservable<TResult>(TTPClient.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 #endif
 
                 return disposables; //support Cancellable
@@ -210,22 +222,24 @@ namespace ZP.Lib
 
                 var multiObserver = MultiObserver<TResult>.Create(observer);
 
+                var clientIdUrl = GetClientId;
                 //Error Type is string
-                var revObservable = ReceivePackage2<TResult>(url + $"/{GetClientId}Result");
-                revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var revObservable = ReceivePackage2<TResult>(url + $"/{clientIdUrl}Result");
+                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
 
 #if ZP_SERVER
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                //TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result")
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => recvDisp.Dispose()));
                 TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
                 //sub = new NetRequestObservable<TResult>(TTPServer.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 #else
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()  => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()  =>  recvDisp.Dispose()));
                 TTPClient.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
                 //sub = new NetRequestObservable<TResult>(TTPClient.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 #endif
 
                 return disposables; //support Cancellable
@@ -250,21 +264,23 @@ namespace ZP.Lib
 
                 var multiObserver = MultiObserver<TResult>.Create(observer);
 
-                var revObservable = ReceivePackage<TResult, TErrorEnum>(url + $"/{GetClientId}Result");
-                revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var clientIdUrl = GetClientId;
+
+                var revObservable = ReceivePackage<TResult, TErrorEnum>(url + $"/{clientIdUrl}Result");
+                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
 
 #if ZP_SERVER
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => recvDisp.Dispose()));
                 TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
                 //sub = new NetRequestObservable<TResult>(TTPServer.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 #else
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()  => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(()  => recvDisp.Dispose()));
                 TTPClient.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
                 //sub = new NetRequestObservable<TResult>(TTPClient.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 #endif
 
                 return disposables; //support Cancellable
@@ -291,23 +307,25 @@ namespace ZP.Lib
             {
                 CompositeDisposable disposables = new CompositeDisposable();
                 var multiObserver = MultiObserver<Unit>.Create(observer);
+                var clientIdUrl = GetClientId;
 
-                var revObservable = ReceivePackage<Unit>(url + $"/{GetClientId}Result");
+                var revObservable = ReceivePackage<Unit>(url + $"/{clientIdUrl}Result");
                 var ret = revObservable.Subscribe(multiObserver).AddTo(disposables);
 
 #if ZP_SERVER
 
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                //TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result")
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => disposables.Dispose()));
                 TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
-                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
                 //sub = new NetRequestObservable<Unit>(TTPServer.Instance.Subscribe(url));
 
 #else
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result")));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => disposables.Dispose()));
                 TTPClient.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
                 //sub = new NetRequestObservable<TResult>(TTPClient.Instance.Subscribe(url));
-                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{GetClientId}Result"));
+                //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
 
 #endif
                 return disposables;
@@ -331,7 +349,7 @@ namespace ZP.Lib
 #else
             sub = new SocketRawRequestObservable(TTPClient.Instance.SubscribeWithClientId(url), url);
 #endif
-            return sub;
+            return sub.ToDisposable(()=> UnSubscribe(url));
         }
 
         static public IObservable<T> ReceiveRaw<T>(string url, Dictionary<string, string> query = null)
@@ -346,7 +364,7 @@ namespace ZP.Lib
 #else
             sub = new NetRequestObservable<T>(TTPClient.Instance.Subscribe(url));
 #endif
-            return sub;
+            return sub.ToDisposable(() => UnSubscribe(url));
         }
 
         static public IObservable<T> ReceiveRaw<T, TResult>(string url, Dictionary<string, string> query = null)
@@ -355,9 +373,15 @@ namespace ZP.Lib
 
 #if ZP_SERVER
             //SocketRawRequestObservable<T, TResult> sub = null;
-            return new SocketRawRequestObservable<T, TResult>(TTPServer.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawRequestObservable<T, TResult>(
+                TTPServer.Instance.SubscribeWithClientId(url)
+                .ToDisposable(() => UnSubscribe(url)), 
+                url);//.ToDisposable(() => UnSubscribe(url));
 #else
-            return new SocketClientRequestObservable<T, TResult> (TTPClient.Instance.Subscribe(url), url);
+            return new SocketClientRequestObservable<T, TResult> (
+                TTPClient.Instance.Subscribe(url)
+                .ToDisposable(() => UnSubscribe(url)), 
+                url);//.ToDisposable(() => UnSubscribe(url));
 #endif
             //return sub;
         }
@@ -387,7 +411,7 @@ namespace ZP.Lib
 #else
             sub = new NetRequestObservable<object>(TTPClient.Instance.Subscribe(url));
 #endif
-            return sub;
+            return sub.ToDisposable(() => UnSubscribe(url));
         }
 
         //param: SocketResponseHub<T, TErrorEnum> 
@@ -398,9 +422,15 @@ namespace ZP.Lib
 
 #if ZP_SERVER
 
-            return new SocketRawPackageAndResponseObservable<T, MultiEnum<ZNetErrorEnum, TErrorEnum>, TResponse>(TTPServer.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable<T, MultiEnum<ZNetErrorEnum, TErrorEnum>, TResponse>(
+                TTPServer.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url))
+                , url);
+            //.ToDisposable(() => UnSubscribe(url));            
 #else
-            return new SocketRawPackageAndResponseObservable<T, MultiEnum<ZNetErrorEnum, TErrorEnum>, TResponse> (TTPClient.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable<T, MultiEnum<ZNetErrorEnum, TErrorEnum>, TResponse> (
+                TTPClient.Instance.SubscribeWithClientId(url)
+                .ToDisposable(() => UnSubscribe(url)), url);
+                //.ToDisposable(()=>UnSubscribe(url));
 #endif
             // return sub;
         }
@@ -413,9 +443,15 @@ namespace ZP.Lib
 
 #if ZP_SERVER
 
-            return new SocketRawPackageAndResponseObservable<T, TResponse>(TTPServer.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable<T, TResponse>(
+                TTPServer.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url))
+                , url);
+            // .ToDisposable(() => UnSubscribe(url));
 #else
-            return new SocketRawPackageAndResponseObservable<T, TResponse>(TTPClient.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable<T, TResponse>(
+                TTPClient.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url)), 
+                url);
+                //.ToDisposable(() => UnSubscribe(url));
 #endif
             // return sub;
         }
@@ -428,9 +464,15 @@ namespace ZP.Lib
 
 #if ZP_SERVER
 
-            return new SocketRawPackageAndResponseObservable<T>(TTPServer.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable<T>(
+                TTPServer.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url))
+                , url);
+            // .ToDisposable(() => UnSubscribe(url));
 #else
-            return new SocketRawPackageAndResponseObservable<T>(TTPClient.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable<T>(
+                TTPClient.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url)), 
+                url);
+                //.ToDisposable(() => UnSubscribe(url));
 #endif
             // return sub;
         }
@@ -443,9 +485,15 @@ namespace ZP.Lib
 
 #if ZP_SERVER
 
-            return new SocketReceiveIRawPackageObservable(TTPServer.Instance.SubscribeWithClientId(url), url);
+            return new SocketReceiveIRawPackageObservable(
+                TTPServer.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url)), 
+                url);
+            // .ToDisposable(() => UnSubscribe(url));
 #else
-            return new SocketReceiveIRawPackageObservable(TTPClient.Instance.SubscribeWithClientId(url), url);
+            return new SocketReceiveIRawPackageObservable(
+                TTPClient.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url)), 
+                url);
+               // .ToDisposable(() => UnSubscribe(url));
 #endif
             // return sub;
         }
@@ -458,9 +506,15 @@ namespace ZP.Lib
 
 #if ZP_SERVER
 
-            return new SocketRawPackageAndResponseObservable(TTPServer.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable(
+                TTPServer.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url))
+                , url);
+            //  .ToDisposable(() => UnSubscribe(url));
 #else
-            return new SocketRawPackageAndResponseObservable(TTPClient.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageAndResponseObservable(
+                TTPClient.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url)), 
+                url);
+               // .ToDisposable(() => UnSubscribe(url));
 #endif
             // return sub;
         }
@@ -473,9 +527,14 @@ namespace ZP.Lib
 
 #if ZP_SERVER
 
-            return new SocketRawPackageObservable(TTPServer.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageObservable(
+                TTPServer.Instance.SubscribeWithClientId(url)
+                .ToDisposable(() => UnSubscribe(url)), 
+                url);
 #else
-            return new SocketRawPackageObservable(TTPClient.Instance.SubscribeWithClientId(url), url);
+            return new SocketRawPackageObservable(
+                TTPClient.Instance.SubscribeWithClientId(url).ToDisposable(() => UnSubscribe(url)), 
+                url);
 #endif
             // return sub;
         }
@@ -498,7 +557,7 @@ namespace ZP.Lib
             var request = ReceiveRaw<NetPackage<T, ZNetErrorEnum>>(url, query);
 
             NetRequestObservable<T, ZNetErrorEnum> sub = new NetRequestObservable<T, ZNetErrorEnum>(request);
-            return sub;
+            return sub;//.ToDisposable(()=> (request as IDisposable)?.Dispose());
         }
 
         static public IObservable<T> ReceivePackage<T, TErrorEnum>(string url, Dictionary<string, string> query = null)
@@ -579,7 +638,7 @@ namespace ZP.Lib
 #else
             sub = new NetRequestObservable<Dictionary<string, object>>(TTPClient.Instance.Subscribe(url));
 #endif
-            return sub;
+            return sub.ToDisposable(()=>UnSubscribe(url));
         }
 
         static public IObservable<bool> RunningObservable  {
@@ -697,6 +756,16 @@ namespace ZP.Lib
             return ret;
         }
 
+        static private void UnSubscribe(string url)
+        {
+#if ZP_SERVER
+            TTPServer.Instance.UnSubscribe(url);
+#else
+            TTPClient.Instance.UnSubscribe(url);
+#endif
+        }
+
+
         [Conditional("DEBUG")]
         static public void FakeConnect(string clientId){
 #if ZP_SERVER
@@ -708,6 +777,15 @@ namespace ZP.Lib
         static public void FakeDisConnect(string clientId){
 #if ZP_SERVER
             TTPServer.Instance.FakeDisConnect(clientId);
+#endif
+        }
+
+        [Conditional("DEBUG")]
+        static public void CheckRecvListenerCount()
+        {
+            Thread.Sleep(300);
+#if ZP_SERVER
+            TTPServer.Instance.CheckRecvListenerCount();
 #endif
         }
 

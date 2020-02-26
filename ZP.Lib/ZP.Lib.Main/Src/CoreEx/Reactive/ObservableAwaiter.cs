@@ -5,7 +5,7 @@ using ZP.Lib.Core.Interface;
 //using UniRx.Async;
 #endif
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
 #if ZP_SERVER
     internal class ObservableAwaiter<T> : IAwaiter<T>

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using UniRx;
 
-namespace ZP.Lib.CoreEx.Reactive
+namespace ZP.Lib.CoreEx
 {
 
     #if ZP_SERVER
@@ -16,11 +16,11 @@ namespace ZP.Lib.CoreEx.Reactive
         /// <typeparam name="T"></typeparam>
         /// <param name="observable"></param>
         /// <returns></returns>
-        internal static ObservableAwaiter<T> GetAwaiter<T>(this IObservable<T> observable){
-            ObservableAwaiter<T> observableAwaiter = new ObservableAwaiter<T>(observable);
+        //internal static ObservableAwaiter<T> GetAwaiter<T>(this IObservable<T> observable){
+        //    ObservableAwaiter<T> observableAwaiter = new ObservableAwaiter<T>(observable);
 
-            return observableAwaiter;
-        }
+        //    return observableAwaiter;
+        //}
 
         /// <summary>
         /// Not Used
@@ -28,13 +28,13 @@ namespace ZP.Lib.CoreEx.Reactive
         /// <typeparam name="T"></typeparam>
         /// <param name="observable"></param>
         /// <returns></returns>
-        internal static Task<T> ToTask<T>(this IObservable<T> observable)
-        {
+        //internal static Task<T> ToTask<T>(this IObservable<T> observable)
+        //{
 
-            return Task.Run<T>(async () => {
-               return  await observable;
-                });
-        }
+        //    return Task.Run<T>(async () => {
+        //       return  await observable;
+        //        });
+        //}
     }
     #endif
 }

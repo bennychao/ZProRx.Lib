@@ -11,10 +11,11 @@ using MQTTnet.Diagnostics;
 using MQTTnet.Protocol;
 using MQTTnet.Server;
 using UniRx;
+using UnityEngine;
+using UnityEngine.Assertions;
 using ZP.Lib;
 using ZP.Lib.CoreEx;
-using ZP.Lib.CoreEx.Reactive;
-using ZP.Lib.Server.CommonTools;
+using ZP.Lib.Main.CommonTools;
 //using ClientResponse = System.Collections.Generic.KeyValuePair<string, string>;
 
 namespace ZP.Lib.Net
@@ -86,12 +87,20 @@ namespace ZP.Lib.Net
 
         public IObservable<string> Subscribe(string topic)
         {
-            var ret = new Subject<string>();
-            var k = new KeyValuePair<string, Subject<string>>(topic, ret);
-            lock (RecvListeners)
+            var listen = RecvListeners.Find(a => string.Compare(topic, a.Key) == 0);
+
+            Subject<string> ret = listen.Value;
+            
+            if (listen.Value == null)
             {
-                RecvListeners.Add(k);
+                ret = new Subject<string>();
+                var k = new KeyValuePair<string, Subject<string>>(topic, ret);
+                lock (RecvListeners)
+                {
+                    RecvListeners.Add(k);
+                }
             }
+
 
             //server need not to Subscribe
             return ret;
@@ -100,12 +109,20 @@ namespace ZP.Lib.Net
         //can return the clientId
         public IObservable<ISocketPackage> SubscribeWithClientId(string topic)
         {
-            var ret = new Subject<ISocketPackage>();
-            var k = new KeyValuePair<string, Subject<ISocketPackage>>(topic, ret);
-            lock (RecvWithClientIdListeners)
+            var listen = RecvWithClientIdListeners.Find(a => string.Compare(topic, a.Key) == 0);
+
+            Subject<ISocketPackage> ret = listen.Value;
+
+            if (listen.Value == null)
             {
-                RecvWithClientIdListeners.Add(k);
+                ret = new Subject<ISocketPackage>();
+                var k = new KeyValuePair<string, Subject<ISocketPackage>>(topic, ret);
+                lock (RecvWithClientIdListeners)
+                {
+                    RecvWithClientIdListeners.Add(k);
+                }
             }
+
 
             //server need not to Subscribe
             return ret;
@@ -116,7 +133,7 @@ namespace ZP.Lib.Net
             lock (RecvWithClientIdListeners)
             {
                 RecvWithClientIdListeners.RemoveAll(a => {
-                    var bFind = string.Compare(a.Key, topic) == 0;
+                    var bFind = string.Compare(a.Key, topic) == 0 && !a.Value.HasObservers;
                     // if (bFind) a.Value.Dispose();
                     return bFind;
                 });
@@ -125,7 +142,7 @@ namespace ZP.Lib.Net
             lock (RecvListeners)
             {
                 RecvListeners.RemoveAll(a => {
-                    var bFind = string.Compare(a.Key, topic) == 0;
+                    var bFind = string.Compare(a.Key, topic) == 0 && !a.Value.HasObservers;
                   //  if (bFind) a.Value.Dispose();
                     return bFind;
                 });
@@ -141,17 +158,34 @@ namespace ZP.Lib.Net
         /// <returns></returns>
         public IObservable<string> SendMsg(string topic, string msg)
         {
+            //create in safe scheduler suit
+            var fakeResp = ServerSocketPackage.CreateFakePackage(topic, msg);
+
             return Observable.Create<string>(observer => {
 
-                bool bLocal = SendFakeMsg(topic, msg) || SendFakeMsgWithId(topic, msg);
+                bool bLocal = SendFakeMsg(topic, msg) || SendFakeMsgWithId(topic, fakeResp);
 
                 if (!bLocal)
-                {                    
+                {
+                    var cancelObserver = observer.ToCancellable();
+
                     Task.Run(async () => {
-                        await PublishAsync(topic, msg);
-                        observer.OnNext("OK");
-                        observer.OnCompleted();
-                    });
+                        if (cancelObserver.Token.IsCancellationRequested)
+                        {
+                            cancelObserver.OnError(new Exception("Canceled"));
+                            cancelObserver.OnCompleted();
+                        }
+                        else
+                        {
+                            await PublishAsync(topic, msg);
+
+                            cancelObserver.OnNext("OK");
+                            cancelObserver.OnCompleted();
+                        }
+
+                    }, cancelObserver.Token);
+
+                    return cancelObserver;
                 }
                 else
                 {
@@ -231,7 +265,6 @@ namespace ZP.Lib.Net
         {
             var listen = RecvWithClientIdListeners.Find(a => MatchTopic(a.Key, topic));
 
-            //add filtter
             var fakeResp = ServerSocketPackage.CreateFakePackage(topic, msg);
 
             Observable.ReturnUnit().Delay(TimeSpan.FromSeconds(0.1)).Subscribe(_ =>
@@ -244,7 +277,19 @@ namespace ZP.Lib.Net
             return listen.Value != null;
         }
 
+        public bool SendFakeMsgWithId(string topic, ISocketPackage fakeResp)
+        {
+            var listen = RecvWithClientIdListeners.Find(a => MatchTopic(a.Key, topic));
 
+            Observable.ReturnUnit().Delay(TimeSpan.FromSeconds(0.1)).Subscribe(_ =>
+            {
+                listen.Value?.OnNext(fakeResp);
+            });
+
+            //            listen.Value?.OnNext(ServerSocketResponse.CreateFakeResponse(topic, msg));
+
+            return listen.Value != null;
+        }
 
         private async Task StartMqttServer()
         {
@@ -419,7 +464,7 @@ namespace ZP.Lib.Net
 
         private void MqttServer_ClientConnected(object sender, MqttClientConnectedEventArgs e)
         {
-            Console.WriteLine($"客户端[{e.ClientId}]已连接，协议版本：");
+            UnityEngine.Debug.LogWarning($"MqttServer_Client   Connected ClientId:[{e.ClientId}]");
             connectedClientId.Add(e.ClientId);
 
             //ConnectListeners.Find((obj) => obj.)
@@ -431,7 +476,7 @@ namespace ZP.Lib.Net
 
         private void MqttServer_ClientDisconnected(object sender, MqttClientDisconnectedEventArgs e)
         {
-            Console.WriteLine($"客户端[{e.ClientId}]已断开连接！");
+           UnityEngine.Debug.LogWarning($"MqttServer_Client  Disconnected ClientId:[{e.ClientId}]");
             connectedClientId.Remove(e.ClientId);
 
             foreach (var c in DisConnectListeners)
@@ -530,6 +575,13 @@ namespace ZP.Lib.Net
         public void Dispose()
         {
             Disconnect();
+        }
+
+        [Conditional("DEBUG")]
+        public void CheckRecvListenerCount()
+        {
+            if (RecvListeners.Count() != 0) throw new Exception("RecvListeners is not Clear");
+            if (RecvWithClientIdListeners.Count() != 0) throw new Exception("RecvListeners is not Clear");
         }
     }
 }

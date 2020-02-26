@@ -12,7 +12,6 @@ using System.Text;
 using System.Net.Security;
 using ZP.Lib.Net;
 using ZP.Lib.CoreEx;
-using ZP.Lib.CoreEx.Reactive;
 
 internal class TTPClient : TTPSingleton<TTPClient>, IConnectable, IDisposable
 {
@@ -83,7 +82,7 @@ internal class TTPClient : TTPSingleton<TTPClient>, IConnectable, IDisposable
             {
                 observer.OnError(new Exception("Is not Connected!!"));
             }
-            return null;
+            return Disposable.Empty;
         });
     }
 

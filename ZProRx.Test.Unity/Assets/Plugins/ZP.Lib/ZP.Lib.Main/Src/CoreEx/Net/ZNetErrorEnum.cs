@@ -47,6 +47,9 @@ namespace ZP.Lib.Net
         UserAlreadyExists,
 
         [EnumStr("")]
+        ClientAlreadyExists,
+
+        [EnumStr("")]
         CustomError,
 
         MaxError = 0x6000

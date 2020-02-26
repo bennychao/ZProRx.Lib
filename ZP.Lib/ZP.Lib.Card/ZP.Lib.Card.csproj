@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>0.7.0.1</AssemblyVersion>
+    <FileVersion>0.7.0.1</FileVersion>
+    <Version>0.7</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Frame\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZP.Lib.Main\ZP.Lib.Server.csproj" />
+  </ItemGroup>
+
+</Project>

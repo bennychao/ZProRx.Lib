@@ -184,6 +184,22 @@
             }
         },
         {
+            "label": "Matrix.Inspector.Run.Debug",
+            "type": "shell",
+            "command": "dotnet",
+            "args": [
+                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Inspector/bin/Debug/netcoreapp2.2/ZP.Matrix.Inspector.dll"
+            ],
+            "group": "test",
+            "options": {
+                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Inspector/bin/Debug/netcoreapp2.2/"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
             "label": "Demo.WebServer.Run.Debug",
             "type": "shell",
             "command": "dotnet",

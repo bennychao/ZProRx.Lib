@@ -636,7 +636,7 @@ namespace ZP.Lib
             //add subs
             if (ZPropertyMesh.IsPropertyListLike(parentProp))
             {
-                rets.AddRange(ZPropertyMesh.GetPropertiesEx(parentProp as IZPropertyList, subs[1]));
+                rets.AddRange(ZPropertyMesh.GetPropertiesEx(parentProp as IEnumerable, subs[1]));
             }
             else if (parentProp.Value != null)
             {

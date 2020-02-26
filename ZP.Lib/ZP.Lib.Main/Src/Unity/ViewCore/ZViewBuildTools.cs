@@ -390,6 +390,11 @@ namespace ZP.Lib
 				var UIItemAttr = ZPropertyAttributeTools.GetAttribute<PropertyUIItemResAttribute> (prop);
 				if (UIItemAttr != null && !ZPropertyMesh.IsPropertyList(prop) && !ZPropertyMesh.IsPropertyRefList(prop)) {
 					item = CreateViewItem (prop, transform);
+
+                    if (bListItem)
+                    {
+                        item.gameObject.name += transform.childCount.ToString();
+                    }
 				} 
 //				else if (prop.AttributeNode.GetAttribute<PropertyBindSelfAttribute> () != null) {
 //					item = transform;
@@ -603,6 +608,9 @@ namespace ZP.Lib
                     //prop.ViewItem = propItem;
                     foreach (var p in propItems)
                     {
+                        if (p.IsBind)
+                            continue;
+
                         if (!p.Bind(prop)) {
                             //delete the bind
                             //prop.ViewItem = null;

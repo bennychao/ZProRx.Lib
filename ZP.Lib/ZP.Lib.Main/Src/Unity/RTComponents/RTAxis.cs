@@ -1,4 +1,5 @@
 ﻿//#if ZP_UNITY_CLIENT
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 namespace ZP.Lib
 {
     //not used
+    [Obsolete("not used")]
     internal static class RTAxis 
     {
         public static Vector3 ToVector3(this Vector2? vec)

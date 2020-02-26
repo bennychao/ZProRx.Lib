@@ -66,7 +66,9 @@
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestBuilder.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestCard.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestCardsView.cs" />
+    <Compile Include="Assets\ZProRx.Lib\Scripts\TestData.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestPlayer.cs" />
+    <Compile Include="Assets\ZProRx.Lib\Scripts\Tools\ZPropertyUnityExtensions.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\UICardItem.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -625,13 +627,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="UniRx.csproj">
-      <Project>{27CA4DA6-5E86-491B-041D-CF17007D821F}</Project>
-      <Name>UniRx</Name>
-    </ProjectReference>
     <ProjectReference Include="ZP.Lib.Main.csproj">
       <Project>{15CD61F4-43A7-94DF-9619-B99AAEECBF42}</Project>
       <Name>ZP.Lib.Main</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniRx.csproj">
+      <Project>{27CA4DA6-5E86-491B-041D-CF17007D821F}</Project>
+      <Name>UniRx</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

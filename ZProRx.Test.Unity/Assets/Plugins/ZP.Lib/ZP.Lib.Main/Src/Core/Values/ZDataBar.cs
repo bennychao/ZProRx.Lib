@@ -1,5 +1,20 @@
-﻿namespace ZP.Lib
+﻿using System;
+
+namespace ZP.Lib
 {
+    public static  class ZDataBarPropertyEx
+    {
+        static public IDisposable Select<ZT>(this ZProperty<ZDataBar> target, ZT source) where ZT : IZProperty<float>
+        {
+           return target.Value.Select(source);
+        }
+
+        static public IDisposable Select<ZT>(this ZProperty<ZDataBar> target, ZT source, ZT max) where ZT : IZProperty<float>
+        {
+            return target.Value.Select(source, max);
+        }
+    }
+
     [PropertyValueChangeAnchorClass(".Max", ".Cur")]
     public class ZDataBar : ICalculable<ZDataBar>
     {
@@ -60,6 +75,27 @@
             Max.Value -= b.Max;
             Cur.Value -= b.Cur;
             return this;
+        }
+
+        public IDisposable Select(IZProperty<float> curProp, IZProperty<float> maxProp)
+        {
+            var retDisp = new MultiDisposable();
+
+            this.Cur.Select(curProp, v => v.Value).AddToMultiDisposable(retDisp);
+
+            this.Max.Select(maxProp, v => v.Value).AddToMultiDisposable(retDisp);
+            return retDisp;
+        }
+
+        public IDisposable Select(IZProperty<float> curProp)
+        {
+            var retDisp = new MultiDisposable();
+
+            this.Cur.Select(curProp, v => v.Value).AddToMultiDisposable(retDisp);
+
+            //this.Max.Select(maxProp, v => v.Value).AddToMultiDisposable(retDisp);
+            this.Max.Value = curProp.Value;
+            return retDisp;
         }
     }
 }
