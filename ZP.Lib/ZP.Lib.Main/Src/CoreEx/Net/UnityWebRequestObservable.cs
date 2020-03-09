@@ -59,7 +59,7 @@ namespace ZP.Lib.CoreEx
             else
             {
                 //Debug.Log(webRequest.downloadHandler.text);
-                observer.OnNext(webRequest.downloadHandler.text);
+                observer.OnNext(webRequest.downloadHandler?.text ?? "");
                 observer.OnCompleted();
             }
         }
@@ -99,7 +99,7 @@ namespace ZP.Lib.CoreEx
             else
             {
                 //Debug.Log(webRequest.downloadHandler.text);
-                observer.OnNext(webRequest.downloadHandler.text);
+                observer.OnNext(webRequest.downloadHandler?.text ?? "");
                 observer.OnCompleted();
             }
         }
@@ -134,7 +134,7 @@ namespace ZP.Lib.CoreEx
             else
             {
                 //Debug.Log(webRequest.downloadHandler.text);
-                observer.OnNext(webRequest.downloadHandler.text);
+                observer.OnNext(webRequest.downloadHandler?.text ?? "");
                 observer.OnCompleted();
             }
         }
@@ -164,13 +164,16 @@ namespace ZP.Lib.CoreEx
             else
             {
                 //Debug.Log(webRequest.downloadHandler.text);
-                observer.OnNext(webRequest.downloadHandler.text);
+                observer.OnNext(webRequest.downloadHandler?.text ?? "");
                 observer.OnCompleted();
             }
         }
 
         static void InitHeaders(UnityWebRequest webRequest, Dictionary<string, string> headers)
         {
+            if (headers == null)
+                return;
+
             foreach (var v in headers)
             {
                 webRequest.SetRequestHeader(v.Key, v.Value);

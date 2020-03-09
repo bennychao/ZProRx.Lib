@@ -273,7 +273,7 @@ namespace ZP.Lib
         /// </summary>
         /// <param name="prop">Property.</param>
         /// <param name="transform">Transform.</param>
-        static public void BindEvent(IZEvent prop, Transform transform = null)
+        static internal void BindEvent(IZEvent prop, Transform transform = null)
         {
             var attr = prop.AttributeNode.GetAttribute<EventMethodAttribute>();
             if (attr == null ||(attr != null && EventMethod.OnClick.Contains(attr.Method)))
@@ -457,7 +457,7 @@ namespace ZP.Lib
             return true;
         }
 
-        static public bool BindMultiProperty(IZProperty prop, string multiPropId, Transform transform = null, List<string> groups = null)
+        static internal bool BindMultiProperty(IZProperty prop, string multiPropId, Transform transform = null, List<string> groups = null)
         {
             Transform item = null;
             var secAttr = prop.AttributeNode.GetAttribute<PropertySecondPropertyAttribute>();
@@ -850,7 +850,7 @@ namespace ZP.Lib
         }
 
         //[TODO]
-        static public void BindCompoent(IZProperty property, Transform transform)
+        static internal void BindCompoent(IZProperty property, Transform transform)
         {
             var attribute = ZPropertyAttributeTools.GetAttribute<PropertyBindCompoentAttribute>(property);
 

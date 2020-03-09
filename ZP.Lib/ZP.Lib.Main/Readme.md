@@ -417,22 +417,12 @@ public static class ZViewCommonObject{
 
 
 ## Net 网络
-包括Socket 和Http的支持。
+包括Socket 和Http的封装支持。
 
 ### Socket Support
-包使用的共通的NetPackage包结构，其模板使用可以用于扩展支持自定义的数据。
 使用Topic进行消息的发送与订阅，分为客户端与Server端两种情况。
-客户端订阅一个消息时，是否加上ClientId为Topic的一部分
-从Socket层来说，其ClientId是透明的。需要应用进行封装与控制。
+数据包使用的共通的`NetPackage`结构，其模板使用可以用于扩展支持自定义的数据。
 
-接口格式如下：
-Post[Package] 用于异步发送，支持错误返回，即发送失败。比如网络异常等。其返回值不表示接收者已经接收。
-Send[Package] 用于同步发送，并接收返回值。
-Receive[Package/RawPackage(SocketPackageHub)/LowSocketPackage][AndResponse]
-
-- RawString 发送普通字符串
-- Package 是ZP格式的数据包，格式如下，如果其支持Response时，内部是使用串行返回的。
-- AndResponse 表示接收到之后可以进行返回。返回值支持`ZNull`，其不会占用传输的Size，但其表达接收到返回值，常常用于回应。
 ```csharp
     public class NetPackage<T, TErrorEnum> // where TErrorEnum : System.Enum
     {
@@ -443,8 +433,39 @@ Receive[Package/RawPackage(SocketPackageHub)/LowSocketPackage][AndResponse]
         private Dictionary<string, string> headers = new Dictionary<string, string>();
     }
 ```
-- RawPackage 即(SocketPackage)，是指带有ClientID的Package包。如果其支持Response，那么内部是使用的并行返回的。
+
+Demo如下：
+```csharp
+    var propObser = ZPropertySocket.ReceivePackage<TestPropData>("topic/multisubscribe");
+
+    propObser.Subscribe(str =>
+    {
+        //... do something
+    }).AddTo(disposables);
+
+    ZPropertySocket.PostPackage<TestPropData>("topic/multisubscribe", data).Subscribe();
+```
+
+注意：
+客户端订阅一个消息时，会加上ClientId为Topic的一部分。
+从Socket层来说，其ClientId是透明的。需要应用进行封装与控制。
+
+### 接口格式如下：
+
+1. 发送消息
+Post[Package] 用于异步发送，支持错误返回，即发送失败。比如网络异常等。其返回值不表示接收者已经接收。
+Send[Package] 用于同步发送，并接收返回值。
+
+2. 接收消息
+Receive[Raw/Package/RawPackage(SocketPackageHub)/LowSocketPackage][AndResponse]
+
+消息类型如下：
+- Raw 发送普通字符串
+- Package 是ZP格式的数据包，格式如下，如果其支持Response时，内部是使用串行返回的。
+- PackageAndResponse 表示接收到之后可以进行返回。返回值支持`ZNull`，其不会占用传输的Size，但其表达接收到返回值，常常用于回应。
+- RawPackage 即接收`SocketPackage`包，是指带有ClientID的Package包。如果其支持Response，那么内部是使用的并行返回的。
 - RawPackageAndResponse 接收端可以获取到`SocketPackageHub` 其包括`ISocketPackage` 原始数据包，和封装的NetPackage包，可以获取额外的客户端内容。比如ClientId等。
+
 ```csharp
     public interface ISocketPackage
     {
@@ -456,20 +477,23 @@ Receive[Package/RawPackage(SocketPackageHub)/LowSocketPackage][AndResponse]
 - LowSocketPackage 以接口的返回 `ISocketPackage`包，用户可以根据需求自己进行Package的解析，当然与需要发送端协商一致。
   这里要注意与上面的RawPackage 和 RawPackageAndResponse 返回的是不同的，即返回的直接的 `ISocketPackage`包，需要自行进行数据包的解析。
 
-SocketObservable
+### SocketObservable 
+以上可以看到ZProRX 对于Socket的处理也是反映式的。
+
+其中使用的核心类如下（对于调用者是透明的）
 Socket[RawRequest/Request/Package/RawPackage(SocketPackage)]Observable
 - Request 用于通用的请求
 - Package 用于Receive请求
 
-返回IObservable 
-支持取消功能，调用Dispose方法会进行反注册等取消操作。
-对于调用
+返回IObservable<TTT>，其好处是，支持取消功能，调用Dispose方法会进行反注册等取消操作。
+支持Retry/Delay等Operator 相关的操作
+
 
 #### T 参数
-对于带Package的API，都对应对应的几套模板，
-基本包括：
+支持接收Package的API，都对应的四套模板用于处理不同的参数形式（接收以及返回的数据格式），基本包括：
+
 - `无`
-其中无参数的即以`IRawDataRef`去接收数值，应用根据 GetData<T>方法获取到对应的数据。
+其中无参数的即以`IRawDataRef`去接收数值，返回IObservable<IRawDataRef>，应用根据 GetData<T>方法获取到对应的数据。
 
 ```csharp
     (IRawDataPref rawData, ISocketPackage rawPack) => {
@@ -486,14 +510,28 @@ Socket[RawRequest/Request/Package/RawPackage(SocketPackage)]Observable
         return true;
     });
 ```
-- <T> 目前未支持实现，所对应的功能 [TODO]
+- <T> 
 - <T, TResult>
 - <T, TError,TResult>
 
 以上不同的层次，可以进一步明确接收参数、回应返回值参数、回应可能出现的错误
-<T, TResult> 时 对应可能的错误值为 ZNetErrorEnum
+<T, TResult> 时对应可能的错误值为 ZNetErrorEnum
 
 <T, TError,TResult> 时，错误值为自定义参数类型，通过[MultiEnum] 方法对ZNetErrorEnum进行兼容。
+
+参考定义如下：
+```csharp
+    public enum TestErrorEnum
+    {
+        //must start form ZNetErrorEnum.MaxError
+        BaseError = ZNetErrorEnum.MaxError + 0x100,
+        Error1,
+        Error2,
+        Error3,
+        Error4,
+    }
+```
+必须从ZNetErrorEnum.MaxError开始定义。
 
 **注意**
 对于无参数的方式，其优点是有很强的通用性，但是以牺牲是一定的性能（需要转换多次）以及可读性。
@@ -503,6 +541,35 @@ SendPackage的API要简化许多，这里只有<T, TResult>  和<T, TError,TResu
 对于没有明确返回错误模板参数的，在处理中返回自定义错误也是可以的，这时要使用 `SendPackage2<T, TResult>` 进行接收返回值，其可以接收所有异常，其异常类型为ZNetException<string>。
 `SendPackage<T, TResult>`其只能接收并抛出 ZNetErrorEnum 异常值，如果Server端返回其它异常，Server端会直接抛出，而Client端无法接收到返回值了。
 当然`SendPackage2<T, TResult>`也同样是有一定的性能损耗。
+
+```csharp
+    //test for common TError
+    disp = ZPropertySocket.ReceivePackageAndResponse<TestPropData, bool>("topic/responseCustomError", null).
+        Subscribe(             //< TestPropData, bool> support return 
+        (TestPropData a1) => {
+            Assert.IsTrue(string.Compare(a1.name.Value, "testobjectname") == 0);
+
+            //throw new Exception(""); 
+            throw new ZNetMultiException<TestErrorEnum>(TestErrorEnum.Error1);
+
+            return true;
+        }).AddTo(disposables);
+
+    ZPropertySocket.SendPackage2<TestPropData, bool>("topic/responseCustomError", data)
+    .Subscribe(bRet =>
+    {
+        taskEnd.Value = true;
+        //Assert.IsTrue(bRet);
+    }, error =>
+    {
+        //Assert.IsTrue((error as ZNetException<ZNetErrorEnum>).Error == ZNetErrorEnum.ActionError);
+        Assert.IsTrue(error.IsMultiError<TestErrorEnum>(TestErrorEnum.Error1));
+        taskEnd.Value = true;
+    });
+```
+
+TestErrorEnum 为自定义的枚举错误类型。
+
 
 推荐使用ZException进行统一接收以及Rx的Catch操作。以下是Ignore一个异常。
 ```csharp
@@ -535,7 +602,7 @@ Receive API 不支持Retry
 #### Reactive 
 
 以下都是ZRropertySocket.Socket/Net
-Receive[Package/RawPackage(SocketPackage)/IRawPackage][AndResponse]
+Receive[Raw/Package/RawPackage(SocketPackage)/LowRawPackage][AndResponse]
 
 
 如下所示：对于Receive Package 支持的反映式的处理方法。
@@ -545,7 +612,6 @@ Receive[Package/RawPackage(SocketPackage)/IRawPackage][AndResponse]
 主要的订阅包括：
 ```csharp
 IObservable<T>
-
 INetResponsable<TResult>
 INetResponsable<TResult, TError>
 INetResponsable<IRawDataPref>
@@ -558,7 +624,6 @@ RawPackage 的支持
  包括的订阅：
 ```csharp
 IObservable<SocketPackageHub<T>>
-
 IRawPackageObservable<IRawDataPref>
 IRawPackageObservable<T, TError>
 IRawPackageObservable<T>
@@ -590,13 +655,18 @@ public enum RoomErrorEnum
 
 **注意事项**
 
-对网络等返回Observable的API是不支持Await的，因为接收到个消息后，不会触发Completed事件。
+对网络等返回Observable的API是不支await的，因为接收到个消息后，不会触发Completed事件。
 如:
 `ZPropertyNet.Post/Get/Put`
 
 如果一定直接使用它们，并需要进行Await的话，需要调用Fetch操作。
 对于整体ZPropertySocket 的API也都是同样的问题。
 类似的还有一些带有连续的消息，也都只有Completed时才能Await返回。
+
+
+### Web
+
+
 
 -----------------------------------------------
 
@@ -684,6 +754,11 @@ ZP框架中基于其的应用，比如`ZUIPropertyListItem` 已经加了锁，�
 
 	#define ZP_M2MQTT // MQTT Client support
 	#define ZP_MQTTNET // for MQTT Server
+
+
+### 发布
+使用如下nuget 命令进行发布
+dotnet pack .\ZP.Lib.Server.csproj -p:NuspecFile=.\ZP.Lib.Server.nuspec
 
 
 [返回ZP.Lib](../Readme.md)

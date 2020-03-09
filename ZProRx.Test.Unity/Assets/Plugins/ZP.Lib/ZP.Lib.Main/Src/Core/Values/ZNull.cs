@@ -29,6 +29,10 @@ namespace ZP.Lib
             return false;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is ZNull;
+        }
 
 
         public bool Equals(ZNull other)

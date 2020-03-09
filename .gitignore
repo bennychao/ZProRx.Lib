@@ -33,6 +33,7 @@ bld/
 [Ll]ogs/
 [Tt]emp
 
+*/Assets/ZProRx.Lib/TestServer/
 
 # plugin generate code
 #*/Assets/Plugins/ZP.Lib/

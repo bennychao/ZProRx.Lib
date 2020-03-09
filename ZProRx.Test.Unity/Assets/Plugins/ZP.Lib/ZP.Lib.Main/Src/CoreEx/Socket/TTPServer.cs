@@ -82,7 +82,7 @@ namespace ZP.Lib.Net
             SubjectComplete();
 
             Task.Run(async () => { await EndMqttServer_2_7_5(); });
-            Console.WriteLine("MQTT服务已停止！");
+            Console.WriteLine("TTPServer End");
         }
 
         public IObservable<string> Subscribe(string topic)
@@ -317,7 +317,7 @@ namespace ZP.Lib.Net
 
                 await Task.Run(async () => { await mqttServer.StartAsync(optionsBuilder.Build()); });
                 //mqttServer.StartAsync(optionsBuilder.Build());
-                Console.WriteLine("MQTT服务启动成功！");
+                Console.WriteLine("TTPServer Start!!");
             }
         }
 
@@ -389,7 +389,7 @@ namespace ZP.Lib.Net
             }
             else
             {
-                Console.WriteLine("mqttserver=null");
+                //Console.WriteLine("mqttserver=null");
             }
         }
 
@@ -582,6 +582,13 @@ namespace ZP.Lib.Net
         {
             if (RecvListeners.Count() != 0) throw new Exception("RecvListeners is not Clear");
             if (RecvWithClientIdListeners.Count() != 0) throw new Exception("RecvListeners is not Clear");
+        }
+
+        [Conditional("DEBUG")]
+        public void CheckRecvListenerCount(int recvCount, int recvWithIdCount)
+        {
+            if (RecvListeners.Count() != recvCount) throw new Exception("RecvListeners is not Clear");
+            if (RecvWithClientIdListeners.Count() != recvWithIdCount) throw new Exception("RecvListeners is not Clear");
         }
     }
 }

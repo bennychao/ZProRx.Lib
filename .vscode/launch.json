@@ -36,7 +36,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Actress/bin/Debug/netcoreapp2.2/ZP.Matrix.Actress.dll",
+            "program": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Actress/bin/Debug/netcoreapp3.1/ZP.Matrix.Actress.dll",
             "args": [],
             "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Actress",
             "stopAtEntry": false,

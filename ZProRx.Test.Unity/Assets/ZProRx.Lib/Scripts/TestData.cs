@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ZP.Lib.Net;
 
 namespace ZP.Lib.Matrix.Test.Entity
 {
@@ -10,6 +11,16 @@ namespace ZP.Lib.Matrix.Test.Entity
         Command2,
         Command3,
         Command4
+    }
+
+
+    public enum TestErrorEnum
+    {
+        BaseError = ZNetErrorEnum.MaxError + 0x100,
+        Error1,
+        Error2,
+        Error3,
+        Error4,
     }
 
     public class TestRet
@@ -32,4 +43,9 @@ namespace ZP.Lib.Matrix.Test.Entity
         public ZProperty<string> msg = new ZProperty<string>();
     }
 
+    public class TestData
+    {
+        public ZProperty<string> testData = new ZProperty<string>();
+        public ZProperty<int> testNum = new ZProperty<int>();
+    }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ZP.Lib.Standard.Tools
+namespace ZP.Lib.Standard
 {
     public class ListenConfigurationBgTask : BackgroundService
     {

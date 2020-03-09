@@ -172,11 +172,11 @@
             "type": "shell",
             "command": "dotnet",
             "args": [
-                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Architect/bin/Debug/netcoreapp2.2/ZP.Matrix.Architect.dll"
+                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Architect/bin/Debug/netcoreapp3.1/ZP.Matrix.Architect.dll"
             ],
             "group": "test",
             "options": {
-                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Architect/bin/Debug/netcoreapp2.2/"
+                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Architect/bin/Debug/netcoreapp3.1/"
             },
             "presentation": {
                 "reveal": "always",
@@ -188,11 +188,11 @@
             "type": "shell",
             "command": "dotnet",
             "args": [
-                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Inspector/bin/Debug/netcoreapp2.2/ZP.Matrix.Inspector.dll"
+                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Inspector/bin/Debug/netcoreapp3.1/ZP.Matrix.Inspector.dll"
             ],
             "group": "test",
             "options": {
-                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Inspector/bin/Debug/netcoreapp2.2/"
+                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Inspector/bin/Debug/netcoreapp3.1/"
             },
             "presentation": {
                 "reveal": "always",
@@ -204,11 +204,11 @@
             "type": "shell",
             "command": "dotnet",
             "args": [
-                "${workspaceFolder}/ZP.WebServer.Demo/bin/Debug/netcoreapp2.2/ZP.WebServer.Demo.dll"
+                "${workspaceFolder}/ZP.WebServer.Demo/bin/Debug/netcoreapp3.1/ZP.WebServer.Demo.dll"
             ],
             "group": "test",
             "options": {
-                "cwd": "${workspaceFolder}/ZP.WebServer.Demo/bin/Debug/netcoreapp2.2/"
+                "cwd": "${workspaceFolder}/ZP.WebServer.Demo/bin/Debug/netcoreapp3.1/"
             },
             "presentation": {
                 "reveal": "always",
@@ -220,12 +220,12 @@
             "type": "shell",
             "command": "dotnet",
             "args": [
-                "${workspaceFolder}/ZP.Server.Demo/bin/Debug/netcoreapp2.2/ZP.Server.Demo.dll",
+                "${workspaceFolder}/ZP.Server.Demo/bin/Debug/netcoreapp3.1/ZP.Server.Demo.dll",
                 "'{\"\"WorkerParam\"\":\"\"run\"\",\"\"Port\"\":5050,\"\"UnitType\"\":\"\"hall\"\",\"\"Count\"\":2}'"
             ],
             "group": "test",
             "options": {
-                "cwd": "${workspaceFolder}/ZP.Server.Demo/bin/Debug/netcoreapp2.2/"
+                "cwd": "${workspaceFolder}/ZP.Server.Demo/bin/Debug/netcoreapp3.1/"
             },
             "presentation": {
                 "reveal": "always",
@@ -237,11 +237,11 @@
             "type": "shell",
             "command": "dotnet",
             "args": [
-                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp2.2/ZP.Matrix.${input:matrixcomponent}.dll"
+                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp3.1/ZP.Matrix.${input:matrixcomponent}.dll"
             ],
             "group": "test",
             "options": {
-                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp2.2/"
+                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp3.1/"
             },
             "presentation": {
                 "reveal": "always",
@@ -253,11 +253,11 @@
             "type": "shell",
             "command": "dotnet",
             "args": [
-                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp2.2/ZP.Matrix.${input:matrixcomponent}.dll"
+                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp3.1/ZP.Matrix.${input:matrixcomponent}.dll"
             ],
             "group": "test",
             "options": {
-                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp2.2/"
+                "cwd": "${workspaceFolder}/ZP.Matrix/ZP.Matrix.${input:matrixcomponent}/bin/Debug/netcoreapp3.1/"
             },
             "presentation": {
                 "reveal": "always",

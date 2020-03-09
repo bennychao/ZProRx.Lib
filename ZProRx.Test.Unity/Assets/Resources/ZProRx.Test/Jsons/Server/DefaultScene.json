@@ -1,0 +1,13 @@
+{
+    "ZServerScene.Name":"DefaultScene",
+    "ZServerScene.Objects":[
+        {
+            "GameObject.InName": "Root",
+            "GameObject.InTransform":{
+                "ZTransform3.Position": {"x":0.0, "y":0.0, "z":0.0},
+                "ZTransform3.Rotation": {"x":0.0, "y":0.0, "z":0.0, "w":1.0}
+            }
+        }
+
+    ]
+}

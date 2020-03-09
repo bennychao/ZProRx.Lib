@@ -15,19 +15,22 @@ using ZP.Lib.CoreEx;
 namespace ZP.Lib.Net
 {
     //user for server to send httpwebrequest, Call by ZPropertyNet
-    internal class HTTPClient : TTPSingleton<HTTPClient>, IConnectable
+    internal class HTTPClient : TTPSingleton<HTTPClient>, IConnectable, INetHttpEngine
     {
         static private float TimeOut = 10;
 
         private List<KeyValuePair<string, Subject<string>>> RecvListeners = new List<KeyValuePair<string, Subject<string>>>();
 
+        public HttpClient Client { get; set; }
+
         public HTTPClient()
         {
             //[TODO]
             //ObservableMap<string> map = new ObservableMap<string>();
-            //map.CreateObserver(url)
-            
+            //map.CreateObserver(url)            
         }
+
+
         public void Connect()
         {
             //do nothing

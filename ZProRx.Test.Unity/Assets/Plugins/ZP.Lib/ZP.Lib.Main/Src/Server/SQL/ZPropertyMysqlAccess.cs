@@ -431,7 +431,7 @@ namespace ZP.Lib.Server.SQL
                 }
                 catch (Exception e)
                 {
-                    Debug.Log("no column");
+                    Debug.Log("no column " + e.ToString());
                 }
             }
 

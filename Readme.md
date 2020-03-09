@@ -24,6 +24,42 @@ Unity工程目前要求是要与ZP.Lib在同一目录下，
 
 ## Release Note
 
+### [v1.0.5]
+
+[2020-03-09]
+发布ZProRx.Lib 1.0.5 版本
+
+变更内容：
+1. 开源ZP.Lib.Standard 是Soc应用与Web应用的共通底层库，只依赖以Standard 2.0 目前集成了配置服务Nacos（阿里开源配置框架）。
+2. 开源ZP.Lib.NetCore 提供了用于NetCore下的一些扩展，更方便在NetCore上使用的ZProxRx。主要用于基于NetCore的控制台应用开发。
+3. 开源ZP.Lib.Web 用于提供Http后端的ZP共通库。主要用于基于NetCore的Web 应用开发。
+4. 追加ZProRx.Test.Web Demo 用于提供Web应用的Demo,可以与ZProRx.Test.Unity中的场景进行联动
+5. ZProRx.Test.Unity 追加两个Test场景：TestSocketStage 和 TestWebStage，详细参考 [ZProRx.Lib.Readme](./ZProRx.Test.Unity/Assets/ZProRx.Lib/Readme.md)
+6. Bug修改参考 ZP.Lib.Server DevLog.md BugList 46+
+
+主要包括：
+1. ZP.Lib.Main 1.0.5 (ZP.Lib.Server)
+   ZProRx框架核心包发布，包括：ZP的基础设施（构建、访问、池化、持久化、关系）基于ZP的反映式框架、网络框架、后端框架、Unity可视化分离架构等。
+   详细说明请参数：
+   https://github.com/bennychao/ZProRx.Lib/blob/master/ZP.Lib/ZP.Lib.Main/Readme.md
+
+   下载安装：
+  - .Net CLI
+  `>dotnet add package ZP.Lib.Server --version 1.0.5`
+  - 或 VS 2019 Nuget 包管理中搜索"ZP.Lib.Server"并安装（推荐）
+  
+2. ZProRx.Lib Plugin 1.0.5
+   下载地址：
+   https://github.com/bennychao/ZProRx.Lib/releases/
+   https://github.com/bennychao/ZProRx.Lib/Publish/ZProRx.Lib.package
+   https://assetstore.unity.com/ 中 搜索 ZProRx.Lib
+
+
+3. ZProRx.Test.Unity 案例
+    源码地址：https://github.com/bennychao/ZProRx.Lib/ZProRx.Test.Unity
+
+
+
 ### [v1.0.4]
 
 [2020-02-26]

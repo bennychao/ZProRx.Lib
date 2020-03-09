@@ -25,9 +25,13 @@ namespace ZP.Lib
 
 		static public void LoadFromStr(object obj, string strData)
 		{
-			prefs.LoadFromStr(obj, strData);
+            if (!string.IsNullOrEmpty(strData))
+            {
+                prefs.LoadFromStr(obj, strData);
 
-			ZPropertyMesh.InvokeLoadMethod (obj);
+                ZPropertyMesh.InvokeLoadMethod(obj);
+            }
+
 		}
 
         static public void LoadValueFromStr(IZProperty p, string path)

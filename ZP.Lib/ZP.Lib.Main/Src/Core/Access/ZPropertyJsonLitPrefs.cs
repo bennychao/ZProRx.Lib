@@ -46,6 +46,9 @@ namespace ZP.Lib
 
         public void LoadFromStr(object obj, string strData)
         {
+            if (string.IsNullOrEmpty(strData))
+                return;
+
             JsonData data = JsonMapper.ToObject(strData);
             if (data.Count <= 0)
                 throw new Exception("JsonReadError");
@@ -56,6 +59,9 @@ namespace ZP.Lib
 
         public void LoadValueFromStr(IZProperty property, string strData)
         {
+            if (string.IsNullOrEmpty(strData))
+                return;
+
             JsonData data = JsonMapper.ToObject(strData);
             if (data.Count <= 0)
                 throw new Exception("JsonReadError");
@@ -110,8 +116,6 @@ namespace ZP.Lib
 
         void ConvertProperty(IZProperty p, JsonData data1)
         {
-
-
             if (ZPropertyMesh.IsPropertyList(p))
             {
                // var data1 = data[p.PropertyID];

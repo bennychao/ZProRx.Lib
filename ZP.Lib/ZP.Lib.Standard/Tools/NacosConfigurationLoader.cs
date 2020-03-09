@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZP.Lib.Server.Tools;
 
-namespace ZP.Lib.Standard.Tools
+namespace ZP.Lib.Standard
 {
     public class NacosConfigurationLoader
     {

@@ -17,6 +17,7 @@
 13. [v0.8] Host Map 需要通过Configuration文件进行导入，目前只支持了一个(localhost)。
 14. [v0.8] 需要对应各UI的Description的功能。
 15. [v0.8] 需要支持Channel Action的串行的标签。
+16. [v1.0.6] Web 也应该支持类似SendPackage2这种，以String为Error的通用错误处理。
 
 #### 目前问题
 1. [Fixed]ZNetErrorEnum 等RX对象的错误处理未完善。可以通过UniRx的.Catch方法进行接收。
@@ -169,6 +170,8 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 45. [Deferred][v1.0]BindProperty 目前使用的tran.name.Contains(prop.SimplePropertyID) 用于比较匹配，会有问题。
 
 46. UpdateValue 有一些个别的ViewItem中对UpdateValue还不是保证在UI线程上调用的。
+
+47. HTTPClient 中的 RecvListeners 还没有考虑线程安全的问题。
 
 ------------------
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ZP.Lib.Server.Tools;
 using ZP.Lib.Standard.Entity;
 
-namespace ZP.Lib.Standard.Tools
+namespace ZP.Lib.Standard
 {
     public static class NacosConfigurationExtensions
     {

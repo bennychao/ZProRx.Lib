@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 16
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZP.Lib.Main", "ZP.Lib.Main.csproj", "{15CD61F4-43A7-94DF-9619-B99AAEECBF42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniRx", "UniRx.csproj", "{27CA4DA6-5E86-491B-041D-CF17007D821F}"

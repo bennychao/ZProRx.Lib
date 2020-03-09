@@ -19,6 +19,22 @@ namespace ZP.Lib
         //static public string IP = "";
         static private string token = "";
 
+        static private INetHttpEngine httpEngine = null;
+
+        static ZPropertyNet()
+        {
+#if ZP_SERVER
+            httpEngine = HTTPClient.Instance;
+#else
+            httpEngine = new UnityHTTPClient();
+#endif
+        }
+
+        static public void ConfigEngine(INetHttpEngine newEngine)
+        {
+            httpEngine = newEngine;
+        }
+
         //WWW is support https
         static public IObservable<TResult> Login<TResult>(string url, Dictionary<string, string> query = null)
         {
@@ -47,11 +63,13 @@ namespace ZP.Lib
 
             //headers["Content-Type"] = "application/json;charset=utf-8";
 
-#if ZP_SERVER
-            request = HTTPClient.Instance.Delete(ip + strQuery);
-#else
-            request = UnityWebRequestObservable.Delete(ip + strQuery, headers);
-#endif
+            //#if ZP_SERVER
+            //            request = HTTPClient.Instance.Delete(ip + strQuery);
+            //#else
+            //            request = UnityWebRequestObservable.Delete(ip + strQuery, headers);
+            //#endif
+
+            request = httpEngine.Delete(ip + strQuery);
 
             NetRequestObservable sub = new NetRequestObservable(request);
 
@@ -76,12 +94,15 @@ namespace ZP.Lib
 
             //headers["Content-Type"] = "application/json;charset=utf-8";
 
-#if ZP_SERVER
+            //#if ZP_SERVER
 
-            request = HTTPClient.Instance.Get(ip + strQuery);
-#else
-             request = ObservableWWW.Get(ip + strQuery, headers);
-#endif
+            //            request = HTTPClient.Instance.Get(ip + strQuery);
+            //#else
+            //             request = ObservableWWW.Get(ip + strQuery, headers);
+            //#endif
+
+            request = httpEngine.Get(ip + strQuery);
+
             NetRequestObservable<T> sub = new NetRequestObservable<T>(request);
             return sub;
         }
@@ -100,12 +121,15 @@ namespace ZP.Lib
 
             //headers["Content-Type"] = "application/json;charset=utf-8";
 
-#if ZP_SERVER
+            //#if ZP_SERVER
 
-            request = HTTPClient.Instance.Get(ip + strQuery, headers);
-#else
-            request = ObservableWWW.Get(ip + strQuery, headers);
-#endif
+            //            request = HTTPClient.Instance.Get(ip + strQuery, headers);
+            //#else
+            //            request = ObservableWWW.Get(ip + strQuery, headers);
+            //#endif
+            request =  httpEngine.Get(ip + strQuery, headers);
+
+
             NetRequestObservable sub = new NetRequestObservable(request);
             return sub;
         }
@@ -118,12 +142,14 @@ namespace ZP.Lib
             IObservable<string> request = null;
             var ip = HostMap.ConvertURL(url);
 
-#if ZP_SERVER
+            //#if ZP_SERVER
 
-            request = HTTPClient.Instance.Get(ip + strQuery, headers);
-#else
-            request = ObservableWWW.Get(ip + strQuery, headers);
-#endif
+            //            request = HTTPClient.Instance.Get(ip + strQuery, headers);
+            //#else
+            //            request = ObservableWWW.Get(ip + strQuery, headers);
+            //#endif
+            request = httpEngine.Get(ip + strQuery, headers);
+
             return request;
         }
 
@@ -161,21 +187,25 @@ namespace ZP.Lib
 
             headers["Content-Type"] = "application/json;charset=utf-8";
 
-#if ZP_SERVER
             var data = ZPropertyPrefs.ConvertToStr(obj);
-            request = HTTPClient.Instance.Post(ip + strQuery, data, headers);
-#else
-            //Unity's HTTP Client 
-            //WWWForm form = new WWWForm();
-            //form.AddField("data", data);
 
-            var data = obj != null ? ZPropertyPrefs.ConvertToStr(obj) : " ";
+            //#if ZP_SERVER
+            //            
+            //            request = HTTPClient.Instance.Post(ip + strQuery, data, headers);
+            //#else
+            //            //Unity's HTTP Client 
+            //            //WWWForm form = new WWWForm();
+            //            //form.AddField("data", data);
 
-            byte[] byteData = Encoding.UTF8.GetBytes(data);
+            //            var data = obj != null ? ZPropertyPrefs.ConvertToStr(obj) : " ";
 
-            request = ObservableWWW.Post(ip + strQuery, byteData, headers);
-#endif
-            
+            //            byte[] byteData = Encoding.UTF8.GetBytes(data);
+
+            //            request = ObservableWWW.Post(ip + strQuery, byteData, headers);
+            //#endif
+
+            request = httpEngine.Post(ip + strQuery, data, headers);
+
             NetRequestObservable<RetT> sub = new NetRequestObservable<RetT>(request);
 
             return sub;
@@ -200,18 +230,20 @@ namespace ZP.Lib
 
             headers["Content-Type"] = "application/json;charset=utf-8";
 
-#if ZP_SERVER
+            //#if ZP_SERVER
 
 
-            request = HTTPClient.Instance.Post(ip + strQuery, data, headers);
-#else
+            //            request = HTTPClient.Instance.Post(ip + strQuery, data, headers);
+            //#else
 
-            //WWWForm form = new WWWForm();
-            //form.AddField("data", data);
-            byte[] byteData = Encoding.UTF8.GetBytes(data);
+            //            //WWWForm form = new WWWForm();
+            //            //form.AddField("data", data);
+            //            byte[] byteData = Encoding.UTF8.GetBytes(data);
 
-            request = ObservableWWW.Post(ip + strQuery, byteData, headers);
-#endif
+            //            request = ObservableWWW.Post(ip + strQuery, byteData, headers);
+            //#endif
+
+            request =  httpEngine.Post(ip + strQuery, data, headers);
 
             NetRequestObservable sub = new NetRequestObservable(request);
 
@@ -227,17 +259,19 @@ namespace ZP.Lib
             IObservable<string> request = null;
 
             var ip = HostMap.ConvertURL(url);
-            
-#if ZP_SERVER
-            request = HTTPClient.Instance.Post(ip + strQuery, data, headers);
-#else
 
-            //WWWForm form = new WWWForm();
-            //form.AddField("data", data);
-            byte[] byteData = Encoding.UTF8.GetBytes(data);
+            //#if ZP_SERVER
+            //            request = HTTPClient.Instance.Post(ip + strQuery, data, headers);
+            //#else
 
-            request = ObservableWWW.Post(ip + strQuery, byteData, headers);
-#endif
+            //            //WWWForm form = new WWWForm();
+            //            //form.AddField("data", data);
+            //            byte[] byteData = Encoding.UTF8.GetBytes(data);
+
+            //            request = ObservableWWW.Post(ip + strQuery, byteData, headers);
+            //#endif
+
+            request =  httpEngine.Post(ip + strQuery, data, headers);
 
             return request;
         }
@@ -261,18 +295,20 @@ namespace ZP.Lib
 
             headers["Content-Type"] = "application/json;charset=utf-8";
 
-#if ZP_SERVER
-            request = HTTPClient.Instance.Put(ip + strQuery, data, headers);
-#else
-            //Unity's HTTP Client 
-            //WWWForm form = new WWWForm();
-            //form.AddField("data", data);
-            byte[] byteData = Encoding.UTF8.GetBytes(data);
+            //#if ZP_SERVER
+            //            request = HTTPClient.Instance.Put(ip + strQuery, data, headers);
+            //#else
+            //            //Unity's HTTP Client 
+            //            //WWWForm form = new WWWForm();
+            //            //form.AddField("data", data);
+            //            byte[] byteData = Encoding.UTF8.GetBytes(data);
 
-            //request = ObservableWWW.Post(ip + strQuery, byteData, headers);
+            //            //request = ObservableWWW.Post(ip + strQuery, byteData, headers);
 
-            request = UnityWebRequestObservable.Put(ip + strQuery, data, headers);
-#endif
+            //            request = UnityWebRequestObservable.Put(ip + strQuery, data, headers);
+            //#endif
+
+            request =  httpEngine.Put(ip + strQuery, data, headers);
 
             NetRequestObservable<RetT> sub = new NetRequestObservable<RetT>(request);
 
@@ -298,18 +334,20 @@ namespace ZP.Lib
 
             headers["Content-Type"] = "application/json;charset=utf-8";
 
-#if ZP_SERVER
+            //#if ZP_SERVER
 
 
-            request = HTTPClient.Instance.Put(ip + strQuery, data, headers);
-#else
+            //            request = HTTPClient.Instance.Put(ip + strQuery, data, headers);
+            //#else
 
-            //WWWForm form = new WWWForm();
-            //form.AddField("data", data);
-            //byte[] byteData = Encoding.UTF8.GetBytes(data);
+            //            //WWWForm form = new WWWForm();
+            //            //form.AddField("data", data);
+            //            //byte[] byteData = Encoding.UTF8.GetBytes(data);
 
-            request = UnityWebRequestObservable.Put(ip + strQuery, data, headers);
-#endif
+            //            request = UnityWebRequestObservable.Put(ip + strQuery, data, headers);
+            //#endif
+
+            request = httpEngine.Put(ip + strQuery, data, headers);
 
             NetRequestObservable sub = new NetRequestObservable(request);
 
@@ -383,12 +421,15 @@ namespace ZP.Lib
 
             //headers["Content-Type"] = "applicatin/json;charset=utf-8";
 
-#if ZP_SERVER
+            //#if ZP_SERVER
 
-            request = HTTPClient.Instance.Delete(ip + strQuery);
-#else
-             request = UnityWebRequestObservable.Delete(ip + strQuery, headers);
-#endif
+            //            request = HTTPClient.Instance.Delete(ip + strQuery);
+            //#else
+            //             request = UnityWebRequestObservable.Delete(ip + strQuery, headers);
+            //#endif
+
+            request = httpEngine.Delete(ip + strQuery);
+
             NetRequestObservable<T> sub = new NetRequestObservable<T>(request);
             return sub;
         }
@@ -407,12 +448,15 @@ namespace ZP.Lib
 
             //headers["Content-Type"] = "applicatin/json;charset=utf-8";
 
-#if ZP_SERVER
+            //#if ZP_SERVER
 
-            request = HTTPClient.Instance.Delete(ip + strQuery, headers);
-#else
-            request = UnityWebRequestObservable.Delete(ip + strQuery, headers);
-#endif
+            //            request = HTTPClient.Instance.Delete(ip + strQuery, headers);
+            //#else
+            //            request = UnityWebRequestObservable.Delete(ip + strQuery, headers);
+            //#endif
+
+            request = httpEngine.Delete(ip + strQuery, headers);
+
             NetRequestObservable sub = new NetRequestObservable(request);
             return sub;
         }

@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyVersion>0.7.0.1</AssemblyVersion>
-    <FileVersion>0.7.0.1</FileVersion>
+    <AssemblyVersion>1.0.5.1</AssemblyVersion>
+    <FileVersion>1.0.5.1</FileVersion>
     <FileUpgradeFlags>40</FileUpgradeFlags>
     <UpgradeBackupLocation>D:\Unity\TestUniRX2\Backup\ZP.Lib\</UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <LangVersion>7.3</LangVersion>
     <PackageProjectUrl>https://github.com/bennychao/ZProRx.Lib/tree/master/ZP.Lib/ZP.Lib.Main</PackageProjectUrl>
     <Description>ZProRx.Lib Core Framework</Description>

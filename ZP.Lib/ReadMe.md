@@ -53,9 +53,15 @@ ZP系的库文件结构树，如下图所示，可以看到各产品的依赖关
 
 ![ZP系架构](./Docs/Images/ZPFrame.jpg)
 
+主要分为两大族系，Soc应用、Web应用。Web应用不用多说了，后面简单什么是Soc应用。
 只简单解释以下几个模块
 - ZP.Lib.Matrix 模块，基于ZP的应用中间件，支持Socket、Web等功能模块。
+- ZP.Lib.Card 卡片模块，参考卡牌游戏，抽象定义卡片类，以及相关辅助类。也可以用于抽象其它实体类。
+- ZP.Lib.Standard 是Soc应用与Web应用的共通底层库，只依赖以Standard 2.0 目前集成了配置服务Nacos（阿里开源配置框架）。
+- ZP.Lib.NetCore 提供了用于NetCore下的一些扩展，更方便在NetCore上使用的ZProxRx。主要用于基于NetCore的控制台应用开发。
+- ZP.Lib.Web 用于提供Http后端的ZP共通库。主要用于基于NetCore的Web 应用开发。
 - ZP.Lib.Soc 基于Socket的网络框架，包括了提供Channel、Pipeline等模块，简化网络相关的开发过程。
+- ZP.Lib.SocClient 即，本地客户端，为Soc端 AI提供一个运行环境（套间）。用于Soc应用开发。
 - ZP.Lib.Battle 基于ZP的网络对战引擎。
 
 ### 统一语言
@@ -200,7 +206,7 @@ RoomMatrixBehaviour的AppName进行指定，默认为"ZProApp"
   
  - [Dudu][ZP.WebServer.Demo一个WebServer端服务](../ZP.WebServer.Demo/Readme.md)
   
- - ZProRx.Matrix.Server 用于测试ZProRx.Matrx 相关功能的Soc Server商。配合ZProRx.Test.Unity 使用
+ - ZProRx.Test.Server 用于测试ZProRx.Matrx 相关功能的Soc Server商。配合ZProRx.Test.Unity 使用
 
 注意：后续开源中。。。
 

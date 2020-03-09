@@ -68,6 +68,10 @@
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestCardsView.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestData.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestPlayer.cs" />
+    <Compile Include="Assets\ZProRx.Lib\Scripts\TestSocketBuilder.cs" />
+    <Compile Include="Assets\ZProRx.Lib\Scripts\TestSocketSystem.cs" />
+    <Compile Include="Assets\ZProRx.Lib\Scripts\TestWebBuilder.cs" />
+    <Compile Include="Assets\ZProRx.Lib\Scripts\TestWebSystem.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\Tools\ZPropertyUnityExtensions.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\UICardItem.cs" />
     <Reference Include="Unity.Timeline.Editor">

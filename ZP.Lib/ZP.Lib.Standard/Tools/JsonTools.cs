@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ZP.Lib.Standard.Tools
+namespace ZP.Lib.Standard
 {
     static public class JsonTools
     {

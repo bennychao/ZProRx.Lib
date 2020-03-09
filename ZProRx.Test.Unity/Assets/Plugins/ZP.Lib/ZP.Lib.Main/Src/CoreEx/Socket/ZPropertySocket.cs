@@ -101,7 +101,8 @@ namespace ZP.Lib
 
                 var clientIdUrl = GetClientId;
                 var revObservable = ReceivePackage<TResult>(url + $"/{clientIdUrl}Result");
-                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var recvDisp = revObservable.Subscribe(multiObserver);
+                recvDisp.AddTo(disposables);
 
 #if ZP_SERVER
                 multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => recvDisp.Dispose()));
@@ -138,7 +139,8 @@ namespace ZP.Lib
                 var multiObserver = MultiObserver<TResult>.Create(observer);
                 var clientIdUrl = GetClientId;
                 var revObservable = ReceivePackage<TResult>(url + $"/{clientIdUrl}Result");
-                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var recvDisp = revObservable.Subscribe(multiObserver);
+                recvDisp.AddTo(disposables);
 
 #if ZP_SERVER
 
@@ -179,7 +181,8 @@ namespace ZP.Lib
                 var clientIdUrl = GetClientId;
 
                 var revObservable = ReceivePackage<TResult>(url + $"/{clientIdUrl}Result");
-                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var recvDisp = revObservable.Subscribe(multiObserver);
+                recvDisp.AddTo(disposables);
 
 #if ZP_SERVER
                 multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() =>
@@ -225,11 +228,17 @@ namespace ZP.Lib
                 var clientIdUrl = GetClientId;
                 //Error Type is string
                 var revObservable = ReceivePackage2<TResult>(url + $"/{clientIdUrl}Result");
-                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var recvDisp = revObservable.Subscribe(multiObserver);
+                recvDisp.AddTo(disposables);
 
 #if ZP_SERVER
                 //TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result")
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => recvDisp.Dispose()));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() =>
+                {
+                    //UnityEngine.Debug.Log($"SendPackage2 CreateOnTerminate {url} clientId is " + clientIdUrl);
+                    recvDisp.Dispose();
+
+                }));
                 TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
                 //sub = new NetRequestObservable<TResult>(TTPServer.Instance.Subscribe(url));
@@ -267,7 +276,8 @@ namespace ZP.Lib
                 var clientIdUrl = GetClientId;
 
                 var revObservable = ReceivePackage<TResult, TErrorEnum>(url + $"/{clientIdUrl}Result");
-                var recvDisp = revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var recvDisp = revObservable.Subscribe(multiObserver);
+                recvDisp.AddTo(disposables);
 
 #if ZP_SERVER
                 multiObserver.AddObserver(ObserverEx.CreateOnTerminate<TResult>(() => recvDisp.Dispose()));
@@ -310,19 +320,20 @@ namespace ZP.Lib
                 var clientIdUrl = GetClientId;
 
                 var revObservable = ReceivePackage<Unit>(url + $"/{clientIdUrl}Result");
-                var ret = revObservable.Subscribe(multiObserver).AddTo(disposables);
+                var ret = revObservable.Subscribe(multiObserver);
+                ret.AddTo(disposables);
 
 #if ZP_SERVER
 
                 //TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result")
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => disposables.Dispose()));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => ret.Dispose()));
                 TTPServer.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
 
                 //revObservable.Subscribe(_ => TTPServer.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
                 //sub = new NetRequestObservable<Unit>(TTPServer.Instance.Subscribe(url));
 
 #else
-                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => disposables.Dispose()));
+                multiObserver.AddObserver(ObserverEx.CreateOnTerminate<Unit>(() => ret.Dispose()));
                 TTPClient.Instance.SendMsg(url, strQuery).Subscribe().AddTo(disposables);
                 //sub = new NetRequestObservable<TResult>(TTPClient.Instance.Subscribe(url));
                 //revObservable.Subscribe(_ => TTPClient.Instance.UnSubscribe(url + $"/{clientIdUrl}Result"));
@@ -758,6 +769,8 @@ namespace ZP.Lib
 
         static private void UnSubscribe(string url)
         {
+            //UnityEngine.Debug.Log("UnSubscribe " + url);
+
 #if ZP_SERVER
             TTPServer.Instance.UnSubscribe(url);
 #else
@@ -786,6 +799,15 @@ namespace ZP.Lib
             Thread.Sleep(300);
 #if ZP_SERVER
             TTPServer.Instance.CheckRecvListenerCount();
+#endif
+        }
+
+        [Conditional("DEBUG")]
+        static public void CheckRecvListenerCount(int recvCount, int recvWithIdCount)
+        {
+            Thread.Sleep(300);
+#if ZP_SERVER
+            TTPServer.Instance.CheckRecvListenerCount(recvCount, recvWithIdCount);
 #endif
         }
 

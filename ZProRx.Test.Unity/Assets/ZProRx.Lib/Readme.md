@@ -55,6 +55,9 @@ ZP_UNITY_CLIENT;ZP_UNIRX;ZP_M2MQTT
 ## Asset
 Resources资源目录结构如下，这里与Server也使用相同的目录结构。
 
+为方便不同的应用的资源管理，ZPR使用如下的目录结构
+应用Root目录：Asset/Resources/[AppName]/
+
 几个相对固定的目录：
 - Msgs: Msg/msgIcon 用于ZMsgList的动态加载的Prefab定义，可以参考它进行对应的Msg体的自定义。
 - Jsons
@@ -66,12 +69,32 @@ Resources资源目录结构如下，这里与Server也使用相同的目录结�
 
 ## Demo 说明
 
-- UI控制Demo：
-Assets/ZProRx.Lib/Scenes/BasePropertyUIStage 
+1.  UI Controls Demo：
+ - 场景位置：Assets/ZProRx.Lib/Scenes/BasePropertyUIStage.unity
 
-运行场景如下：
+ - 运行场景：
 
 ![](./Docs/img/Readme_2020-01-29-15-39-00.png)
+
+2. TestSocketStage: 
+  用于连接Socket Server的Demo， 
+  场景位置：Assets/ZProRx.Lib/Scenes/TestSocketStage.unity
+  需要先运行 ZProRx.Test.Server，依赖NetCore3.1 以上环境。
+ - 下载并编译源代码：源代码 https://github.com/bennychao/ZProRx.Lib
+ - 切换到目录：\ZProRx.Test.Server\bin\Release\netcoreapp3.1
+ - 运行命令：dotnet .\ZProRx.Test.Soc.dll '{\"WorkerParam\":\"run\",\"Port\":5050,\"UnitType\":\"hall\",\"Count\":2,\"IsPrivateClub\":true}'
+  运行效果如下：
+![](./Docs/img/Readme_2020-03-09-21-52-29.png)
+
+ - 最后再启动场景
+
+1. TestWebStage: 
+用于连接Web API的Demo， 
+场景位置：Assets/ZProRx.Lib/Scenes/TestSocketStage.unity
+需要先运行 ZProRx.Test.Web，依赖NetCore3.1 以上环境。
+ - 下载并编译源代码：源代码 https://github.com/bennychao/ZProRx.Lib
+ - 切换到目录：\ZProRx.Test.Web\bin\Release\netcoreapp3.1
+ - 运行命令：dotnet .\ZProRx.Test.Web.dll
 
 
 ## 参考
