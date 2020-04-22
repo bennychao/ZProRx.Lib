@@ -533,7 +533,7 @@ Socket[RawRequest/Request/Package/RawPackage(SocketPackage)]Observable
 ```
 必须从ZNetErrorEnum.MaxError开始定义。
 
-**注意**
+##### 返回值与异常处理
 对于无参数的方式，其优点是有很强的通用性，但是以牺牲是一定的性能（需要转换多次）以及可读性。
 对于明确返回值类型以及错误类型的还是推荐使用对应的模板参数。
 
@@ -587,6 +587,42 @@ TestErrorEnum 为自定义的枚举错误类型。
         return Observable.Return(true);
     })
 ```
+
+#### 通用异常
+```csharp
+ZPropertyNet.Post(url + $"/api/v1/TestError/{id}", null, data).Subscribe(_ => { },
+    error =>
+    {
+        if (error.IsHttpError(HttpStatusCode.NotFound))
+        {
+            //can not read the error
+            taskEnd.Value = true;
+        }
+    });
+```
+框架内部在接收到网络异常时，会抛出新的ZNetHttpException 异常，其定义如下：
+```csharp
+public class ZNetHttpException : Exception
+{
+    public HttpStatusCode StatusCode { get; private set; }
+
+    public ZNetHttpException(HttpStatusCode code)
+    {
+        this.StatusCode = code;
+    }
+
+    public override string ToString()
+    {
+        return StatusCode.ToString();
+    }
+}
+```
+
+其中HttpClient 返回错误码（HttpStatusCode）
+
+https://docs.microsoft.com/zh-cn/dotnet/api/system.net.httpstatuscode?redirectedfrom=MSDN&view=netframework-4.8
+
+
 
 #### 安全
 在TTPServer端 ValidatingMqttClients的方法中进行相关的安全Token验证。Token来至ZRoom的Token

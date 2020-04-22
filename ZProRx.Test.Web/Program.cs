@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using ZP.Lib.NetCore;
 
 namespace ZProRx.Matrix.Web
 {
@@ -26,6 +28,14 @@ namespace ZProRx.Matrix.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            //.ConfigureLogging((ILoggingBuilder logBuilder) =>
+            //{
+            //    logBuilder.AddNLog();
+            //    logBuilder.AddConsole();
+            //    //logBuilder.confi
+            //    NLog.LogManager.LoadConfiguration("sysnlog.config");
+            //})
+            .UseNacos<Startup>()
             .UseUrls("http://*:6008")
                 .UseStartup<Startup>();
     }

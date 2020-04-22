@@ -1,0 +1,45 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="UniRx">
+      <HintPath>..\ZP.Lib\ServerLibrary\UniRx.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\ZP.Lib\ServerLibrary\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZP.Lib\ZP.Lib.Battle\ZP.Lib.Battle.csproj" />
+    <ProjectReference Include="..\ZP.Lib\ZP.Lib.SocClient\ZP.Lib.SocClient.csproj" />
+    <ProjectReference Include="..\ZP.Lib\ZP.Lib.Soc\ZP.Lib.Soc.csproj" />
+    <ProjectReference Include="..\ZP.Lib\ZP.Lib.Main\ZP.Lib.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Lib\Scripts\TestData.cs" Link="ClientLinkedSrc\TestData.cs" />
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\MainScene3.cs" Link="ClientLinkedSrc\MainScene3.cs" />
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestBroadPipeline.cs" Link="ClientLinkedSrc\TestBroadPipeline.cs" />
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestClientChannel.cs" Link="ClientLinkedSrc\TestClientChannel.cs" />
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestCmdClientAgent.cs" Link="ClientLinkedSrc\TestCmdClientAgent.cs" />
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestRoundPipeline.cs" Link="ClientLinkedSrc\TestRoundPipeline.cs" />
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestRuntimePipeline.cs" Link="ClientLinkedSrc\TestRuntimePipeline.cs" />
+    <Compile Include="..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestSceneManagePipeline.cs" Link="ClientLinkedSrc\TestSceneManagePipeline.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="sysnlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

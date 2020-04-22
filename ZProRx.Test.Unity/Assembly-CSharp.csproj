@@ -74,32 +74,34 @@
     <Compile Include="Assets\ZProRx.Lib\Scripts\TestWebSystem.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\Tools\ZPropertyUnityExtensions.cs" />
     <Compile Include="Assets\ZProRx.Lib\Scripts\UICardItem.cs" />
+    <None Include="Assets\ZProRx.Lib\Plugins\Resources\cacert.txt" />
+    <None Include="Assets\ZProRx.Lib\Resources\cacert.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -279,10 +281,10 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/Plugins/LitJson.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/ZProRx.Lib/Plugins/ClientLibrary/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="M2Mqtt">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/Plugins/M2Mqtt.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/ZProRx.Lib/Plugins/ClientLibrary/M2Mqtt.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -638,6 +640,18 @@
     <ProjectReference Include="UniRx.csproj">
       <Project>{27CA4DA6-5E86-491B-041D-CF17007D821F}</Project>
       <Name>UniRx</Name>
+    </ProjectReference>
+    <ProjectReference Include="ZP.Lib.Matrix.csproj">
+      <Project>{18BB6D6D-36D9-6188-6712-C6105CEF6C50}</Project>
+      <Name>ZP.Lib.Matrix</Name>
+    </ProjectReference>
+    <ProjectReference Include="ZP.Lib.Card.csproj">
+      <Project>{FBA01113-9872-9EAE-450F-A51345F41F37}</Project>
+      <Name>ZP.Lib.Card</Name>
+    </ProjectReference>
+    <ProjectReference Include="ZP.Lib.Unity.csproj">
+      <Project>{B43061AA-2363-EF56-4B1F-5F64D382BAA4}</Project>
+      <Name>ZP.Lib.Unity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -82,7 +82,14 @@ Resources资源目录结构如下，这里与Server也使用相同的目录结�
   需要先运行 ZProRx.Test.Server，依赖NetCore3.1 以上环境。
  - 下载并编译源代码：源代码 https://github.com/bennychao/ZProRx.Lib
  - 切换到目录：\ZProRx.Test.Server\bin\Release\netcoreapp3.1
- - 运行命令：dotnet .\ZProRx.Test.Soc.dll '{\"WorkerParam\":\"run\",\"Port\":5050,\"UnitType\":\"hall\",\"Count\":2,\"IsPrivateClub\":true}'
+  
+ - 运行命令：
+    Windows:
+    dotnet .\ZProRx.Test.Soc.dll '{\"WorkerParam\":\"run\",\"Port\":5050,\"UnitType\":\"hall\",\"Count\":2,\"IsPrivateClub\":true}'
+
+    Mac:
+    dotnet ./ZProRx.Test.Soc.dll '{"WorkerParam":"run","Port":5050,"UnitType":"hall","Count":2,"IsPrivateClub":true}'
+  
   运行效果如下：
 ![](./Docs/img/Readme_2020-03-09-21-52-29.png)
 
@@ -97,6 +104,23 @@ Resources资源目录结构如下，这里与Server也使用相同的目录结�
  - 运行命令：dotnet .\ZProRx.Test.Web.dll
 
 
+4. TestCardsStage 
+用于演示Card的升级、抽卡等流程。
+
+[TODO] Demo构建中
+
 ## 参考
 
 [ZP.Lib](../../../ZP.Lib/ZP.Lib.Main/Readme.md)
+
+
+
+## Release Note
+
+
+Decline reasons:
+Package Content - English 
+There must be an English version of documentation and metadata description text in your submission. Please have an English version of your title, metadata description, documentation, and content of your package.(https://unity3d.com/asset-store/sell-assets/submission-guidelines , Section 3.1.b, 3.2.f)
+Metadata & Artwork - Use HTML Tags 
+You must use HTML tags in your metadata description text. Please use the following tags to format your metadata description text: To create a new line, use tag 
+at the end To insert a web link in the description, follow this format: Link text To insert a email link in the description, follow this format: Link text (https://unity3d.com/asset-store/sell-assets/submission-guidelines , Section 2.3.e)

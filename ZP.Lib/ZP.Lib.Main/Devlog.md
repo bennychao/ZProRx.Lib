@@ -1,25 +1,63 @@
 # DevLog for ZP.Lib.Main
 
+各版本的开发计划以及Bug跟踪
 
-#### 后续功能
+## [xxx.xx.xx]
+1. 返回某一类型的属性
+2. ZP对象池，需要支持临时对象。比如，ZTransform3 有一些Static的对象，比如 one / 无穷大等。
+3. [v1.1] 状态机支持 子状态。
+4. [v1.0.8] 需要支持Channel Action的串行的标签。
+
+
+## [v1.0.8]
+
+### Features
+1. 追加Animator Server的实现，只通过Prefabs.json文件记录关键结点的帧信息（位置、时间）相对于Unit，
+2. Bind Check Editor扩展，可以在Editor Mode下加载。自动Check 代码工具，主要用于ZP类定义、ZProperty关联、Bind View、Socket Action，比如如下的问题[19]
+3. 移除全部对Unity的依赖。
+4. 安全问题：用户密码安全
+5. UI框架进一步细化，包括：Unit、Skill详细界面、需要对应各UI的Description的功能。
+6. 资源管理优化：支持Assets/[APP]/Resources/[APP] 目录结构自动匹配，通过定义共通的`AssetPathAttribute`类，Asset相关的Attribute从其进行派生。其功能包括：资源目录的自动匹配，以及资源有效性验证。比如：Jsons中Prefabs定义与Assets中的Prefab是否一致。
+   相关Attribute包括：
+   - PropertyConfigPathAttribute
+   - PropertyImageResAttribute
+   - PropertyAutoLoadAttribute
+7. ZPropertyAttributeTools 可以考虑都使用相同的`ZPropertyMesh` 或者使用 ZProRx
+
+### BugList
+
+   
+
+## [v1.0.6]
+1. [Done]Web 也应该支持类似SendPackage2这种，以String为Error的通用错误处理。
+3. [Done]Host Map 需要通过Configuration文件进行导入，目前只支持了一个(localhost)。即考虑不同机器IP的访问问题。
+   [2020-04-06] 目前看现状OK
+4. [Done]Bug list 41(Event Support multiId), 46+
+5. UIitem的Size 可以配置为保持一定的比例（以一轴为基准）
+6. [Done]ZEvent 的SimplePropertyId 支持
+7. [Done]追加Tag Attribute 用于label不同的用处，比如：用于动画的标签，对应的命名空间为 Unity.Animator，常用 的NS参考 TagNameSpace
+
+9.  [Done]目前只支持MySQL， SQL接口通用化，透明化Mysql支持，为引入SQLit做准备。
+10. [Done] FSM 支持条件，并支持通过 Attribute进行条件函数的配置。
+11. [Part]UniRx 的 Unit类，在System.Reactive中是没有，这样还得需要引用UniRx。所以需要考虑消除对 Unit的依赖，以ZNull进行暴露
+    [2020-04-15] 目前修改了Main中主要的依赖，对于在Unity中使用的方法未进行修改，考虑后续分离出对应的单独的Unity模块。
+
+
+## 后续功能
+这里不再追加新功能，以版本进行新功能的规划与管理
 1. [Fixed]通过ZP自动生成数据库代码。
 2. [v1.1]PropertyLink 可以指定变换方法。
 3. [Fixed]**网络**如果Post等操作失败，超时如何进行处理？返回对应的异常
-4. [v0.81]对象池化对应
+4. [v0.81]对象池化对应，以及结合Span的应用
 5. [TBD]关联方法引入类型Ling串联的调用方式？？
-6. [v0.8]HTTP 错误码支持
-7. [v0.8]用户密码安全问题
-8. [v0.81] 支持UI属性的绑定
-9. [v0.8] 统一事件处理，支持多层次的事件追踪、订阅。以ZEvent为基础
-10. [v1.0] Server 端未支持UniRX的Trigger 扩展，比如使用的`UpdateAsObservable`这种方式。当然Unity 工程中还是可以使用的
-11. [v1.1] 自动Check 代码工具，比如如下的问题[19]
-12. [v0.8] 通用的异常处理
-13. [v0.8] Host Map 需要通过Configuration文件进行导入，目前只支持了一个(localhost)。
-14. [v0.8] 需要对应各UI的Description的功能。
-15. [v0.8] 需要支持Channel Action的串行的标签。
-16. [v1.0.6] Web 也应该支持类似SendPackage2这种，以String为Error的通用错误处理。
+6. [Done][v0.8]HTTP 错误码支持
+7. [v0.81] 支持UI属性的绑定
+8. [Done][v0.8] 统一事件处理，支持多层次的事件追踪、订阅。以ZEvent为基础
+9.  [v1.0] Server 端未支持UniRX的Trigger 扩展，比如使用的`UpdateAsObservable`这种方式。当然Unity 工程中还是可以使用的
+10. [v1.0.8] 通用的异常处理
 
-#### 目前问题
+
+## 目前问题
 1. [Fixed]ZNetErrorEnum 等RX对象的错误处理未完善。可以通过UniRx的.Catch方法进行接收。
 2. [Fixed]Socket 返回值 Topic目前调用了 UnSubscribe，
    [Fixed]但对应的SubJect还未进行处理, 同时还需要支持在返回的IDisposable 对象调用Dispose自动 UnSubscribe [2019.08.09]
@@ -132,9 +170,9 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 
 31. 线程的Cancel还不完整，new Task( 等还有未支持取消的。
 
-32. IEquipable 的Destory还未进行对应。
+32. [Fixed] IEquipable 的Destroy还未进行对应。
 
-34. RTBullt还不是Trigger
+34. [Fixed]RTBullet还不是Trigger
 
 35. IZPropertyList).OnRemoveItem 还未支持Observable，因为其Action有两个参数
 
@@ -155,13 +193,15 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 38. [Fixed]【重要】SendPackage 的多次的Subscribe会有问题，会有多个Result的Topic，其核心还是 ReceivePackage 是不能多次进行的。
     [CheckList][2020-02-24] 目前 已经支持了SendPackage多次Subscribe的问题，但ReceivePackage 只能要Dispose之后才能再次使用
 
-39. UniRx ToTask 如何 Dispose
+39. [TODO]UniRx ToTask 如何 Dispose
 
 40. [Deferred][CheckList][v1.0]PropertyMesh.IsDefineInterface(p) 对于把_ConvertToMap 即转换为Json时，对于值类是接口的ZP对象，目前的式样是停止进行转换的。
 
-41. [Deferred][CheckList][v1.0]【重要】ZEvent 还不支持MultiPropertyId, 即简写的".OnEvent"的形式。
+41. [TODO][CheckList][v1.0]【重要】ZEvent 还不支持MultiPropertyId, 即简写的".OnEvent"的形式。
 
-42. 【重要】TTPServer 中的 RecvListeners 还没有进行线程安全的处理。
+42. [Part]【重要】TTPServer 中的 RecvListeners 还没有进行线程安全的处理。
+    [2020-04-15 11:28:30]
+    TTPClient还未进行修改
 
 43. [Fixed]SocBuilding中的判断Connect需要加入 InterAdd 变量进行互斥操作。
 
@@ -169,15 +209,26 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 
 45. [Deferred][v1.0]BindProperty 目前使用的tran.name.Contains(prop.SimplePropertyID) 用于比较匹配，会有问题。
 
-46. UpdateValue 有一些个别的ViewItem中对UpdateValue还不是保证在UI线程上调用的。
+46. [Deferred]UpdateValue 有一些个别的ViewItem中对UpdateValue还不是保证在UI线程上调用的。
 
-47. HTTPClient 中的 RecvListeners 还没有考虑线程安全的问题。
+47. [Fixed]HTTPClient 中的 RecvListeners 还没有考虑线程安全的问题。
+
+48. [Deferred]【重要】Asset下各应用的动态资源（Resources）应该是在各应用下去获取到，统一不要使用的公共的目录。即与Unity的目录机制一致。
+
+49. [Deferred]Responsable 接口名称修改
+  
+50. List 的Item，所在的ViewPort的宽度（或者高度）要与元素个数能自动进行绑定。
+
+51. Debug时时常出现如下
+  ![](./Docs/img/Devlog_2020-04-15-15-30-00.png)
+
+52. GameObject 的线程安全问题，主要是对子对象的管理。这个可能是 TestMsgAndHints 单体测试失败的原因。
 
 ------------------
 
-#### TestCase
+## TestCase
 
-##### Base
+### Base
 1. 基本对象的创建
 2. 加载一个测试的Json文件确认Json解析是否OK， 需要支持的所有的共通数据类型。需要Test支持加载Dll的情况。
 3. 各值对象的使用
@@ -185,21 +236,21 @@ AssemblyDll的加载需要有一个顺序，进行默认加载。
 4. 各个关联、视图的测试
 
 
-##### Scene
+### Scene
 1. 加载、绑定、Prefab自动创建、生命周期
 2. Transform 相关测试
 3. 物理、碰撞等
 
-##### Net 
+### Net 
 1. Net 的测试，还需要启动一个小的Server。用于接收Post、Get等操作。
 2. 测试Socket Receive[xxx]方法，进行反订阅的操作，即在Dispose的时机。时刻查看Subject的个数。这也是一个性能指标。
 3. 对于 SyncResult 的方法需要进行测试。分兩個方向。對于向Server端，其要保證只調用一次，并返回多個結果。
 
-##### UI
+### UI
 3. 与UI的绑定、解绑，以及对应事件的接收情况。
 4. Channel Action 的各种类型的参数[FromBody]
 
-#### Debug Journal
+## Debug Journal
 1. [Fixed]线程安全的问题，如果在使用的Mutex需要在同一线程中获取与Release，否则会出现以下异常。
 
 ![](./Docs/img/Readme_2019-10-21-14-29-29.png)
@@ -230,6 +281,26 @@ When All not work it only return when all observer is stopped，
 
 
 
-### Release
+## Release
+
+1. 打包
+
+使用VSCode的Task： ZProRx.Lib.Package
+
+
 一定要使用.nuspec 文件
 dotnet pack .\ZP.Lib.Server.csproj -p:NuspecFile=.\ZP.Lib.Server.nuspec
+
+如何包含多个文件的打包
+
+https://docs.microsoft.com/en-us/nuget/reference/nuspec
+
+各Dotnet的命令:
+
+https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish?tabs=netcore21
+
+正常使用的dotnet publish -c Release 就可以了其会生成到默认的目录
+
+![](./Docs/img/Devlog_2020-04-17-08-55-31.png)
+
+

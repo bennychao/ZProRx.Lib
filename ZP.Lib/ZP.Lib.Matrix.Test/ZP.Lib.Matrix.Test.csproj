@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LitJson">
+      <HintPath>..\ServerLibrary\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="UniRx">
+      <HintPath>..\ServerLibrary\UniRx.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\ServerLibrary\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>..\ServerLibrary\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\ServerLibrary\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZP.Lib.Battle\ZP.Lib.Battle.csproj" />
+    <ProjectReference Include="..\ZP.Lib.Main\ZP.Lib.Server.csproj" />
+    <ProjectReference Include="..\ZP.Lib.Matrix\ZP.Lib.Matrix.csproj" />
+    <ProjectReference Include="..\ZP.Lib.SocClient\ZP.Lib.SocClient.csproj" />
+    <ProjectReference Include="..\ZP.Lib.Soc\ZP.Lib.Soc.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\ZProRx.Test.Server\Entity\TestChannel.cs" Link="ServerLinkedSrc\TestChannel.cs" />
+    <Compile Include="..\..\ZProRx.Test.Server\Entity\TestRoundChannel.cs" Link="ServerLinkedSrc\TestRoundChannel.cs" />
+    <Compile Include="..\..\ZProRx.Test.Server\Entity\TestRuntimeChannel.cs" Link="ServerLinkedSrc\TestRuntimeChannel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Lib\Scripts\TestData.cs" Link="ClientLinkedSrc\TestData.cs" />
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\MainScene3.cs" Link="ClientLinkedSrc\MainScene3.cs" />
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestBroadPipeline.cs" Link="ClientLinkedSrc\TestBroadPipeline.cs" />
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestClientChannel.cs" Link="ClientLinkedSrc\TestClientChannel.cs" />
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestCmdClientAgent.cs" Link="ClientLinkedSrc\TestCmdClientAgent.cs" />
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestRoundPipeline.cs" Link="ClientLinkedSrc\TestRoundPipeline.cs" />
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestRuntimePipeline.cs" Link="ClientLinkedSrc\TestRuntimePipeline.cs" />
+    <Compile Include="..\..\Dudu.Unity\Assets\ZProRx.Matrix\Scripts\TestSceneManagePipeline.cs" Link="ClientLinkedSrc\TestSceneManagePipeline.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="sysnlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

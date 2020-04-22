@@ -281,6 +281,7 @@ namespace ZP.Lib.Server.Test
             var interfaceType = Type.GetType("ZP.Lib.Server.Test.Entity.TestObj");
 
             var person = ZPropertyMesh.CreateObject<Person>();
+            var path = AppDomain.CurrentDomain.BaseDirectory;
 
             ZPropertyPrefs.Load(person, "../../../Assets/TestPerson.json");
 

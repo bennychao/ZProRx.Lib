@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ZP.Lib.NetCore;
 using ZP.Lib.Web;
+using ZProRx.Test.Web.Entity;
 
 namespace ZProRx.Matrix.Web
 {
@@ -31,6 +32,17 @@ namespace ZProRx.Matrix.Web
             services.AddMatrix(Configuration);
 
             services.AddZPSwagger<Program>(Configuration);
+
+            services.Configure<TestConfig>(Configuration.GetSection("TestConfig"));
+
+            services.AddCors(option =>
+                option.AddPolicy("cors", policy =>
+                policy
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .SetIsOriginAllowed(_ => true))
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,13 +52,16 @@ namespace ZProRx.Matrix.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            //env.ConfigureNLog("sysnlog.config");
+            app.UseZLog("sysnlog.config");
 
             app.UseMatrix();
 
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("cors");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

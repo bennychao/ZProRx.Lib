@@ -1,0 +1,38 @@
+{
+  "TLocalBattle.BattleUnits": [
+    {
+      "BattleUnit.UnitID": 0,
+      "BattleUnit.BrainID": 0,
+      "BattleUnit.CardID": 1,
+      "BattleUnit.Pos": {
+        "ZTransform.Position": {"x": 2.0, "y": 2.0},
+        "ZTransform.Direction": {"x": 1.0, "y": 0.0}
+      }
+    },
+    {
+      "BattleUnit.UnitID": 1,
+      "BattleUnit.BrainID": 1,
+      "BattleUnit.CardID": 1,
+      "BattleUnit.Pos": {
+        "ZTransform.Position": {"x": 2.0, "y": 3.0},
+        "ZTransform.Direction": {"x": 0.0, "y": 1.0}
+      }
+    }
+  ],
+  "TLocalBattle.BrainLinks": [
+    {
+      "BrainInfo.BrainID": 0,
+      "BrainInfo.TeamID": 0,
+      "BrainInfo.Name": "Testuser1",
+      "BrainInfo.Rank": 2,
+      "BrainInfo.Portrait": "TestUser1"
+    },
+    {
+      "BrainInfo.BrainID": 1,
+      "BrainInfo.TeamID": 1,
+      "BrainInfo.Name": "Testuser2",
+      "BrainInfo.Rank": 2,
+      "BrainInfo.Portrait": "TestUser2"
+    }
+  ]
+}

@@ -5472,6 +5472,12 @@ PrefabInstance:
       propertyPath: m_ChildForceExpandWidth
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5508396847943782748, guid: c5440557ad8e2be4fabc3785f3c45d45,
+        type: 3}
+      propertyPath: RadioItemTemplate
+      value: 
+      objectReference: {fileID: 6701475783419199592, guid: 54567e1939b00ca4a80b47c233fe1fbb,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5440557ad8e2be4fabc3785f3c45d45, type: 3}
 --- !u!1001 &5631326664918665312

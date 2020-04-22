@@ -75,5 +75,18 @@ namespace ZP.Lib.Server.Test
             }
 
         }
+
+        [Test]
+        public void TestRandom()
+        {
+            var r = RandomMgr.Next(0, 100.0f);
+            var r2 = RandomMgr.Next(0, 100.0f);
+            for (int i = 0; i < 50; i++)
+            {
+                r = RandomMgr.Next(0, 3.0f);
+
+                r2 = RandomMgr.Next(0, 3.0f);
+            }
+        }
     }
 }

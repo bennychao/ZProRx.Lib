@@ -29,6 +29,8 @@ namespace ZProRx.Lib.Unity
         public void OnBind(Transform node)
         {
 
+            zMsgs.TransNode.transform.DetachChildren();
+
             OnStartSock.OnEventObservable().Subscribe(_ =>
             {
                 if (ZPropertySocket.IsConnected())
@@ -46,7 +48,7 @@ namespace ZProRx.Lib.Unity
 
                     zMsgs.AddTimer(msg);
 
-                    return Observable.Empty<Unit>();
+                    return Observable.Empty<ZNull>();
                 }
                     ).Subscribe();
             });

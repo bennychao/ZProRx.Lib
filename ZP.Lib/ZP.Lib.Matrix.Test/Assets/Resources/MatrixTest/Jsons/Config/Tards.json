@@ -1,0 +1,8 @@
+{
+    "ZCardsFactory.Groups":[
+        {
+            "CardGroup.GroupID":0,
+            "CardGroup.CardRefs":[{"refid":1}, {"refid":2}, {"refid":3}, {"refid":4}]
+        }
+    ]
+}

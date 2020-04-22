@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>ZP.Lib.Card</id>
+    <version>1.0.6</version>
+    <authors>BennyChao</authors>
+    <icon>images/head.png</icon>
+    <owners>BennyChao</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ZProRx ---- One property-oriented reactive property framework, the current ZP.Lib.Card package is ZProRx's main entity class.</description>
+    <projectUrl>https://github.com/bennychao/ZProRx.Lib/tree/master/ZP.Lib/ZP.Lib.Card</projectUrl>
+    <license type="expression">MIT</license>
+    
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="ZP.Lib.Server" version="1.0.6" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard2.0\*.dll" target="lib/netstandard2.0/" />
+    <file src="..\Docs\Images\head.png" target="images/" />
+  </files>
+</package>

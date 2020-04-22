@@ -78,16 +78,16 @@
     <Compile Include="Assets\Plugins\UniRx\Examples\Sample13_ToDoApp.cs" />
     <None Include="Assets\Plugins\UniRx\Examples\UniRx.Examples.asmdef" />
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -267,7 +267,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

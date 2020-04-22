@@ -10,7 +10,7 @@ using ZProRx.Test.Web.Entity;
 
 namespace ZProRx.Test.Web.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/test/web/[controller]")]
     [ApiController]
     public class TestErrorController : ControllerBase
     {

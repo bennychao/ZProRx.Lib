@@ -21,7 +21,7 @@ namespace ZP.Lib.Web
 {
     public static class MatrixCoreServiceCollectionExtensions
     {
-        private static readonly string secretKey = "mysupersecret_secretkey!123";
+        //private static readonly string secretKey = "mysupersecret_secretkey!123";
 
         public static IServiceCollection AddApiRoute(this IServiceCollection services)
         {

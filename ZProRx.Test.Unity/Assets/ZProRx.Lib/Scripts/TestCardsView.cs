@@ -36,12 +36,14 @@ public class TestCardsView
     {
         this.player = player;
 
-        cardCount.Value.Max.Count(player.CardList);
+        cardCount.Value.Max.Count(player.CardList).AddTo(disposables);
 
         //link the cardlist
-        cardList.Where(player.CardList, card => (card.Value as TestCard).Category.Value == CardCategory);
+        cardList
+            .Where(player.CardList, card => (card.Value as TestCard).Category.Value == CardCategory)
+            .AddTo(disposables);
 
-        cardCount.Value.Cur.Count(cardList);
+        cardCount.Value.Cur.Count(cardList).AddTo(disposables);
 
         //var selEvents = ZPropertyMesh.GetEventsEx(this, ".cardList.*.onSelect");
         //foreach(var se in selEvents)

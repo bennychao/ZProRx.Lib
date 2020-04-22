@@ -53,11 +53,11 @@ namespace ZP.Lib.Server.WebTest
                 //config.ArchitectMasterServer +
                 url +
                 $"/api/v1/TestWeb/{id}",
-                null).Subscribe(retData =>
+                null).Subscribe(recvData =>
                 {
                     taskEnd.Value = true;
 
-                    Assert.True(retData.testNum.Value == 100);
+                    Assert.True(recvData.testNum.Value == 100);
                 });
 
             taskEnd.Where(cur => cur == true).Fetch().ToTask().Wait();
@@ -110,7 +110,7 @@ namespace ZP.Lib.Server.WebTest
             data.testNum.Value = 300;
 
             //not need Result
-            ZPropertyNet.Post(url + $"/api/v1/TestError/{id}", null, data).Subscribe(_ => { },
+            ZPropertyNet.Post(url + $"/api/v1/test/web/TestError/{id}", null, data).Subscribe(_ => { },
                 error =>
                 {
                     //can not read the error
@@ -121,7 +121,7 @@ namespace ZP.Lib.Server.WebTest
             taskEnd.Where(cur => cur == true).WaitAFetch(2);
             taskEnd.Value = false;
 
-            ZPropertyNet.Post<ZNull, TestErrorEnum>(url + $"/api/v1/TestError/{id}", null, data).Subscribe(_ => { },
+            ZPropertyNet.Post<ZNull, TestErrorEnum>(url + $"/api/v1/test/web/TestError/{id}", null, data).Subscribe(_ => { },
                 error =>
                 {
                     Assert.True(error.IsMultiError<TestErrorEnum>(TestErrorEnum.Error1));
@@ -134,7 +134,7 @@ namespace ZP.Lib.Server.WebTest
             taskEnd.Value = false;
 
 
-            var retData = ZPropertyNet.Get<TestData, TestErrorEnum>(url + $"/api/v1/TestError/{id}")
+            var retData = ZPropertyNet.Get<TestData, TestErrorEnum>(url + $"/api/v1/test/web/TestError/{id}")
                 .Catch<TestData, Exception>(error =>
                 {
                     data.testNum.Value = 200;
@@ -147,7 +147,7 @@ namespace ZP.Lib.Server.WebTest
 
             Assert.True(data.testNum.Value == 200);
 
-            retData = ZPropertyNet.Put<TestData, TestErrorEnum>(url + $"/api/v1/TestError/{id}", null, data)
+            retData = ZPropertyNet.Put<TestData, TestErrorEnum>(url + $"/api/v1/test/web/TestError/{id}", null, data)
                 .Catch<TestData, Exception>(error =>
                 {
                     data.testNum.Value = 200;
@@ -160,7 +160,7 @@ namespace ZP.Lib.Server.WebTest
 
             Assert.True(data.testNum.Value == 200);
 
-            ZPropertyNet.Delete<ZNull, TestErrorEnum>(url + $"/api/v1/TestError/{id}")
+            ZPropertyNet.Delete<ZNull, TestErrorEnum>(url + $"/api/v1/test/web/TestError/{id}")
                 .Catch<ZNull, Exception>(error =>
                 {
                     data.testNum.Value = 200;

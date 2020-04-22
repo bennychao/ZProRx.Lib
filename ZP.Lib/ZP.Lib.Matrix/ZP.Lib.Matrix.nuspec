@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>ZP.Lib.Matrix</id>
+    <version>1.0.6</version>
+    <authors>BennyChao</authors>
+    <icon>images/head.png</icon>
+    <owners>BennyChao</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ZProRx ---- One property-oriented reactive property framework, the current ZP.Lib.Matrix package is ZProRx's core framework for Soc and Web App.</description>
+    <projectUrl>https://github.com/bennychao/ZProRx.Lib/tree/master/ZP.Lib/ZP.Lib.Matrix</projectUrl>
+    <license type="expression">MIT</license>
+    
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="ZP.Lib.Server" version="1.0.6" exclude="Build,Analyzers" />
+        <dependency id="ZP.Lib.Card" version="1.0.6" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Configuration" version="3.1.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Configuration.Binder" version="3.1.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Configuration.FileExtensions" version="3.1.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Configuration.Json" version="3.1.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Hosting" version="3.1.2" exclude="Build,Analyzers" />
+        <dependency id="nacos-sdk-csharp-unofficial" version="0.2.5" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />
+        <dependency id="MQTTnet" version="2.8.5" exclude="Build,Analyzers" />
+        <dependency id="MySql.Data" version="8.0.16" exclude="Build,Analyzers" />
+        <dependency id="System.Numerics.Vectors" version="4.5.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard2.0\*.dll" target="lib/netstandard2.0/" />
+    <file src="..\Docs\Images\head.png" target="images/" />
+  </files>
+</package>

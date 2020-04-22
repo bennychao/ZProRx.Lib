@@ -34,6 +34,7 @@ namespace ZP.Lib.Server.Test.Entity
         public void Unbind()
         {
             //throw new NotImplementedException();
+            base.UnbindBase();
             bBind = false;
         }
 
@@ -71,6 +72,7 @@ namespace ZP.Lib.Server.Test.Entity
         public void Unbind()
         {
             //throw new NotImplementedException();
+            base.UnbindBase();
             bBind = false;
         }
 
@@ -100,6 +102,7 @@ namespace ZP.Lib.Server.Test.Entity
         public void Unbind()
         {
             //throw new NotImplementedException();
+            base.UnbindBase();
             bBind = false;
         }
 

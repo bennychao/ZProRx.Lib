@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>1.0.6.1</AssemblyVersion>
+    <FileVersion>1.0.6.1</FileVersion>
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <UpgradeBackupLocation>D:\Unity\TestUniRX2\Backup\ZP.Lib\</UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <Version>1.0.6</Version>
+    <LangVersion>7.3</LangVersion>
+    <PackageProjectUrl>https://github.com/bennychao/ZProRx.Lib/tree/master/ZP.Lib/ZP.Lib.Main</PackageProjectUrl>
+    <Description>ZProRx.Lib Core Framework for Unity Extensions</Description>
+    <Copyright>BennyChao</Copyright>
+    <PackageReleaseNotes>MIT</PackageReleaseNotes>
+    <RepositoryType>Githup</RepositoryType>
+    <RepositoryUrl>https://github.com/bennychao/ZProRx.Lib</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>2</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;ZP_SERVER;ZP_UNIRX;</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;ZP_SERVER;ZP_UNIRX;</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Reference Include="LitJson">
+      <HintPath>..\ServerLibrary\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="UniRx">
+      <HintPath>..\ServerLibrary\UniRx.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\ServerLibrary\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>..\ServerLibrary\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\ServerLibrary\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using ZP.Lib;
 using ZP.Lib.Server.SQL;
 using ZP.Lib.NetCore.Domain;
+using ZP.Lib.Server.Domain;
+using ZP.Lib.NetCore.Entity;
 
 namespace ZP.Lib.Web
 {
@@ -12,21 +14,41 @@ namespace ZP.Lib.Web
     {
         protected string connectStr;
 
-        protected ZPropertyMysql sqlCtl;
+        protected ISQLConnection sqlCtl;
 
-
+        protected Type engintType;
         public BaseModel(IConfiguration configuration)
         {
-            connectStr = configuration.GetConnectionString("mysql");
+            var engine = (this.GetType().GetCustomAttributes(typeof(SQLEngineAttribute), true)?.FirstOrDefault() as SQLEngineAttribute)
+                ?.EngineType ?? typeof(ZPropertyMysql);
+
+            if (engine == typeof(ZPropertyMysql))
+                connectStr = configuration.GetConnectionString("mysql");
+            else if (engine == typeof(ZPropertySQLite))
+                connectStr = configuration.GetConnectionString("sqlite3");
+
+            engintType = engine;
         }
 
         public void Connect()
         {
             if (sqlCtl == null)
             {
-                sqlCtl = new ZPropertyMysql(connectStr);
+                sqlCtl = CreateCtrl();
+
                 sqlCtl.Connect();
             }
+        }
+
+        protected ISQLConnection CreateCtrl()
+        {
+            ISQLConnection ret = null;
+            if (engintType == typeof(ZPropertyMysql))
+                ret = new ZPropertyMysql(connectStr);
+            else if (engintType == typeof(ZPropertySQLite))
+                ret = new ZPropertySQLite(connectStr);
+
+            return ret;
         }
 
         public void Disconnect()
@@ -47,17 +69,23 @@ namespace ZP.Lib.Web
         readonly protected string DbName = "";
         readonly protected string TableName = "";
 
-        public string FullTableName => $"{DbName}.{TableName}";
+        readonly protected string fullTableName = "";
+        public string FullTableName => fullTableName;// $"{DbName}.{TableName}";
+
+        public string MainIndexName => $"{TableName[0].ToString().ToLower()}pid";
 
         public BaseModel(IConfiguration configuration, string dbName) : base(configuration)
         {
             this.DbName = dbName;
+
             TableName = this.GetType().Name.Replace("Model", "");
+
+            fullTableName = string.IsNullOrEmpty(dbName) || engintType == typeof(ZPropertySQLite) ? TableName : $"{DbName}.{TableName}";
         }
 
         public void CheckOrCreateDB()
         {
-            using (ZPropertyMysql sql = new ZPropertyMysql(connectStr))
+            using (ISQLConnection sql = CreateCtrl())
             {
                 sql.Connect();
 
@@ -72,7 +100,7 @@ namespace ZP.Lib.Web
 
         public bool Add(TModeDatal model)
         {
-            var index = sqlCtl.Insert<TModeDatal>($"{DbName}.{TableName}", model);
+            var index = sqlCtl.Insert<TModeDatal>(fullTableName, model);
 
             var primaryIndex = ZPropertyMysql.GetPrimaryIndexProperty(model);
             if (primaryIndex != null)
@@ -81,12 +109,12 @@ namespace ZP.Lib.Web
                 return index >= 0;
             }
 
-            return false;
+            return index >= 0;
         }
 
         public TModeDatal Get(uint index)
         {
-            var model = sqlCtl.QueryOne<TModeDatal>($"{DbName}.{TableName}", index);
+            var model = sqlCtl.QueryOne<TModeDatal>(fullTableName, index);
             //user.Id.Value = index;
 
             return model;
@@ -117,6 +145,11 @@ namespace ZP.Lib.Web
             return sqlCtl.Update<TModeDatal>(FullTableName, data);
         }
 
+        public bool Update(uint index, TModeDatal data)
+        {
+            return sqlCtl.Update<TModeDatal>(FullTableName, MainIndexName, index, data);
+        }
+
         public bool Update(TModeDatal data, string propID)
         {
             return sqlCtl.Update<TModeDatal>(FullTableName, data, propID);
@@ -130,6 +163,14 @@ namespace ZP.Lib.Web
         public bool Delete(TModeDatal data)
         {
             return sqlCtl.Delete(FullTableName, data);
+        }
+
+        public bool Delete(uint mainIndex)
+        {
+            string strsql =
+                $"DELETE FROM {FullTableName} WHERE `{MainIndexName}`={mainIndex}";
+
+           return sqlCtl.Execute(strsql) > 0;
         }
 
         public void Delete(string propertyId, string value)

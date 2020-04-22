@@ -1,19 +1,15 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
-using ZP.Lib;
-using ZP.Lib.Server.Test.Entity;
 using UniRx;
+using UnityEngine;
 using ZP.Lib.CoreEx;
-using System.Threading;
 using ZP.Lib.CoreEx.Tools;
+using ZP.Lib.Server.Test.Entity;
 
 namespace ZP.Lib.Server.Test
 {
-   internal  class UnitScene
+    internal  class UnitScene
     {
         private TestTaskScheduler taskScheduler;
         [SetUp]
@@ -46,13 +42,17 @@ namespace ZP.Lib.Server.Test
 
                 Assert.IsTrue(mainScene.bACallNextFrame == true);
 
+                var sub = mainScene.gameObject.GetComponentInChildren<Transform>();
+
                 //test for close
                 ZServerScene.Instance.Close();
 
                 var bindTarget = GameObject.Find("main"); //self
 
+               
+
                 Assert.IsTrue(bindTarget == null);
-                Assert.IsTrue(mainScene.bACallDestory == true);
+                Assert.IsTrue(mainScene.bACallDestroy == true);
 
             });
 

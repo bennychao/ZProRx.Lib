@@ -17,10 +17,13 @@
   - [Unity Plugin](#unity-plugin)
     - [Plugin 导入](#plugin-%e5%af%bc%e5%85%a5)
   - [Asset](#asset)
+    - [资源目录结构](#%e8%b5%84%e6%ba%90%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84)
+  - [辅助工具](#%e8%be%85%e5%8a%a9%e5%b7%a5%e5%85%b7)
   - [Demo 应用案例](#demo-%e5%ba%94%e7%94%a8%e6%a1%88%e4%be%8b)
   - [Other 其它](#other-%e5%85%b6%e5%ae%83)
   - [RoadMap](#roadmap)
   - [License](#license)
+  - [返回](#%e8%bf%94%e5%9b%9e)
 
 ## ZProRx 框架简介
 面向属性的编程框架，以属性为基础，构建属性网，同时结合反应式编程、链式编程。
@@ -200,6 +203,27 @@ public sealed class  ServerPath : PropObjectSingleton<ServerPath>
 Unity端可通过
 RoomMatrixBehaviour的AppName进行指定，默认为"ZProApp"
 
+### 资源目录结构
+
+![](./Docs/img/ReadMe_2020-04-20-11-15-26.png)
+
+代码中使用的资源都在Assets/[APP]/Resources/[APP]中
+其中两级的[APP]可以没有
+比如：
+Assets/Dudu.Demo/Resources/Jsons/test.json
+Assets/Resources/Dudu.Demo/Jsons/test.json
+Assets/ZProRx.Lib/Resources/Dudu.Demo/Jsons/test.json
+其中第三者主要用于一些在共通的库中定义的App资源。
+
+以上框架在资源加载会自动进行目录匹配。
+
+## 辅助工具
+ZProRx在Unity中提供了一些提高效率的生产工具
+1. Server 场景、Prefabs自动导出工具
+2. Card配置文件自动生成工具，方案之一是通过生成工程模板，统一生成各配置文件模板、方案之二是通过UnityEditor菜单生成Card以及添加。
+3. PropertyId 输入提示工具。
+4. Property与View、UnityUIBind 的自动核验工具，排查由于拼写错误的名称错误。
+
 ## Demo 应用案例
  - [Dudu][ZP.Server.Demo一个Soc端服务](../ZP.Server.Demo/Readme.md)
    - 其主要功能是一个简单的Dudu回合制小游戏
@@ -217,13 +241,15 @@ ServerLibrary目录：Server端依赖的库文件，
 - UniRx为通用版本，即不支持Unity的扩展。Unity客户端还请从Asset Store 下载UniRx免费插件。
 - UnityEngine.CoreModule.dll 为Server端使用的Unity库文件，这里通过编译注入进行了修改，屏蔽了一些在Server端无法使用的类，如GameObject。会根据Untiy的大版本进行定期更新。
 
+
+
 ## RoadMap
-1. [v0.8] 基本功能，与ZProRx.Matrix版本同步，即完成ZProRx.Matrix相应版本的功能。
+1. [Done][v0.8] 基本功能，与ZProRx.Matrix版本同步，即完成ZProRx.Matrix相应版本的功能。
   - 资源管理类进行统一处理，支持动态更新、版本控制、缓存、前后端差别（Resource.Load时 Unity不能带扩展名）
-2. [v0.81] 支持NetCore 3.0, 模块整理, HTTP 错误码支持。
-3. [v0.82] Pool模块支持池化。TestCase 对应xUnit
-4. **[v1.0]**  1.0版本对外开放，对Unity更好的支持，包括Unity Plugin以及工程优化，支持更多的TriggerComponent
-5. [v1.09] 非功能性需求对应，使用的AOP对应，主要功能包括
+2. [Done][v0.81] 支持NetCore 3.0, 模块整理, HTTP 错误码支持。
+3. [Done][v0.82] Pool模块支持池化。TestCase 对应xUnit
+4. [Done]**[v1.0.3]**  1.0版本对外开放，对Unity更好的支持，包括Unity Plugin以及工程优化，支持更多的TriggerComponent
+5. [v1.0.9] 非功能性需求对应，使用的AOP对应，主要功能包括
    - 事务 - 缓存 - 日志 - 安全
 6. [v1.1] Net优化与扩展，支持除MQTT外的Socket框架。支持Component的绑定功能。
 7. [v1.2] 后端物理引擎完善（Box2D？），Server端替换到UnityCore相关的依赖
@@ -235,3 +261,7 @@ ServerLibrary目录：Server端依赖的库文件，
 
 ## License
 	 ZProRx.Lib 开源源码遵循 [MIT](LICENSE) 开源协议。
+
+
+## 返回
+[Back](../Readme.md)

@@ -29,7 +29,7 @@ namespace ZP.Lib.Server.Test.Entity
         //for test 
         public bool bACallAwake = false;
         public bool bACallStart = false;
-        public bool bACallDestory= false;
+        public bool bACallDestroy= false;
 
         public bool bACallNextFrame = false;
 
@@ -476,7 +476,7 @@ namespace ZP.Lib.Server.Test.Entity
 
         void OnDestroy()
         {
-            bACallDestory = true;
+            bACallDestroy = true;
         }
 
         public void Stop()

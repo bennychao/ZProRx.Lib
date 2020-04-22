@@ -13,7 +13,7 @@ namespace ZP.Lib.Server.Test.Entity
     {
         public bool bACallAwake = false;
         public bool bACallStart = false;
-        public bool bACallDestory = false;
+        public bool bACallDestroy = false;
 
         public IReactiveProperty<int> taskCount = new ReactiveProperty<int>(0);
 

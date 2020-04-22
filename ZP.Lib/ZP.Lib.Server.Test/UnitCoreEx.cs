@@ -150,9 +150,9 @@ namespace ZP.Lib.Server.Test
 
             IReactiveProperty<bool> callSync = new ReactiveProperty<bool>(false);
 
-            var dispFsm = FsmObj.Status.Enter.Subscribe(s =>
+            var dispFsm = FsmObj.Status.EnterObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status1);
+                Assert.IsTrue(s == (uint)TestStatus.Status1);
                 callSync.Value = true;
             });
 
@@ -175,9 +175,9 @@ namespace ZP.Lib.Server.Test
             dispFsm.Dispose();
 
             //test for transfer to Status2
-            dispFsm = FsmObj.Status.Enter.Subscribe(s =>
+            dispFsm = FsmObj.Status.EnterObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status2);
+                Assert.IsTrue(s == (uint)TestStatus.Status2);
                 callSync.Value = true;
             });
 
@@ -190,15 +190,15 @@ namespace ZP.Lib.Server.Test
             dispFsm.Dispose();
 
             //test for transfer to Status3
-            dispFsm = FsmObj.Status.Enter.Subscribe(s =>
+            dispFsm = FsmObj.Status.EnterObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status3);
+                Assert.IsTrue(s == (uint)TestStatus.Status3);
                 callSync.Value = true;
             });
 
-            var dispFsmLeave = FsmObj.Status.Leave.Subscribe(s =>
+            var dispFsmLeave = FsmObj.Status.LeaveObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status2);
+                Assert.IsTrue(s == (uint)TestStatus.Status2);
                 callSync.Value = true;
             });
 
@@ -211,15 +211,15 @@ namespace ZP.Lib.Server.Test
             dispFsmLeave.Dispose();
 
             //test for transfer to Status1 form Status3
-            dispFsm = FsmObj.Status.Enter.Subscribe(s =>
+            dispFsm = FsmObj.Status.EnterObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status1);
+                Assert.IsTrue(s == (uint)TestStatus.Status1);
                 callSync.Value = true;
             });
 
-            dispFsmLeave = FsmObj.Status.Leave.Subscribe(s =>
+            dispFsmLeave = FsmObj.Status.LeaveObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status3);
+                Assert.IsTrue(s == (uint)TestStatus.Status3);
                 callSync.Value = true;
             });
 
@@ -232,9 +232,9 @@ namespace ZP.Lib.Server.Test
             dispFsmLeave.Dispose();
 
             //test for stop fsm
-            dispFsmLeave = FsmObj.Status.Leave.Subscribe(s =>
+            dispFsmLeave = FsmObj.Status.LeaveObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status1);
+                Assert.IsTrue(s == (uint)TestStatus.Status1);
                 callSync.Value = true;
             });
 
@@ -246,9 +246,9 @@ namespace ZP.Lib.Server.Test
 
             Assert.IsTrue(FsmObj.Status.Value == TestStatus.Status1);
 
-            dispFsm = FsmObj.Status.Enter.Subscribe(s =>
+            dispFsm = FsmObj.Status.EnterObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status1);
+                Assert.IsTrue(s == (uint)TestStatus.Status1);
                 callSync.Value = true;
             });
 
@@ -260,9 +260,9 @@ namespace ZP.Lib.Server.Test
 
             dispFsm.Dispose();
 
-            dispFsm = FsmObj.Status.Enter.Subscribe(s =>
+            dispFsm = FsmObj.Status.EnterObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus.Status2);
+                Assert.IsTrue(s == (uint)TestStatus.Status2);
                 callSync.Value = true;
             });
 
@@ -275,9 +275,9 @@ namespace ZP.Lib.Server.Test
             dispFsm.Dispose();
 
             //test multi Event And Status
-            dispFsm = FsmObj.Status.Enter.Subscribe(s =>
+            dispFsm = FsmObj.Status.EnterObservable.Subscribe(s =>
             {
-                Assert.IsTrue(s == TestStatus2.Status5);
+                Assert.IsTrue(s == (uint)TestStatus2.Status5);
                 callSync.Value = true;
             });
 

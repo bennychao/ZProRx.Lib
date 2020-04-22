@@ -1,0 +1,21 @@
+{
+    "name": "ZP.Lib.Unity",
+    "references": [
+        "LitJson",
+        "M2Mqtt",
+        "UniRx",
+        "ZP.Lib.Main",
+        "ZP.Lib.Card",
+        "ZP.Lib.Matrix",
+        "ZP.Lib.Battle"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

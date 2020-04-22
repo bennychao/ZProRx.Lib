@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ZProRx.Test.Soc": {
+      "commandName": "Project",
+      "commandLineArgs": "{\\\"WorkerParam\\\":\\\"run\\\",\\\"Port\\\":5050,\\\"UnitType\\\":\\\"hall\\\",\\\"Count\\\":2,\\\"IsPrivateClub\\\":true}"
+    }
+  }
+}

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>ZP.Lib.Server</id>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <authors>BennyChao</authors>
     <icon>images/head.png</icon>
     <owners>BennyChao</owners>
@@ -12,16 +12,18 @@
     <license type="expression">MIT</license>
     
     <dependencies>
-      <group targetFramework=".NETStandard2.0">
+      <group targetFramework="netstandard2.0">
         <dependency id="MQTTnet" version="2.8.5" exclude="Build,Analyzers" />
         <dependency id="MySql.Data" version="8.0.16" exclude="Build,Analyzers" />
         <dependency id="System.Numerics.Vectors" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="SQLitePCLRaw.bundle_green" version="2.0.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Data.Sqlite.Core" version="3.1.3" exclude="Build,Analyzers" />
       </group>
     </dependencies>
 
   </metadata>
   <files>
-    <file src="bin\Release\netstandard2.0\*.dll" target="lib/" />
+    <file src="bin\Release\netstandard2.0\*.dll" target="lib/netstandard2.0/" />
     <file src="..\Docs\Images\head.png" target="images/" />
   </files>
 </package>

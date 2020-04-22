@@ -1,0 +1,19 @@
+{
+    "name": "ZP.Lib.Matrix",
+    "references": [
+        "LitJson",
+        "M2Mqtt",
+        "UniRx",
+        "ZP.Lib.Main",
+        "ZP.Lib.Card"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

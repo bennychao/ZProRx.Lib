@@ -13,7 +13,7 @@ public enum TaskTypeEnum
 }
 
 
-[RTAddTriggerComponentClassAttribute(typeof(ZUIHoldableItem), ".OnHold")]
+[AddTriggerComponentClassAttribute(typeof(ZUIHoldableItem), ".OnHold")]
 public class TestHoldObject
 {
     public ZProperty<bool> bHolding = new ZProperty<bool>();
@@ -21,7 +21,7 @@ public class TestHoldObject
     public ZEvent<bool> OnHold = new ZEvent<bool>();
 }
 
-[RTAddTriggerComponentClassAttribute(typeof(ZUIClickableItem), ".OnClick")]
+[AddTriggerComponentClassAttribute(typeof(ZUIClickableItem), ".OnClick")]
 public class TestClickObject
 {
     public ZProperty<bool> bClick = new ZProperty<bool>();

@@ -1,0 +1,12 @@
+﻿{
+    "Person.weapon":{
+        "Weapon.power":8.0
+    },
+    "Person.rank":190,
+    "Person.blood":98,
+    "Person.testList":[
+        10,20,30
+    ],
+  "Person.testInterface2": { "refid": 1 }
+   
+}

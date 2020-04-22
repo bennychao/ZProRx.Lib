@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>ZP.Lib.NetCore</id>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <authors>BennyChao</authors>
     <icon>images/head.png</icon>
     <owners>BennyChao</owners>
@@ -12,8 +12,9 @@
     <license type="expression">MIT</license>
     
     <dependencies>
-      <group targetFramework=".NETStandard2.0">
-        <dependency id="ZP.Lib.Server" version="1.0.5" exclude="Build,Analyzers" />
+      <group targetFramework="netcoreapp3.1">
+        <dependency id="ZP.Lib.Server" version="1.0.6" exclude="Build,Analyzers" />
+        <dependency id="ZP.Lib.Standard" version="1.0.6" exclude="Build,Analyzers" />
         <!--<dependency id="Microsoft.AspNetCore.Mvc.Core" version="2.2.5" exclude="Build,Analyzers" />
         <dependency id="Microsoft.AspNetCore.Mvc.Formatters.Json" version="2.2.0" exclude="Build,Analyzers" />-->
         <dependency id="Microsoft.Extensions.Configuration.Binder" version="3.1.2" exclude="Build,Analyzers" />
@@ -27,6 +28,7 @@
 
   </metadata>
   <files>
-    <file src="bin\Release\netstandard2.0\ZP.Lib.NetCore.dll" target="lib/" />
+    <file src="bin\Release\netcoreapp3.1\*.dll" target="lib/netcoreapp3.1/" />
+    <file src="..\Docs\Images\head.png" target="images/" />
   </files>
 </package>

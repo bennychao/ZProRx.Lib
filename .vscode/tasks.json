@@ -74,32 +74,8 @@
             },
             "problemMatcher": "$msCompile"
         },
-        {
-            "label": "publish",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Actress/ZP.Matrix.Actress.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "watch",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/ZP.Matrix/ZP.Matrix.Actress/ZP.Matrix.Actress.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        }
-        ,
+
+
         {
             "label": "Unity.Source.Plugin.Publish",
             "type": "shell",
@@ -117,8 +93,9 @@
             },
             "args": ["${input:UnityProjectName}"]
         },
+
         {
-            "label": "Unity.ZP.Lib.Plugin.Publish",
+            "label": "Unity.ZP.Lib.Plugin.PublishToUnity",
             "type": "shell",
             "command": "${workspaceFolder}/ZP.Lib/Tools/publish_zplib.sh",
             "windows": {
@@ -134,6 +111,7 @@
             },
             "args": ["${input:ZPLibUnityProjectName}"]
         },
+
         {
             "label": "Matrix.Server.Publish",
             "type": "shell",
@@ -151,6 +129,39 @@
             }
         }
         ,
+        {
+            "label": "ZProRx.Lib.Package(nuget)",
+            "type": "shell",
+            "command": "${workspaceFolder}/ZP.Lib/Tools/publish_package.sh",
+            "windows": {
+                "command": "${workspaceFolder}/ZP.Lib/Tools/publish_package.bat"
+            },
+            "group": "test",
+            "options": {
+                "cwd": "${workspaceRoot}/ZP.Lib"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "CloneTo.ZProRx.Lib.Repository",
+            "type": "shell",
+            "command": "${workspaceFolder}/ZP.Lib/Tools/cloneto_zprorx_lib.sh",
+            "windows": {
+                "command": "${workspaceFolder}/ZP.Lib/Tools/cloneto_zprorx_lib.bat"
+            },
+            "group": "test",
+            "options": {
+                "cwd": "${workspaceRoot}/ZP.Lib"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+
         {
             "label": "Matrix.Server.Run",
             "type": "shell",

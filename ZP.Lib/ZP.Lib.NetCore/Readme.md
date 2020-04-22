@@ -15,7 +15,7 @@
   ```csharp
   c.InjectJavascript("/swagger_custom.js"); // 加载中文包
   ```
-接入方式如下：
+接入方式如下：调用`services.AddZPSwagger<Program>(Configuration)`
 ```csharp
     public void ConfigureServices(IServiceCollection services)
     {
@@ -28,6 +28,7 @@
         services.AddZPSwagger<Program>(Configuration);
     }
 ```
+以及调用`app.UseZPSwagger<Program>();`
 ```csharp
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLifeTime
         , ILoggerFactory loggerFactory)
@@ -51,7 +52,7 @@
 
 
 ## ZsonResult 
-Zson是对Json的简单封装的定义，这里也可NetCore进行扩展，可以用于Web API的返回值，与作为[FromBody]参数。
+Zson是对Json的简单封装的定义，这里也可NetCore进行扩展，可以用于Web API的返回值，以及与作为[FromBody]参数传入。
 返回值如果使用Matrix框架，默认是支持。
 如果需要参数支持，需要调用` IMvcBuilder.AddZPBinder `MVCBuilder的扩展
 
@@ -59,6 +60,8 @@ Zson是对Json的简单封装的定义，这里也可NetCore进行扩展，可�
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddZPBinder();
+        //...
+    }
 ```
 
 ### 常用类
@@ -68,6 +71,17 @@ Zson是对Json的简单封装的定义，这里也可NetCore进行扩展，可�
 - ZsonListHub<T> 类似上者，支持返回List的Zson数据。
 
 什么是ZP类，参考[ZP.Lib.Main](../ZP.Lib.Main/Readme.md)
+
+```csharp
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, [FromBody]TestData value)
+    {
+        var ret = ZPropertyMesh.CreateObject<TestData>();
+        ret.testNum.Value = 100;
+        return ZPropertyMesh.CreateObject<ZsonResult<TestData>>(ret);
+    }
+```
+注意使用 `IActionResult` 做为返回值。
 
 
 ## ZP Model
@@ -83,8 +97,10 @@ Model类定义,由于连接字符串，一般在appsettings.json中定义，所�
         {
         }
 
+        //...
+    }
 ```
-默认Model的类名为其Table的名，如上BoxesModel 类，对应的Table名为Boxs。
+默认Model的类名为其Table的名，如上BoxesModel 类，对应的Table名为Boxes。
 
 Controller IOC
 ```csharp   

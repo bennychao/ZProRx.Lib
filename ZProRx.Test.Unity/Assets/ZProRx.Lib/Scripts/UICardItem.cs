@@ -20,7 +20,7 @@ public class UICardItem : ZUIPropertyItemBehaviour, IZPropertyViewItem
     }
 
 
-    public bool Bind(IZProperty property)
+    new public bool Bind(IZProperty property)
     {
         //bind with the Color Control
         //nametext = 
@@ -37,8 +37,4 @@ public class UICardItem : ZUIPropertyItemBehaviour, IZPropertyViewItem
         return base.BindBase(property);
     }
 
-    public void UpdateValue(object data)
-    {
-        throw new System.NotImplementedException();
-    }
 }

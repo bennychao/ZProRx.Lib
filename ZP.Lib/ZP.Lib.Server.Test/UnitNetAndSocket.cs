@@ -275,7 +275,7 @@ namespace ZP.Lib.Server.Test
                     //throw new Exception(""); 
                     throw new ZNetMultiException<TestErrorEnum>(TestErrorEnum.Error1);
 
-                    return true;
+                    return true;  //must have return, or else Sender will not recevie the result even the Error Exception
                 }).AddTo(disposables);//, (Exception e) => Debug.Log(e.ToString())
 
             ZPropertySocket.SendPackage<TestPropData, TestErrorEnum, bool>("topic/responseCustomError", data)

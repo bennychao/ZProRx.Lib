@@ -292,10 +292,10 @@
     <Compile Include="Assets\Plugins\UniRx\Scripts\UnityWinRTBridge\ThreadPoolScheduler_UnityWinRT.cs" />
     <None Include="Assets\Plugins\UniRx\Scripts\UniRx.asmdef" />
     <Reference Include="UnityEditor.UI">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -486,11 +486,14 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="AssetStoreTools">
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/AssetStoreTools/Editor/AssetStoreTools.dll</HintPath>
+    </Reference>
     <Reference Include="LitJson">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/Plugins/LitJson.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/ZProRx.Lib/Plugins/ClientLibrary/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="M2Mqtt">
-      <HintPath>F:/GitRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/Plugins/M2Mqtt.dll</HintPath>
+      <HintPath>F:/GiteeRoot/ZPWorkSpace/ZProRx.Test.Unity/Assets/ZProRx.Lib/Plugins/ClientLibrary/M2Mqtt.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

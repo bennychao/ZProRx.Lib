@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using ZP.Lib.Server.Tools;
 
 namespace ZP.Lib.Standard
@@ -33,7 +34,7 @@ namespace ZP.Lib.Standard
             }
             catch (Exception e)
             {
-                
+                Debug.Log("Nacos GetConfigAsync Error " + e.ToString());
             }
 
 

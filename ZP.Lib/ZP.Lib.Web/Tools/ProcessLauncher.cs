@@ -33,7 +33,10 @@ namespace ZP.Lib.Web
 
             //var str11 = System.Environment.CurrentDirectory;
 
-            var psi = new ProcessStartInfo(path, param) { RedirectStandardOutput = true };
+            var psi = new ProcessStartInfo(path, param) { 
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true
+            };
 
             var log = new ProcessLogStdoutput(path);
 
@@ -42,6 +45,7 @@ namespace ZP.Lib.Web
             //bin/bash
             //try
             {
+                psi.RedirectStandardInput = true;
                 //psi.UseShellExecute = true;
                 psi.WorkingDirectory = workfolder;
                 var proc = Process.Start(psi);
@@ -53,6 +57,9 @@ namespace ZP.Lib.Web
                 }
                 else
                 {
+
+                    //proc.StandardInput.WriteLine("Test");
+
                     Task.Run(() =>
                    {
                        string retStr = "";
@@ -61,7 +68,7 @@ namespace ZP.Lib.Web
                            while (!sr.EndOfStream)
                            {
                                var str = sr.ReadLine();
-                               //Console.WriteLine(str);
+                               Console.WriteLine(str);
                                log.Log.LogWarning(str);
                                retStr += str;
                            }
@@ -84,6 +91,22 @@ namespace ZP.Lib.Web
             //    return (-1, null);
             //}
 
+        }
+
+        static public void SendInput(int pid, string str)
+        {
+            var psi = Process.GetProcessById(pid);
+
+            psi?.StandardInput.WriteLine(str);
+        }
+
+
+        static public void Kill(int pid)
+        {
+            var psi = Process.GetProcessById(pid);          
+
+             psi?.Kill(true);
+             psi.Close();
         }
     }
 }
